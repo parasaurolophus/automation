@@ -1,1 +1,6099 @@
-[]
+[
+    {
+        "id": "24510f25743eef8c",
+        "type": "tab",
+        "label": "Timer",
+        "disabled": false,
+        "info": "Periodically send time-based event messages which are used to trigger\nautomation.\n\n# Details\n\nThis flow divides each day into five segments. It sends a message\nwith `msg.topic` set to `trigger` at the start of each\nsegment<sup>*</sup>. It periodically sends such `trigger` messages via\na `link out` node to flows on the _Shades_ and _Lighting_ tabs. Each\nsuch message has `msg.payload` set to an object with the following\nproperties:\n\n| Property               | Description                                                                             |\n|------------------------|-----------------------------------------------------------------------------------------|\n| `msg.payload.lighting` | Boolean value indicating whether or not lighting automation is currently enabled        |\n| `msg.payload.shades`   | Boolean value indicating whether or not window covering automation is currently enabled |\n| `msg.payload.theme`    | String indicating which lighting theme to activate in the evening                       |\n| `msg.payload.time`     | String indicating which the current time of day                                         |\n\n> <sup>*</sup>The wording here describes the canonical case of exactly\n> five `trigger` events per day. In reality, more or fewer than five\n> `trigger`  events may be sent in a given day depending on when and\n> how often flows are restarted as well as corner cases as to how\n> certain segments are defined, as described below.\n\n### Time\n\nThe `msg.payload.time` for each `trigger` message will be one of the\nfollowing following strings:\n\n| `msg.payload.time` | Description<sup>**</sup>                                                                                    |\n|--------------------|-------------------------------------------------------------------------------------------------------------|\n| `morning`          | Sent at sunrise                                                                                             |\n| `midday`           | Sent when the sun is high enough to no longer be shining directly into east-facing windows                  |\n| `afternoon`        | Sent when the sun is coming from the west and low enough to start shining directly into west-facing windows |\n| `evening`          | Sent at sunset                                                                                              |\n| `night`            | Sent at bedtime, as described below                                                                         |\n\n> <sup>**</sup>The sun's position is obtained each minute using\n> [suncalc](https://www.npmjs.com/package/suncalc). \"Coming\n> from the west\" means the sun's azimuth is greater than 0, otherwise\n> it is coming from the east. The sun being \"low enough\" to shine\n> directly into windows is determined empirically for a given house\n> by comparing the sun's altitude as reported by _suncalc_ at various\n> times of day to how the sunlight is or is not intruding\n> uncomfortably at that moment.\n\nCanonically, `trigger` events are sent five times per day at the times\nspecified in the preceding table, including times that vary from day\nto day due to randomly generated offsets or the changing position of\nthe sun over the course of a year. That said, \"extra\" `trigger`\nmessages will be sent when flows are restarted or when the user takes\ncertain actions using dashboard controls such as changing the bedtime\nor enabling or disabling lighting and window shade automation.\nSimilarly, some `trigger` messages may be missing or skipped on any\ngiven day. For example, the criteria defining `midday` are never met at\ncertain times of year for some latitudes.\n\nMore precisely, a new `trigger` event is sent:\n\n1. When flows are started\n2. When a new value for `sunrise`, `sunset`, `bedtime` or `theme` is\n   calculated each day or, in the case of `bedtime`, a user changes\n   the _Bedtime_ setting on the dashboard\n3. A state transition is detected when handling a `now` message each\n   minute, using the logic implied by the preceding table\n4. Lighting or window shade automation is enabled or disabled via the\n   dashboard, as described in the documentation for their respective\n   flow tabs\n\nIn summary, the values for `sunrise`, `sunrise` and `bedtime` are\ncalculated once whenever flows start up and again at the start of each\nday. The value for `bedtime` is recalculated any time a user changes\nthe _Bedtime_ setting on the dashboard. The `bedtime` calculation\nincludes an offset that is randomly calculated each day, as described\nbelow. In addition, `now` events are sent each minute and their handler\ncompares the current time to the rules described above in order to\ndecide when to send `trigger` event messages and what their payloads\nshould contain.\n\n#### Bedtime\n\nA user can choose a value for \"bedtime\" from a dropdown control on the\ndashboard. The actual time at which an event with `msg.topic` set to\n`trigger` and `msg.payload.time` set to `night` will vary slightly each\nday. The intent is to provide a modest degree of simulated presence when\nthe home is unoccupied. In particular, this flow sets the value of\n`msg.payload.time` in `trigger` event messages by adding or subtrating\na randomly generated offset of up 30 minutes to the hour specified by\nthe _Bedtime_ dashboard control. The offset is regenerated once each\nday and also when a user changes any of the dashboard settings\ncontrolling automation.\n\n#### Midday and Afternoon\n\nAt first glance, dividing each day into five distinct time ranges may\nseem excessive. However, different types of home automation rules\nfocus on distinct criteria. The `midday` and `afternoon` values for\n`msg.payload.time` in `trigger` event messages are used to control\neast- and west-facing window coverings in addition to the `morning`,\n`evening` and `night` values which are also of interest for lighting.\nSee the documentation for the _Shades_ and _Lighting_ flow tabs for\nmore information on how the various values for `msg.payload.time` are\nused.\n\n### Theme\n\nThe `msg.payload.theme` property of `trigger` event messages is used to\nindicate special times of year when specific lighting schemes might be\nappropriate:\n\n| `msg.payload.theme` | Description                      |\n|---------------------|----------------------------------|\n| `tribal`            | July 1 - 4 (US Independence Day) |\n| `spooky`            | Any day in October               |\n| `jolly`             | Any day in December              |\n| `standard`          | Any other day                    |",
+        "env": []
+    },
+    {
+        "id": "2182cc80719b7a81",
+        "type": "tab",
+        "label": "Shades",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "448b73182a92925c",
+        "type": "tab",
+        "label": "Lighting",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "dcb190a34f9985d0",
+        "type": "tab",
+        "label": "PowerView",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "d090d7f6da3c673d",
+        "type": "tab",
+        "label": "Ground Floor Hue",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "86021a0ae2220c2b",
+        "type": "tab",
+        "label": "Basement Hue",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "5f4fc72ed0a33627",
+        "type": "tab",
+        "label": "Monitoring",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "4a8af92611acc27a",
+        "type": "subflow",
+        "name": "Notify",
+        "info": "Display a message as a \"toast\" on the\ndashboard and in the debug console.",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "d2492fc09315bfc0"
+                    },
+                    {
+                        "id": "30e1991ea828ba4f"
+                    }
+                ]
+            }
+        ],
+        "out": [],
+        "env": [],
+        "meta": {
+            "module": "@parasaurolophus/node-red-notify",
+            "type": "notify",
+            "version": "1.0.0",
+            "author": "parasaurolophus <apps@rader.us>",
+            "desc": "Display a message as a toast on the dashboard and in the debug console",
+            "keywords": "node-red",
+            "license": "MIT"
+        },
+        "color": "#3FADB5",
+        "icon": "node-red-dashboard/ui_toast.png",
+        "status": {
+            "x": 200,
+            "y": 220,
+            "wires": [
+                {
+                    "id": "5280e126498476bc",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "a0b7d0294edc5956",
+        "type": "subflow",
+        "name": "EventSource readyState",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "726e859588b521d1"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 760,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "834d9349d1ebe8de",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {
+            "module": "@parasaurolophus/node-red-eventsource-readystate",
+            "type": "eventsource-readystate",
+            "version": "1.0.0",
+            "author": "parasaurolophus <apps@rader.us>",
+            "desc": "Convert the numeric status code for an EventSource into a string for display to the user",
+            "keywords": "node-red",
+            "license": "MIT"
+        },
+        "color": "#3FADB5",
+        "icon": "node-red-dashboard/ui_text.png",
+        "status": {
+            "x": 940,
+            "y": 180,
+            "wires": [
+                {
+                    "id": "b00c5123ccc7aca8",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "d61db14468b910ab",
+        "type": "subflow",
+        "name": "Hue API V2",
+        "info": "This subflow encapsulates logic necessary to subscribe to event messages\nsent by a Philips Hue Bridge. It wraps this fairly complex logic as a\nsubflow as a convenience for connecting to multiple bridges on a single\nLAN.\n\n# Input\n\nThe receipt of any input message triggers a sequence of events as\ndescribed below. The actual content of the incoming message is ignored.\n\n# Output\n\nAn ongoing stream of event messages wrapped in a data structure suitable\nfor providing a set of dynamically created dashboard controls using a\n`ui_template` node.\n\n# Details\n\nThis subflow requires the following configuration:\n\n| Environment Variable | Description                                                                       |\n|----------------------|-----------------------------------------------------------------------------------|\n| `ADDRESS`            | IP address or host name of the Hue bridge                                         |\n| `KEY`                | A valid client application key for the Hue bridge                                 |\n| `TARGET`             | The label of a `link in` node that will be called to send messages to the Hue bridge |\n| `BRIDGE`             | A unique name for the Hue bridge at the given `ADDRESS`                           |\n\nSee\n<https://developers.meethue.com/develop/application-design-guidance/hue-bridge-discovery/>\nfor information on determining the value for `${ADDRESS}`.\n\nSee <https://developers.meethue.com/develop/hue-api-v2/getting-started/>\nfor information on how to generate the value for `${KEY}`; the\n_@parasaurolophus/node-red-create-hue-application-key_ subflow provides\na convenience wrapper for the relevant API.\n\nThe value of `${TARGET}` must be the name of a `link in` node that\nconnects to an instance of the\n_@parasaurolophus/node-red-send-hue-command_ subflow configured\nwith the same values for `${ADDRESS}` and `${KEY}`. The output of that\nsubflow must connect to a `link out` node configured to return its\ncaller.\n\nThe value of `${BRIDGE}` can be any string you wish to identify a\nparticular bridge. It will be used to form flow context storage keys.\n\nUpon receipt of any incoming message, this subflow:\n\n1. Fetches the complete set of \"resources\" from the Hue bridge\n2. Parses and reformats a subset of that metadata for use in\n   dynamically creating dashboard controls for the light groups and\n   scenes defined using the native Hue mobile app\n3. Uses a\n   [@parasaurolophus/node-red-eventsource](https://flows.nodered.org/node/@parasaurolophus/node-red-eventsource)\n   node to subscribe to event messages sent by the bridge\n4. Sends update messages each time the state of the dynamically created\n   dashboard controls change\n\nThe output of this flow should be connected to a `ui_template` node. The\noutput of that `ui_template` should be sent to an instance of the\n_@parasaurolophus/node-red-send-hue-command_ subflow configured with the\nsame values for `${ADDRESS}` and `${KEY}`. Typically, this would be\nthrough a `link call` node configured to invoke the same `link in` as\nspecified by `${TARGET}`.",
+        "category": "hue",
+        "in": [
+            {
+                "x": 40,
+                "y": 380,
+                "wires": [
+                    {
+                        "id": "07d9702ee21263d3"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1070,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "d9ae737367ebed62",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1300,
+                "y": 560,
+                "wires": [
+                    {
+                        "id": "d48dd4b5aa1368b0",
+                        "port": 1
+                    }
+                ]
+            },
+            {
+                "x": 1300,
+                "y": 620,
+                "wires": [
+                    {
+                        "id": "5d95dbf897fe7abd",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1050,
+                "y": 240,
+                "wires": [
+                    {
+                        "id": "c9d3ee76b8c11967",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "ADDRESS",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "KEY",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "TARGET",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "BRIDGE",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {
+            "module": "@parasaurolophus/node-red-hue-api-v2",
+            "type": "hue-api-v2",
+            "version": "1.0.0",
+            "author": "parasaurolophus <apps@rader.us>",
+            "desc": "Wrap the API (V2) exposed by a Philips Hue Bridge",
+            "keywords": "node-red,philips-hue,hue",
+            "license": "MIT"
+        },
+        "color": "#D8BFD8",
+        "outputLabels": [
+            "dashboard",
+            "onopen",
+            "onerror",
+            "events"
+        ],
+        "icon": "node-red/bridge.svg",
+        "status": {
+            "x": 1260,
+            "y": 680,
+            "wires": [
+                {
+                    "id": "8cd24b2b4ab64410",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "dd3a1235085c7ed7",
+        "type": "subflow",
+        "name": "Send Hue Command",
+        "info": "Send a HTTP request to the API (V2) on a Philips Hue Bridge.\n\n# Input\n\nSee the documentation for the `http request` node for information about\nhow to format a message for use with an HTTP based API like that exposed\nby a Hue Bridge. In particular, this subflow assumes that `msg.payload`\nand `msg.method` will be set appropriately for the particular API entry\npoint you wish to invoke. In addition, this subflow assumes that\n`msg.topic` is the bridge resource URI representing the command entry\npoint or resource to fetch. It will be converted to a proper value for\nthe `msg.url` property, as described below.\n\n# Output\n\nThe the output of a `http request` node used to interact with the Hue\nbridge.\n\n# Details\n\nThis subflow will set `msg.url` and `msg.headers` according to the\nvalues of:\n\n- `msg.topic`\n- `${ADDRESS}`\n- `${KEY}`\n\nbefore sending the message through to a `http request` node. The URL\nwill be formed by prepending the `htts://` scheme and value of the\n`${ADDRESS}` environment variable to `msg.topic`. The value of\n`msg.headers` will include the client application security token\ncontained in the `${KEY}` environment variable. The other message\nproperties will be passed through unchanged to the `http request` node.\n\nSee <https://developers.meethue.com/develop/hue-api-v2/> for details of\nthe various API entry points that can be invoked using this subflow.\n\nSee\n<https://developers.meethue.com/develop/application-design-guidance/hue-bridge-discovery/>\nfor information on how to obtain the `${ADDRESS}` for your bridge.\n\nSee <https://developers.meethue.com/develop/hue-api-v2/getting-started/> for\ninformation on how to generate a value to pass as the `${KEY}`. The\n_@parasaurolophus/node-red-create-hue-application-key_ subflow provides\na convenient way to invoke the relevat API entry point.",
+        "category": "hue",
+        "in": [
+            {
+                "x": 60,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "fa870f94fa1ea10b"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 680,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "20ac42d7649c260a",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 870,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "c029fcaa62306eb2",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "ADDRESS",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "KEY",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {
+            "module": "@parasaurolophus/node-red-send-hue-command",
+            "type": "send-hue-command",
+            "version": "1.0.0",
+            "author": "parasaurolophus <apps@rader.us>",
+            "desc": "Send a message to the Philips Hue Bridge API V2",
+            "keywords": "node-red,philips-hue,hue",
+            "license": "MIT"
+        },
+        "color": "#D8BFD8",
+        "inputLabels": [
+            "command"
+        ],
+        "outputLabels": [
+            "response",
+            "error"
+        ],
+        "icon": "node-red/bridge.svg",
+        "status": {
+            "x": 640,
+            "y": 280,
+            "wires": [
+                {
+                    "id": "7f6c4efded50ed6b",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "ff5e6c57350b517d",
+        "type": "group",
+        "z": "24510f25743eef8c",
+        "name": "send messages for events that occur every minute",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "03ac34a13709be39",
+            "c50b52aee3f36be8",
+            "47d3d2e7f832edc0",
+            "9dc6f3432564c1e2",
+            "83852d4482fadfc7",
+            "829d6487fc430502",
+            "32e4dd9341d63405",
+            "54c207974d22c913",
+            "c45a75a4ea70bf3a",
+            "6a14f93e5d6efc13",
+            "8e8260bf6d0fb1d1",
+            "8ea23957849f9e6c",
+            "a3864a0d07101185",
+            "6397de314a021b18"
+        ],
+        "x": 14,
+        "y": 499,
+        "w": 1252,
+        "h": 182
+    },
+    {
+        "id": "60e4d1c056ed3a0c",
+        "type": "group",
+        "z": "448b73182a92925c",
+        "name": "trigger lighting automation",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "8083b56440c292c8",
+            "21d5dda80821a109",
+            "aae17e5a30471de5",
+            "f590050ce69df70f",
+            "961b3a3f24cec00c",
+            "c6c885de97bd8e99",
+            "43ec488110790f7e",
+            "5074d2c62a31146b",
+            "276ab966afd5e0f9",
+            "3558695087d0fa53",
+            "21c53d52d5277b4c",
+            "7ed122d84c5e7167"
+        ],
+        "x": 114,
+        "y": 19
+    },
+    {
+        "id": "49f5aae09949b530",
+        "type": "group",
+        "z": "2182cc80719b7a81",
+        "name": "trigger shades automation",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "a9a05d5f14d5310e",
+            "31e39e81f78fa235",
+            "37bac7a6b658ade4",
+            "ec730ac674a50f58",
+            "4517f2c78c9498d7",
+            "3d7ec93adc3b5b60",
+            "bbbb4e53c2082d73"
+        ],
+        "x": 114,
+        "y": 19
+    },
+    {
+        "id": "2da3e0020db1582c",
+        "type": "group",
+        "z": "24510f25743eef8c",
+        "name": "automation dashboard controls",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "ecfbd237278bdee4",
+            "48fca1b6724de951",
+            "efb74a364c880c27",
+            "8802b0ac9b530f7c",
+            "d91da8bbf302b6c9",
+            "3a210f7e37be9ff5",
+            "1f1835bd1f7a046b",
+            "d3e8ba34d44f67aa",
+            "028e5ae634a130e8",
+            "617c23c03011acd7",
+            "e147ba939c07a9a6",
+            "e49473b0bae32aa7",
+            "e15932987c8aeb5e",
+            "6c8f562f25df6bd3",
+            "b681bcc695abf3d1",
+            "895d1c6f5d4cf269",
+            "bbc7973a5447198c",
+            "c5b9a97f9cc97bd1",
+            "02d93ffb776df2c5"
+        ],
+        "x": 14,
+        "y": 19,
+        "w": 862,
+        "h": 462
+    },
+    {
+        "id": "eaaca1e226cc9251",
+        "type": "group",
+        "z": "dcb190a34f9985d0",
+        "name": "send message to powerview hub",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "70e42b6637f4c865",
+            "413305fe8cf8bc16",
+            "3b9aea255e25c86d",
+            "b528e18246309ead",
+            "450c11f088a3f9ee",
+            "a250d71416af8250"
+        ],
+        "x": 94,
+        "y": 19
+    },
+    {
+        "id": "74348749d23b9082",
+        "type": "group",
+        "z": "dcb190a34f9985d0",
+        "name": "dynamically create powerview controls on dashboard",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "02eb116aa3a7efad",
+            "a2ce2f10f0cbc3b4",
+            "4597056c8e33d1d2",
+            "a4b2cb7314b93cec",
+            "e89d138990a2c571",
+            "09ed6328f31946db",
+            "a4115f1a663ecf84",
+            "b3fa2dd0b396e5ba",
+            "7379bd9759e06a98",
+            "fa994326c2180556",
+            "97d89691a9505bb9",
+            "23ce9cde77523965",
+            "ca455aa5752d94d8",
+            "78a3fbe808d63c4c",
+            "8d7e72df780c1561",
+            "9950e52333199d8f",
+            "b3b32f662f388893",
+            "b6e07b7b99531b02",
+            "7fb1bd1acb1ca5f7",
+            "0a9432f7e85182e1",
+            "6f2a76cdcf373136",
+            "9b899812a51421bf",
+            "75f0adce74746386",
+            "ddda84706da2c026"
+        ],
+        "x": 94,
+        "y": 159
+    },
+    {
+        "id": "2c4eab1ce95057ef",
+        "type": "group",
+        "z": "d61db14468b910ab",
+        "name": "get all configuration data from hue bridge",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "07d9702ee21263d3",
+            "27cbc52e000f9fd1",
+            "8909e3d843ad752c",
+            "fcf52eacd721a4a9",
+            "afd10513e80a6c06"
+        ],
+        "x": 74,
+        "y": 319
+    },
+    {
+        "id": "061d94914ef0f0c0",
+        "type": "group",
+        "z": "d61db14468b910ab",
+        "name": "format grouped light event data for dashboard",
+        "style": {
+            "label": true,
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "eeb425059507ba39",
+            "3fe9b64e4c386d21",
+            "d9ae737367ebed62",
+            "edb141c15ed881a4",
+            "a3bfbe7bec9a2dda",
+            "b698fabef55c0f4c",
+            "c9d3ee76b8c11967"
+        ],
+        "x": 74,
+        "y": 119
+    },
+    {
+        "id": "ad76998e48254ce7",
+        "type": "group",
+        "z": "d61db14468b910ab",
+        "name": "",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "5e8b87d6d8f0fed7"
+        ],
+        "x": 74,
+        "y": 19
+    },
+    {
+        "id": "86efe0cfe1142093",
+        "type": "group",
+        "z": "d61db14468b910ab",
+        "name": "store resource state changes in flow context",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "fcb648906e6b792a",
+            "339ebff143d5b535",
+            "1bc6cee6558ccaf4",
+            "36dd0d5dc31ca8b4",
+            "980418c680804201",
+            "d29c26656d2e74ae"
+        ],
+        "x": 794,
+        "y": 279
+    },
+    {
+        "id": "f773f7f5615b8215",
+        "type": "group",
+        "z": "d090d7f6da3c673d",
+        "name": "ground floor hue bridge",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "f87cd6036de631b7",
+            "0226968bb49f22c5",
+            "4ebca8a3aa5763e5",
+            "466fb66350e127f2",
+            "acac97da53ff2812",
+            "460867bbae94da5a",
+            "915b3721df3bd41d",
+            "f4e7f3f6609ec608",
+            "13a8932676232537",
+            "5c8a7c32ac4b3bf1",
+            "615c8c80e4e28048",
+            "e178773d828de62d",
+            "33da30d97725e077",
+            "7ff8e33c2fe0f536",
+            "b9049fede42c5a94",
+            "54d0bf270c658aca",
+            "3572083b1ce8b5cb"
+        ],
+        "env": [
+            {
+                "name": "ADDRESS",
+                "value": "GROUND_FLOOR_HUE_ADDRESS",
+                "type": "env"
+            },
+            {
+                "name": "KEY",
+                "value": "GROUND_FLOOR_HUE_KEY",
+                "type": "env"
+            },
+            {
+                "name": "BRIDGE",
+                "value": "ground-floor",
+                "type": "str"
+            },
+            {
+                "name": "TARGET",
+                "value": "send ground floor hue command",
+                "type": "str"
+            }
+        ],
+        "x": 94,
+        "y": 19
+    },
+    {
+        "id": "595f21be09dd9396",
+        "type": "group",
+        "z": "86021a0ae2220c2b",
+        "name": "basement hue bridge",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "10c74bd3ce62390f",
+            "85c6aa31ab17c911",
+            "ef72c1743493465e",
+            "214548005f7e99ab",
+            "40f45c398a50b05e",
+            "3f8329fdc5c54932",
+            "3600df219088f5a6",
+            "e53ba9a7af486095",
+            "ab59aff7c27c6728",
+            "46ac9274524ad523",
+            "d7f22263a9cd899a",
+            "299a8ff9654c4b2a",
+            "0236f877cea9aa1b",
+            "2cc43613b1b953f9",
+            "b26df763264faaa4",
+            "1180af1e760ed933",
+            "5b06452387fe80e3"
+        ],
+        "env": [
+            {
+                "name": "ADDRESS",
+                "value": "BASEMENT_HUE_ADDRESS",
+                "type": "env"
+            },
+            {
+                "name": "KEY",
+                "value": "BASEMENT_HUE_KEY",
+                "type": "env"
+            },
+            {
+                "name": "BRIDGE",
+                "value": "basement",
+                "type": "str"
+            },
+            {
+                "name": "TARGET",
+                "value": "send basement hue command",
+                "type": "str"
+            }
+        ],
+        "x": 94,
+        "y": 19
+    },
+    {
+        "id": "773980010e098c1d",
+        "type": "group",
+        "z": "5f4fc72ed0a33627",
+        "name": "monitor automation daily events",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "dd8c04e3e7a29933",
+            "583e7746d1fa7f88",
+            "aebfdc0a1c3b976e",
+            "e7a7dc5db8821c29"
+        ],
+        "x": 134,
+        "y": 339
+    },
+    {
+        "id": "c788c5f426cb2e80",
+        "type": "group",
+        "z": "5f4fc72ed0a33627",
+        "name": "monitor automation trigger events",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "64fa5f1cef66ef07",
+            "0384befea96e64d6",
+            "f3eeda3b6470e2cf"
+        ],
+        "x": 134,
+        "y": 439
+    },
+    {
+        "id": "d12cf5959a668653",
+        "type": "group",
+        "z": "5f4fc72ed0a33627",
+        "name": "monitor ground floor hue connection status",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "aacdb5b99748f94f",
+            "6f2b37e9e0163a69",
+            "d2682f043a62593b",
+            "e741bdeb4a0992af",
+            "0696c3dfdfb89df9",
+            "37ceae934f23da16"
+        ],
+        "x": 134,
+        "y": 19
+    },
+    {
+        "id": "8b35b76a6e9c0b6d",
+        "type": "group",
+        "z": "5f4fc72ed0a33627",
+        "name": "monitor basement hue connection status",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "9a0ebc96f768ceb8",
+            "703bbe856b326d23",
+            "27a1d5e6b32b490c",
+            "d150b3ca21a4fa2a",
+            "174b7dc47587b326",
+            "9990a00c003ca563"
+        ],
+        "x": 134,
+        "y": 179
+    },
+    {
+        "id": "f8dce80b21d7f706",
+        "type": "group",
+        "z": "448b73182a92925c",
+        "name": "activate yard scene",
+        "style": {
+            "stroke": "none",
+            "stroke-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1"
+        },
+        "nodes": [
+            "2bb38044a932fa69",
+            "64a68d2a2d2e93cd",
+            "b11c745f6ce17117",
+            "7e843abc77537f92",
+            "510f4653645e17d0",
+            "67013f62ca5bcb43",
+            "feaf54e6c16337c1",
+            "d92030613c5ce50e",
+            "cb0bc87b9e465a2f",
+            "da79b96d161e1c28",
+            "cfbe73c13aeb3e35"
+        ],
+        "x": 694,
+        "y": 339,
+        "info": "Set `msg` properties to invoke specific `grouped_light` and `scene` commands targeting the room named \"Yard\" on the ground floor Hue Bridge."
+    },
+    {
+        "id": "b1ee6e019c90396d",
+        "type": "group",
+        "z": "448b73182a92925c",
+        "name": "activate main floor scene",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "52f0cba3f9b87632",
+            "72acc2a8bcbc1528",
+            "0acba8178934baa1",
+            "1c5888bd24d0a311",
+            "fe5fdd858e8b907d",
+            "64afce8ff0b75f48",
+            "b5961ce82d77690f"
+        ],
+        "x": 114,
+        "y": 339,
+        "info": "Set `msg` properties to invoke specific `grouped_light` and `scene` commands targeting the zone named \"Main Floor\" on the ground floor Hue Bridge."
+    },
+    {
+        "id": "2d9ad017d6aeb18f",
+        "type": "group",
+        "z": "2182cc80719b7a81",
+        "name": "activate a powerview scene",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "b6ce3321e4119a91",
+            "689bb9bf9977b2c7",
+            "9a4ac3fab7c9e137",
+            "8810232073bb1f9d",
+            "fab23e5be84c202c",
+            "1e9e0b9fd7d051f1",
+            "83d0e35629e294d4",
+            "ab48edf506472b79",
+            "78d97384c0e5dc0d",
+            "1e6c0ad384e7aca2",
+            "26124b0246ef158d",
+            "e90c8c66623d3a7b"
+        ],
+        "x": 114,
+        "y": 239
+    },
+    {
+        "id": "f848d645bd1abc5b",
+        "type": "group",
+        "z": "448b73182a92925c",
+        "name": "activate main bathroom scene",
+        "style": {
+            "stroke": "none",
+            "stroke-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1"
+        },
+        "nodes": [
+            "df41f3a116d28de2",
+            "a122f1a4fc3399e5",
+            "012902774c9657f1",
+            "90cec6147a7de28f",
+            "a3ebd5d5a2bab049"
+        ],
+        "x": 114,
+        "y": 519,
+        "info": "Set `msg` properties to invoke specific `grouped_light` and `scene` commands targeting the room named \"Main Bathroom\" on the ground floor Hue Bridge."
+    },
+    {
+        "id": "d6d68c481562616a",
+        "type": "group",
+        "z": "d61db14468b910ab",
+        "name": "subscribe to server sent events from hue bridge",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "1056f2ddf9c58227",
+            "2d13eb8e173c7968",
+            "d48dd4b5aa1368b0",
+            "d6f78cafaf0b00d7",
+            "22e026e913c8a836",
+            "1cd6fafb6c18354c",
+            "f855f79c60d5581f",
+            "dc94e795cd3258f8",
+            "1da7ab591b98f32c",
+            "5d95dbf897fe7abd",
+            "8cd24b2b4ab64410"
+        ],
+        "x": 74,
+        "y": 459
+    },
+    {
+        "id": "7ed122d84c5e7167",
+        "type": "junction",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "x": 580,
+        "y": 180,
+        "wires": [
+            [
+                "f590050ce69df70f",
+                "43ec488110790f7e"
+            ]
+        ]
+    },
+    {
+        "id": "834d9349d1ebe8de",
+        "type": "junction",
+        "z": "a0b7d0294edc5956",
+        "x": 700,
+        "y": 140,
+        "wires": [
+            [
+                "b00c5123ccc7aca8"
+            ]
+        ]
+    },
+    {
+        "id": "c9d3ee76b8c11967",
+        "type": "junction",
+        "z": "d61db14468b910ab",
+        "g": "061d94914ef0f0c0",
+        "x": 360,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5d95dbf897fe7abd",
+        "type": "junction",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "x": 520,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6e79e7537966793f",
+        "type": "ui_tab",
+        "name": "Controls",
+        "icon": "fa-home",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "679eed718054e895",
+        "type": "ui_base",
+        "theme": {
+            "name": "theme-light",
+            "lightTheme": {
+                "default": "#0094CE",
+                "baseColor": "#0094CE",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": true,
+                "reset": false
+            },
+            "darkTheme": {
+                "default": "#097479",
+                "baseColor": "#097479",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif",
+                "edited": false
+            },
+            "customTheme": {
+                "name": "Untitled Theme 1",
+                "default": "#4B7930",
+                "baseColor": "#4B7930",
+                "baseFont": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+            },
+            "themeState": {
+                "base-color": {
+                    "default": "#0094CE",
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-titlebar-backgroundColor": {
+                    "value": "#0094CE",
+                    "edited": false
+                },
+                "page-backgroundColor": {
+                    "value": "#fafafa",
+                    "edited": false
+                },
+                "page-sidebar-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-textColor": {
+                    "value": "#1bbfff",
+                    "edited": false
+                },
+                "group-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "group-backgroundColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "widget-textColor": {
+                    "value": "#111111",
+                    "edited": false
+                },
+                "widget-backgroundColor": {
+                    "value": "#0094ce",
+                    "edited": false
+                },
+                "widget-borderColor": {
+                    "value": "#ffffff",
+                    "edited": false
+                },
+                "base-font": {
+                    "value": "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif"
+                }
+            },
+            "angularTheme": {
+                "primary": "indigo",
+                "accents": "blue",
+                "warn": "red",
+                "background": "grey",
+                "palette": "dark"
+            }
+        },
+        "site": {
+            "name": "Chez Nous",
+            "hideToolbar": "true",
+            "allowSwipe": "false",
+            "lockMenu": "false",
+            "allowTempTheme": "none",
+            "dateFormat": "MM/DD/YYYY",
+            "sizes": {
+                "sx": 48,
+                "sy": 48,
+                "gx": 6,
+                "gy": 6,
+                "cx": 6,
+                "cy": 6,
+                "px": 0,
+                "py": 0
+            }
+        }
+    },
+    {
+        "id": "d45acf67bdd65c8f",
+        "type": "ui_group",
+        "name": "Automation",
+        "tab": "6e79e7537966793f",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "64285772c6ce65e8",
+        "type": "ui_group",
+        "name": "Monitor",
+        "tab": "6e79e7537966793f",
+        "order": 5,
+        "disp": true,
+        "width": "6",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "bad6261ac75df85d",
+        "type": "ui_group",
+        "name": "Window Shades",
+        "tab": "6e79e7537966793f",
+        "order": 4,
+        "disp": true,
+        "width": "6",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "21f11f110d626f5a",
+        "type": "ui_group",
+        "name": "Ground Floor Lighting",
+        "tab": "6e79e7537966793f",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "ab9e7529ab02c320",
+        "type": "ui_group",
+        "name": "Basement Lighting",
+        "tab": "6e79e7537966793f",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "96738d9e92f617dc",
+        "type": "tls-config",
+        "z": "dd3a1235085c7ed7",
+        "name": "Ignore Certificate",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "448d1e2ff0ff4a74",
+        "type": "ui_toast",
+        "z": "4a8af92611acc27a",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": true,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": true,
+        "className": "",
+        "topic": "",
+        "name": "",
+        "x": 450,
+        "y": 60,
+        "wires": [
+            []
+        ],
+        "info": "Display the HTML snippet as a \"toast\" on the dashboard."
+    },
+    {
+        "id": "30e1991ea828ba4f",
+        "type": "debug",
+        "z": "4a8af92611acc27a",
+        "name": "notification",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "counter",
+        "x": 190,
+        "y": 140,
+        "wires": [],
+        "info": "Add the message to the debug pane."
+    },
+    {
+        "id": "0985cf211a9510a2",
+        "type": "template",
+        "z": "4a8af92611acc27a",
+        "name": "<pre>",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "mustache",
+        "template": "<div>\n    <pre>{{payload}}</pre>\n</div>",
+        "output": "str",
+        "x": 310,
+        "y": 60,
+        "wires": [
+            [
+                "448d1e2ff0ff4a74"
+            ]
+        ],
+        "info": "Wrap `msg.payload` in HTML."
+    },
+    {
+        "id": "d2492fc09315bfc0",
+        "type": "function",
+        "z": "4a8af92611acc27a",
+        "name": "stringify",
+        "func": "msg.payload = JSON.stringify(msg, undefined, ' ')\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 60,
+        "wires": [
+            [
+                "0985cf211a9510a2"
+            ]
+        ],
+        "info": "Pretty-print `msg.payload`."
+    },
+    {
+        "id": "5280e126498476bc",
+        "type": "status",
+        "z": "4a8af92611acc27a",
+        "name": "count",
+        "scope": [
+            "30e1991ea828ba4f"
+        ],
+        "x": 90,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "152881af3cfe09a3",
+        "type": "switch",
+        "z": "a0b7d0294edc5956",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "-1",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "num"
+            },
+            {
+                "t": "eq",
+                "v": "2",
+                "vt": "num"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 5,
+        "x": 330,
+        "y": 140,
+        "wires": [
+            [
+                "4585854e9c80742e"
+            ],
+            [
+                "69ef20c042513eec"
+            ],
+            [
+                "621754612c4b4783"
+            ],
+            [
+                "28f1f48654f5d897"
+            ],
+            [
+                "d93ad1b014d6eaf4"
+            ]
+        ],
+        "info": "Select the string representation of `EventSource.readyState` based on\nits numeric value."
+    },
+    {
+        "id": "726e859588b521d1",
+        "type": "change",
+        "z": "a0b7d0294edc5956",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$number(status.text)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 180,
+        "y": 140,
+        "wires": [
+            [
+                "152881af3cfe09a3"
+            ]
+        ],
+        "info": "Parse `msg.status.text` as a number in `msg.payload`."
+    },
+    {
+        "id": "4585854e9c80742e",
+        "type": "change",
+        "z": "a0b7d0294edc5956",
+        "name": "unitialized",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "unitialized",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 500,
+        "y": 60,
+        "wires": [
+            [
+                "834d9349d1ebe8de"
+            ]
+        ]
+    },
+    {
+        "id": "69ef20c042513eec",
+        "type": "change",
+        "z": "a0b7d0294edc5956",
+        "name": "closed",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "closed",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 100,
+        "wires": [
+            [
+                "834d9349d1ebe8de"
+            ]
+        ]
+    },
+    {
+        "id": "621754612c4b4783",
+        "type": "change",
+        "z": "a0b7d0294edc5956",
+        "name": "open",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "open",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 140,
+        "wires": [
+            [
+                "834d9349d1ebe8de"
+            ]
+        ]
+    },
+    {
+        "id": "28f1f48654f5d897",
+        "type": "change",
+        "z": "a0b7d0294edc5956",
+        "name": "failed",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "failed",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 180,
+        "wires": [
+            [
+                "834d9349d1ebe8de"
+            ]
+        ]
+    },
+    {
+        "id": "d93ad1b014d6eaf4",
+        "type": "change",
+        "z": "a0b7d0294edc5956",
+        "name": "invalid",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "invalid",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 490,
+        "y": 220,
+        "wires": [
+            [
+                "834d9349d1ebe8de"
+            ]
+        ]
+    },
+    {
+        "id": "b00c5123ccc7aca8",
+        "type": "change",
+        "z": "a0b7d0294edc5956",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t   \"text\":payload,\t   \"shape\":status.shape,\t   \"fill\":status.fill\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 820,
+        "y": 180,
+        "wires": [
+            []
+        ],
+        "info": "Convert the string representation of the `EventSource.readyState` back\ninto this subflow's status."
+    },
+    {
+        "id": "07d9702ee21263d3",
+        "type": "change",
+        "z": "d61db14468b910ab",
+        "g": "2c4eab1ce95057ef",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "GET",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "target",
+                "pt": "msg",
+                "to": "TARGET",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 180,
+        "y": 380,
+        "wires": [
+            [
+                "27cbc52e000f9fd1"
+            ]
+        ],
+        "info": "Prepare `msg.topic`, `msg.payload`, `msg.method` and `msg.target` to\nsend a request for all resource metadata to a Hue bridge using a\n`link call` node. The assumption is that the link will invoke an\ninstance of the _Send to Hue Bridge_ subflow configured with the same\nvalues for `ADDRESS` and `KEY`."
+    },
+    {
+        "id": "27cbc52e000f9fd1",
+        "type": "link call",
+        "z": "d61db14468b910ab",
+        "g": "2c4eab1ce95057ef",
+        "name": "${TARGET}",
+        "links": [],
+        "linkType": "dynamic",
+        "timeout": "30",
+        "x": 350,
+        "y": 380,
+        "wires": [
+            [
+                "8909e3d843ad752c"
+            ]
+        ],
+        "info": "Dynamically call the `link in` specified by `${TARGET}`."
+    },
+    {
+        "id": "8909e3d843ad752c",
+        "type": "function",
+        "z": "d61db14468b910ab",
+        "g": "2c4eab1ce95057ef",
+        "name": "merge metadata",
+        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue') || {}\nconst bridge = hue[bridgeName] || {}\nconst resources = {}\nconst merged = []\nconst events = []\nlet index = 0\n\nfunction findScenes(group) {\n\n    const scenes = []\n\n    for (let id in resources.scene) {\n\n        const scene = resources.scene[id]\n\n        if (scene.group.rid == group.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes\n\n}\n\nfunction findGroup(grouped_light) {\n\n    const groups = resources[grouped_light.owner.rtype]\n\n    for (let id in groups) {\n\n        const group = groups[id]\n\n        if (id == grouped_light.owner.rid) {\n\n            return {\n                grouped_light: grouped_light,\n                group: group,\n                scenes: findScenes(group)\n            }\n        }\n    }\n\n    node.error('no group found for grouped_light ' + grouped_light.id, msg)\n\n}\n\nif (msg.statusCode != 200) {\n\n    node.error('response status ' + msg.statusCode + ' from ' + bridgeName + ' hue bridge', msg)\n\n}\n\nfor (let resource of msg.payload.data) {\n\n    const type = resources[resource.type] || {}\n\n    type[resource.id] = resource\n    resources[resource.type] = type\n\n}\n\nbridge.resources = resources\n\nfor (let id in resources.grouped_light) {\n\n    const grouped_light = resources.grouped_light[id]\n    merged.push(findGroup(grouped_light))\n\n}\n\nbridge.merged = merged\nhue[bridgeName] = bridge\nflow.set('$parent.hue', hue)\n\nfor (let entry of merged) {\n\n    events.push({\n        topic: 'update',\n        payload: entry.grouped_light,\n        parts: {\n            id: msg._msgid,\n            type: 'array',\n            len: 1,\n            count: merged.length,\n            index: index++\n        }\n    })\n}\n\nreturn [\n    events,\n    {\n        payload: merged\n    }\n]",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 380,
+        "wires": [
+            [
+                "afd10513e80a6c06"
+            ],
+            [
+                "fcf52eacd721a4a9"
+            ]
+        ],
+        "outputLabels": [
+            "events",
+            ""
+        ],
+        "info": "Reformat the resource data received from the Hue bridge for more\nefficient access while processing server-sent events and dynamically\nmanaging dashboard controls. Store the reformatted data in flow\ncontext. \"Prime the pump\" for server-sent event handling.\n\n# Input\n\nResponse from a Hue bridge containing response to a `/resource` request.\n\n# Outputs\n\n1. A stream of `grouped_light` events in the same format that would\n   be received as server-sent events\n2. Forwards the response message, but only if an error is indicated\n\n# Details\n\nUse the value of `${BRIDGE}` as a key to store this subflow instance's\ndata in flow context as `$parent.hue.${BRIDGE}`."
+    },
+    {
+        "id": "d48dd4b5aa1368b0",
+        "type": "EventSource",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "",
+        "x": 410,
+        "y": 560,
+        "wires": [
+            [
+                "d6f78cafaf0b00d7"
+            ],
+            [],
+            [
+                "5d95dbf897fe7abd"
+            ]
+        ],
+        "info": "Subscribe to server-sent events from the\n[Hue Bridge API v2](https://developers.meethue.com/develop/hue-api-v2/).\n\nSee\n<https://developers.meethue.com/develop/hue-api-v2/core-concepts/#events>\nfor more information."
+    },
+    {
+        "id": "2d13eb8e173c7968",
+        "type": "change",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"url\":\"https://\" & $env('ADDRESS') & \"/eventstream/clip/v2\",\"initDict\":{\"withCredentials\":false,\"https\":{\"rejectUnauthorized\":false},\"headers\":{\"hue-application-key\":$env('KEY')}}}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 560,
+        "wires": [
+            [
+                "d48dd4b5aa1368b0"
+            ]
+        ],
+        "info": "Set `msg.payload` to the URL and `initDict` parameters required by the\n[Hue Bridge API V2](https://developers.meethue.com/develop/hue-api-v2/)\n\nSee\n<https://developers.meethue.com/develop/hue-api-v2/core-concepts/#events>\nfor more information."
+    },
+    {
+        "id": "d6f78cafaf0b00d7",
+        "type": "change",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.data",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 570,
+        "y": 500,
+        "wires": [
+            [
+                "22e026e913c8a836"
+            ]
+        ],
+        "info": "Set `msg.payload` to `msg.payload.data`."
+    },
+    {
+        "id": "22e026e913c8a836",
+        "type": "json",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "",
+        "property": "payload",
+        "action": "obj",
+        "pretty": false,
+        "x": 690,
+        "y": 500,
+        "wires": [
+            [
+                "1cd6fafb6c18354c"
+            ]
+        ],
+        "info": "Parse the JSON string in `msg.payload`."
+    },
+    {
+        "id": "1cd6fafb6c18354c",
+        "type": "split",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 810,
+        "y": 500,
+        "wires": [
+            [
+                "f855f79c60d5581f"
+            ]
+        ],
+        "info": "Split the array in `msg.payload` into individual messages."
+    },
+    {
+        "id": "f855f79c60d5581f",
+        "type": "change",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "topic & data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "payload.type",
+                "tot": "msg"
+            },
+            {
+                "t": "move",
+                "p": "payload.data",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 950,
+        "y": 500,
+        "wires": [
+            [
+                "dc94e795cd3258f8"
+            ]
+        ],
+        "info": "Set `msg.topic` to `msg.payload.type` and then move `msg.payload.data`\nto `msg.payload`."
+    },
+    {
+        "id": "dc94e795cd3258f8",
+        "type": "split",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 1090,
+        "y": 500,
+        "wires": [
+            [
+                "1da7ab591b98f32c"
+            ]
+        ],
+        "info": "Split the array in `msg.payload` into individual messages."
+    },
+    {
+        "id": "8cd24b2b4ab64410",
+        "type": "status",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "eventsource status",
+        "scope": [
+            "d48dd4b5aa1368b0"
+        ],
+        "x": 1090,
+        "y": 680,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1056f2ddf9c58227",
+        "type": "link in",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "subscribe",
+        "links": [
+            "fcf52eacd721a4a9"
+        ],
+        "x": 115,
+        "y": 560,
+        "wires": [
+            [
+                "2d13eb8e173c7968"
+            ]
+        ]
+    },
+    {
+        "id": "fcf52eacd721a4a9",
+        "type": "link out",
+        "z": "d61db14468b910ab",
+        "g": "2c4eab1ce95057ef",
+        "name": "ready",
+        "mode": "link",
+        "links": [
+            "1056f2ddf9c58227"
+        ],
+        "x": 635,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "fcb648906e6b792a",
+        "type": "link out",
+        "z": "d61db14468b910ab",
+        "g": "86efe0cfe1142093",
+        "name": "publish",
+        "mode": "link",
+        "links": [
+            "edb141c15ed881a4"
+        ],
+        "x": 1175,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "edb141c15ed881a4",
+        "type": "link in",
+        "z": "d61db14468b910ab",
+        "g": "061d94914ef0f0c0",
+        "name": "events",
+        "links": [
+            "fcb648906e6b792a"
+        ],
+        "x": 115,
+        "y": 200,
+        "wires": [
+            [
+                "a3bfbe7bec9a2dda"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "339ebff143d5b535",
+        "type": "function",
+        "z": "d61db14468b910ab",
+        "g": "86efe0cfe1142093",
+        "name": "update",
+        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue')\nconst bridge = hue[bridgeName] || {}\nconst resources = bridge.resources || {}\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nbridge.resources = resources\nhue[bridgeName] = bridge\nflow.set('$parent.hue', hue)\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 360,
+        "wires": [
+            [
+                "fcb648906e6b792a"
+            ]
+        ],
+        "info": "Update `msg.payload` in the resources and, for `grouped_light` events,\nmerged metadata cached in flow context."
+    },
+    {
+        "id": "1bc6cee6558ccaf4",
+        "type": "switch",
+        "z": "d61db14468b910ab",
+        "g": "86efe0cfe1142093",
+        "name": "topic",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "add",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "update",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "delete",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 3,
+        "x": 930,
+        "y": 360,
+        "wires": [
+            [
+                "d29c26656d2e74ae"
+            ],
+            [
+                "339ebff143d5b535"
+            ],
+            [
+                "36dd0d5dc31ca8b4"
+            ]
+        ]
+    },
+    {
+        "id": "36dd0d5dc31ca8b4",
+        "type": "function",
+        "z": "d61db14468b910ab",
+        "g": "86efe0cfe1142093",
+        "name": "delete",
+        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue')\nconst bridge = hue[bridgeName] || {}\nconst resources = bridge.resources || {}\nconst type = resources[msg.payload.type] || {}\n\ndelete type[msg.payload.id]\nresources[msg.payload.type] = type\nbridge.resources = resources\n\nif (msg.payload.type == 'grouped_light') {\n\n    const oldMerged = bridge.merged || []\n    const newMerged = []\n\n    for (let entry of oldMerged) {\n\n        if (msg.payload.id != entry.grouped_light.id) {\n\n            newMerged.push(entry)\n\n        }\n    }\n\n    bridge.merged = newMerged\n\n}\n\nhue[bridgeName] = bridge\nflow.set('$parent.hue', hue)\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 400,
+        "wires": [
+            [
+                "fcb648906e6b792a"
+            ]
+        ],
+        "info": "Delete `msg.payload` from the resources and, for `grouped_light` events,\nmerged metadata cached in flow context."
+    },
+    {
+        "id": "3fe9b64e4c386d21",
+        "type": "function",
+        "z": "d61db14468b910ab",
+        "g": "061d94914ef0f0c0",
+        "name": "format metadata",
+        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue')\nconst bridge = hue[bridgeName]\nconst merged = bridge.merged\nconst resources = bridge.resources\nconst model = []\n\nfor (let entry of merged) {\n\n    const grouped_light = entry.grouped_light\n    const group = entry.group\n    const scenes = entry.scenes\n    const label = (group.metadata ? group.metadata.name : 'All Lights')\n\n    model.push({\n        label: label,\n        id: grouped_light.id,\n        state: resources.grouped_light[grouped_light.id].on.on,\n        scenes: scenes.map((scene) => {\n            return {\n                id: scene.id,\n                name: scene.metadata.name\n            }\n        }).sort((a, b) => {\n\n            return a.name.localeCompare(b.name)\n\n        })\n    })\n}\n\nmsg.payload = model.sort((a, b) => {\n\n    return a.label.localeCompare(b.label)\n\n})\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 160,
+        "wires": [
+            [
+                "d9ae737367ebed62"
+            ]
+        ],
+        "info": "Extract the cached state of all `grouped_light` resources into a data\nstructure suitable for use by dynamically created dashboard controls."
+    },
+    {
+        "id": "d9ae737367ebed62",
+        "type": "template",
+        "z": "d61db14468b910ab",
+        "g": "061d94914ef0f0c0",
+        "name": "",
+        "field": "template",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "plain",
+        "template": "<div>\n    <div ng-repeat=\"model in msg.payload\" style=\"text-align:center\">\n        <div ng-if=\"$index > 0\">\n            <hr>\n        </div>\n        <md-switch style=\"margin-top:10px;margin-left:10px\" ng-value=\"model.state\" ng-model=\"model.state\"\n            ng-change=\"send({ topic: 'resource/grouped_light/' + model.id, payload: { on: { on:model.state } }, method: 'PUT' })\">\n            {{model.label}}\n        </md-switch>\n        <md-button style=\"display:inline-block;margin:1px\" ng-repeat=\"scene in model.scenes\"\n            ng-click=\"send({topic: 'resource/scene/' + scene.id, payload: {recall:{action:'dynamic_palette'}}, method: 'PUT'})\">\n            {{scene.name}}\n        </md-button>\n    </div>\n</div>",
+        "output": "str",
+        "x": 900,
+        "y": 160,
+        "wires": [
+            []
+        ],
+        "info": "Provide the HTML template for dynamically created dashboard controls.\nThis uses the Node-RED dashboard's built-in support for AngularJS.\nThe intent is that the output of this function will be sent to a\n`ui_template` node for inclusion on the dashboard."
+    },
+    {
+        "id": "eeb425059507ba39",
+        "type": "switch",
+        "z": "d61db14468b910ab",
+        "g": "061d94914ef0f0c0",
+        "name": "grouped_light",
+        "property": "payload.type",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "grouped_light",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 1,
+        "x": 440,
+        "y": 160,
+        "wires": [
+            [
+                "b698fabef55c0f4c"
+            ]
+        ],
+        "info": "Block unless this is a `grouped_light` event."
+    },
+    {
+        "id": "5e8b87d6d8f0fed7",
+        "type": "comment",
+        "z": "d61db14468b910ab",
+        "g": "ad76998e48254ce7",
+        "name": "https://developers.meethue.com/develop/hue-api-v2/",
+        "info": "<https://developers.meethue.com/develop/hue-api-v2/>",
+        "x": 290,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "afd10513e80a6c06",
+        "type": "link out",
+        "z": "d61db14468b910ab",
+        "g": "2c4eab1ce95057ef",
+        "name": "initialize",
+        "mode": "link",
+        "links": [
+            "980418c680804201"
+        ],
+        "x": 635,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "a3bfbe7bec9a2dda",
+        "type": "change",
+        "z": "d61db14468b910ab",
+        "g": "061d94914ef0f0c0",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "event",
+                "pt": "msg",
+                "to": "topic",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "'resource/grouped_light/' & payload.id",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 200,
+        "wires": [
+            [
+                "eeb425059507ba39",
+                "c9d3ee76b8c11967"
+            ]
+        ],
+        "info": "Set `msg.topic` to the URI for the partiular `grouped_light` resource."
+    },
+    {
+        "id": "b698fabef55c0f4c",
+        "type": "rbe",
+        "z": "d61db14468b910ab",
+        "g": "061d94914ef0f0c0",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 590,
+        "y": 160,
+        "wires": [
+            [
+                "3fe9b64e4c386d21"
+            ]
+        ],
+        "info": "Block for each topic, i.e. `grouped_light` resource, unless\n`msg.payload` changes."
+    },
+    {
+        "id": "980418c680804201",
+        "type": "link in",
+        "z": "d61db14468b910ab",
+        "g": "86efe0cfe1142093",
+        "name": "update",
+        "links": [
+            "1da7ab591b98f32c",
+            "afd10513e80a6c06"
+        ],
+        "x": 835,
+        "y": 360,
+        "wires": [
+            [
+                "1bc6cee6558ccaf4"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "1da7ab591b98f32c",
+        "type": "link out",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "events",
+        "mode": "link",
+        "links": [
+            "980418c680804201"
+        ],
+        "x": 1175,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "d29c26656d2e74ae",
+        "type": "function",
+        "z": "d61db14468b910ab",
+        "g": "86efe0cfe1142093",
+        "name": "add",
+        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue')\nconst bridge = hue[bridgeName] || {}\nconst resources = bridge.resources || {}\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfunction findScenes(group) {\n\n    const scenes = []\n\n    for (let id in resources.scene) {\n\n        const scene = resources.scene[id]\n\n        if (scene.group.rid == group.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes\n\n}\n\nfunction findGroup(grouped_light) {\n\n    const groups = resources[grouped_light.owner.rtype]\n\n    for (let id in groups) {\n\n        const group = groups[id]\n\n        if (id == grouped_light.owner.rid) {\n\n            return {\n                grouped_light: grouped_light,\n                group: group,\n                scenes: findScenes(group)\n            }\n        }\n    }\n\n    node.error('no group found for grouped_light ' + grouped_light.id, msg)\n\n}\n\nif (msg.payload.type == 'grouped_light') {\n\n    const merged = bridge.merged || []\n    const group = findGroup(msg.payload)\n    const entry = {\n        grouped_light: msg.payload,\n        group: group,\n        scenes: findScenes(group)\n    }\n\n    merged.push(entry)\n    bridge.merged = merged\n\n}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nbridge.resources = resources\nhue[bridgeName] = bridge\nflow.set('$parent.hue', hue)\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 320,
+        "wires": [
+            [
+                "fcb648906e6b792a"
+            ]
+        ],
+        "info": "Add `msg.payload` to the resources and, for `grouped_light` events,\nmerged metadata cached in flow context."
+    },
+    {
+        "id": "fa870f94fa1ea10b",
+        "type": "change",
+        "z": "dd3a1235085c7ed7",
+        "name": "url and headers",
+        "rules": [
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\"hue-application-key\": $env('KEY')}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "'https://' & $env('ADDRESS') & '/clip/v2/' & topic",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 180,
+        "y": 160,
+        "wires": [
+            [
+                "3709e3d94bfad967"
+            ]
+        ],
+        "info": "Set `msg.url` and `msg.headers` based on the values i `msg.topic` and\nthe environment variables named `ADDRESS` and `KEY`."
+    },
+    {
+        "id": "3709e3d94bfad967",
+        "type": "delay",
+        "z": "dd3a1235085c7ed7",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 350,
+        "y": 160,
+        "wires": [
+            [
+                "20ac42d7649c260a"
+            ]
+        ],
+        "info": "Limit the rate at which messages are sent to the Hue bridge to 1 per\nsecond."
+    },
+    {
+        "id": "20ac42d7649c260a",
+        "type": "http request",
+        "z": "dd3a1235085c7ed7",
+        "name": "",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "96738d9e92f617dc",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 510,
+        "y": 160,
+        "wires": [
+            [
+                "c029fcaa62306eb2"
+            ]
+        ],
+        "info": "Send a message to the Hue bridge using TLS but with certificate\nvalidation disabled due to defects in the Hue Bridge API."
+    },
+    {
+        "id": "c029fcaa62306eb2",
+        "type": "function",
+        "z": "dd3a1235085c7ed7",
+        "name": "validate response",
+        "func": "let fill = 'green'\n\ntry {\n\n    if ((typeof msg.statusCode) != 'number') {\n\n        fill = 'red'\n        return msg\n\n    }\n\n    if (msg.statusCode < 200) {\n\n        fill = 'red'\n        return msg\n\n    }\n\n    if (msg.statusCode >= 300) {\n\n        fill = 'red'\n        return msg\n\n    }\n\n    if (!msg.payload.data) {\n\n        fill = 'yellow'\n        return msg\n\n    }\n\n    if (!msg.payload.errors) {\n\n        fill = 'yellow'\n        return msg\n\n    }\n\n    /*\n    hue bridge api defect: meaningless warning messages\n                           are often included in errors\n                           array so there is no actual\n                           way to determine if a command\n                           was successful\n    \n    if (msg.payload.errors.length > 0) {\n    \n        fill = 'yellow'\n        return msg\n    \n    }\n    */\n\n    if (msg.statusCode != 200) {\n\n        fill = 'yellow'\n\n    }\n\n    return null\n\n} finally {\n\n    node.status({\n        text: msg.statusCode,\n        shape: 'dot',\n        fill: fill\n    })\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 200,
+        "wires": [
+            []
+        ],
+        "outputLabels": [
+            "response"
+        ],
+        "info": "Block unless the output from the `http request` node indicates an\nerror."
+    },
+    {
+        "id": "7f6c4efded50ed6b",
+        "type": "status",
+        "z": "dd3a1235085c7ed7",
+        "name": "validate response",
+        "scope": [
+            "c029fcaa62306eb2"
+        ],
+        "x": 520,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aef7dcdbe4ac6a64",
+        "type": "comment",
+        "z": "dd3a1235085c7ed7",
+        "name": "https://developers.meethue.com/develop/hue-api-v2/",
+        "info": "",
+        "x": 230,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "32e4dd9341d63405",
+        "type": "inject",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "daily",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "01 01 * * *",
+        "once": true,
+        "onceDelay": "1",
+        "topic": "",
+        "payload": "true",
+        "payloadType": "bool",
+        "x": 110,
+        "y": 640,
+        "wires": [
+            [
+                "8e8260bf6d0fb1d1"
+            ]
+        ],
+        "info": "Send the current timestamp every morning at 1AM"
+    },
+    {
+        "id": "83852d4482fadfc7",
+        "type": "function",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "sun",
+        "func": "/*global suncalc*/\n\nconst LATITUDE = env.get('LATITUDE') || node.error('${LATITUDE} is not defined', msg)\nconst LONGITUDE = env.get('LONGITUDE') || node.error('${LONGITUDE} is not defined', msg)\n\nconst date = new Date(msg.payload.time)\n\n// work around bug in suncalc\nconst times = suncalc.getTimes(\n    new Date(\n        date.getFullYear(),\n        date.getMonth(),\n        date.getDate(),\n        1,\n        1,\n        0,\n        0),\n    LATITUDE,\n    LONGITUDE)\n\nmsg.payload.sunrise = times.sunrise.getTime()\nmsg.payload.sunset = times.sunset.getTime()\n\nnode.status({\n    text: times.sunrise.toLocaleDateString(),\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "suncalc",
+                "module": "suncalc"
+            }
+        ],
+        "x": 350,
+        "y": 620,
+        "wires": [
+            [
+                "9dc6f3432564c1e2"
+            ]
+        ],
+        "inputLabels": [
+            "timestamp"
+        ],
+        "outputLabels": [
+            "sunrise"
+        ],
+        "info": "Use [suncalc](https://www.npmjs.com/package/suncalc) to determine the\ntimestamps for sunrise and sunset.\n\n# Input\n\n- `msg.payload.time` contains a timestamp\n\n# Output\n\n- `msg.payload.sunrise` is the timestamp for sunrise reported by\n  _suncalc_\n- `msg.payload.sunset` is the timestamp for sunset reported by\n  _suncalc_\n\n# Details\n\nThis function requires permission to load the _suncalc_ package and\nthat environment variables named `LATITUDE` and `LONGITUDE` specify the\ngeographical coordinates to use when calling `suncalc.getTimes()`."
+    },
+    {
+        "id": "9dc6f3432564c1e2",
+        "type": "function",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "bedtime",
+        "func": "const MILLIS_PER_SECOND = 1000\nconst MILLIS_PER_MINUTE = 60 * MILLIS_PER_SECOND\nconst MILLIS_PER_HALF_HOUR = 30 * MILLIS_PER_MINUTE\nconst MILLIS_PER_HOUR = 2 * MILLIS_PER_HALF_HOUR\n\nconst bedtime = flow.get('bedtime', 'file') || 22\nconst date = new Date(msg.payload.time)\nconst time = new Date(date.getFullYear(), date.getMonth(), date.getDate(), bedtime, 0, 0, 0).getTime()\nconst offset = MILLIS_PER_HALF_HOUR - Math.floor(Math.random() * MILLIS_PER_HOUR)\n\nmsg.payload.bedtime = time + offset\n\nnode.status({\n    text: new Date(msg.payload.bedtime).toLocaleTimeString(),\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 620,
+        "wires": [
+            [
+                "47d3d2e7f832edc0"
+            ]
+        ],
+        "inputLabels": [
+            "timestamp"
+        ],
+        "outputLabels": [
+            "bedtime"
+        ],
+        "info": "# Input\n\n`msg.payload.time` contains a timestamp\n\n# Output\n\n`msg.payload.bedtime` set to a randomly generated timestamp\n\n# Details\n\nThe timestamp in `msg.payload.bedtime` is the result of adding a\nrandomly generated offset of plus or minus 30 minutes to the hour\nspecified by the `bedtime` flow context variable on the same day as that\nspecified by `msg.payload.time`. This requires a filesystem-backed\ncontext store named `file` and assumes that the `bedtime` context\nvariable will have been set by a dashboard control. It uses a default\nvalue of 22 (10PM) if `bedtime` has not yet been set."
+    },
+    {
+        "id": "47d3d2e7f832edc0",
+        "type": "function",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "theme",
+        "func": "const date = new Date(msg.payload.time)\nconst month = date.getMonth() + 1\nconst day = date.getDate()\n\nif ((month == 7) && (day <= 4)) {\n\n    msg.payload.theme = 'tribal'\n\n} else if (month == 10) {\n\n    msg.payload.theme = 'spooky'\n\n} else if (month == 12) {\n\n    msg.payload.theme = 'jolly'\n\n\n} else {\n\n    msg.payload.theme = 'standard'\n\n}\n\nnode.status({\n    text: msg.payload.theme,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 620,
+        "wires": [
+            [
+                "c50b52aee3f36be8"
+            ]
+        ],
+        "inputLabels": [
+            "timestamp"
+        ],
+        "outputLabels": [
+            "theme"
+        ],
+        "info": "# Input\n\n`msg.payload.time` contains a timestamp\n\n# Output\n\n`msg.payload.theme` set to one of the following strings:\n\n| Payload    | Description         |\n|------------|---------------------|\n| `tribal`   | July 1 - 4          |\n| `spooky`   | Any day in October  |\n| `jolly`    | Any day in December |\n| `standard` | Any other day       |\n\n# Details\n\nThe date which determines `msg.payload.theme` is that specified by the\ntimestamp in `msg.payload.time`."
+    },
+    {
+        "id": "829d6487fc430502",
+        "type": "link in",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "send daily",
+        "links": [
+            "e52486dc4d837c03",
+            "3a210f7e37be9ff5",
+            "e15932987c8aeb5e",
+            "c5b9a97f9cc97bd1"
+        ],
+        "x": 145,
+        "y": 600,
+        "wires": [
+            [
+                "8e8260bf6d0fb1d1"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "03ac34a13709be39",
+        "type": "inject",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "every minute",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "now",
+        "payload": "",
+        "payloadType": "date",
+        "x": 700,
+        "y": 580,
+        "wires": [
+            [
+                "54c207974d22c913"
+            ]
+        ],
+        "info": "Send the current timestamp every minute."
+    },
+    {
+        "id": "c50b52aee3f36be8",
+        "type": "rbe",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 730,
+        "y": 620,
+        "wires": [
+            [
+                "54c207974d22c913",
+                "8ea23957849f9e6c"
+            ]
+        ],
+        "info": "Block for each topic unless the payload changes."
+    },
+    {
+        "id": "02d93ffb776df2c5",
+        "type": "comment",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "assumes that a filesystem-backed context store exists named 'file'",
+        "info": "",
+        "x": 270,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "ecfbd237278bdee4",
+        "type": "ui_dropdown",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "",
+        "label": "Bedtime",
+        "tooltip": "",
+        "place": "Select time",
+        "group": "d45acf67bdd65c8f",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "multiple": false,
+        "options": [
+            {
+                "label": "9PM",
+                "value": 21,
+                "type": "num"
+            },
+            {
+                "label": "10PM",
+                "value": 22,
+                "type": "num"
+            },
+            {
+                "label": "11PM",
+                "value": 23,
+                "type": "num"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 520,
+        "y": 220,
+        "wires": [
+            [
+                "d91da8bbf302b6c9"
+            ]
+        ],
+        "info": "Dashboard dropdown allowing users to select a value to\nuse when calculating each day's bedtime."
+    },
+    {
+        "id": "48fca1b6724de951",
+        "type": "inject",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "at start",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [
+                "efb74a364c880c27",
+                "1f1835bd1f7a046b",
+                "028e5ae634a130e8",
+                "6c8f562f25df6bd3"
+            ]
+        ],
+        "info": "Send the current timestamp when the flow starts."
+    },
+    {
+        "id": "efb74a364c880c27",
+        "type": "function",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "get flow.bedtime",
+        "func": "msg.topic = 'bedtime'\nmsg.payload = flow.get('bedtime', 'file') || 22\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 200,
+        "wires": [
+            [
+                "ecfbd237278bdee4"
+            ]
+        ],
+        "info": "Set `msg.payload` to the value of `flow.bedtime` using the context\nstore named `file` or to the number 22 (denoting 10PM) if\n`flow.bedtime` is undefined."
+    },
+    {
+        "id": "8802b0ac9b530f7c",
+        "type": "link in",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "update bedtime dashboard",
+        "links": [
+            "3a210f7e37be9ff5",
+            "5102d6facd1ff9a2"
+        ],
+        "x": 425,
+        "y": 240,
+        "wires": [
+            [
+                "ecfbd237278bdee4"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "d91da8bbf302b6c9",
+        "type": "change",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "#:(file)::bedtime",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 220,
+        "wires": [
+            [
+                "3a210f7e37be9ff5"
+            ]
+        ],
+        "info": "Set `flow.bedtime` to `msg.payload` using the context store named\n`file`."
+    },
+    {
+        "id": "3a210f7e37be9ff5",
+        "type": "link out",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "bedtime dashboard",
+        "mode": "link",
+        "links": [
+            "829d6487fc430502",
+            "8802b0ac9b530f7c"
+        ],
+        "x": 795,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "8e8260bf6d0fb1d1",
+        "type": "change",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "millis",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"time\":$millis()}",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "daily",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 230,
+        "y": 620,
+        "wires": [
+            [
+                "83852d4482fadfc7"
+            ]
+        ],
+        "info": "Set `msg.topic` to `daily`.\n\nSet `msg.payload` to `{\"time\":timestamp}` where _timestamp_ is the\ncurrent time as reported by the `$millis()` JSONata function."
+    },
+    {
+        "id": "1f1835bd1f7a046b",
+        "type": "ui_button",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "",
+        "group": "d45acf67bdd65c8f",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "Refresh",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "",
+        "payloadType": "date",
+        "topic": "refresh",
+        "topicType": "str",
+        "x": 340,
+        "y": 100,
+        "wires": [
+            [
+                "d3e8ba34d44f67aa"
+            ]
+        ],
+        "info": "Trigger the dynamic creation of dashboard controls by querying the\nHue and PowerView API's at start up and each time the _Refresh_\nbutton is pressed."
+    },
+    {
+        "id": "d3e8ba34d44f67aa",
+        "type": "link out",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "refresh",
+        "mode": "link",
+        "links": [
+            "8d7e72df780c1561",
+            "915b3721df3bd41d",
+            "9b899812a51421bf",
+            "d857f6ba793e2430",
+            "3f8329fdc5c54932"
+        ],
+        "x": 435,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "54c207974d22c913",
+        "type": "join",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 850,
+        "y": 600,
+        "wires": [
+            [
+                "c45a75a4ea70bf3a"
+            ]
+        ],
+        "info": "Wait for the first two messages to arrive. Send a combined payload for\nboth messages and again each time a new input value arrives."
+    },
+    {
+        "id": "c45a75a4ea70bf3a",
+        "type": "function",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "time",
+        "func": "/*global suncalc*/\n\nconst LATITUDE = env.get('LATITUDE') || node.error('${LATITUDE} is not defined', msg)\nconst LONGITUDE = env.get('LONGITUDE') || node.error('${LONGITUDE} is not defined', msg)\n\nconst now = msg.payload.now\nconst daily = msg.payload.daily\nconst lighting = flow.get('lighting', 'file') || false\nconst shades = flow.get('shades', 'file') || false\nconst position = suncalc.getPosition(new Date(now), LATITUDE, LONGITUDE)\n\nmsg.topic = 'trigger'\nmsg.payload = {\n    lighting: lighting,\n    shades: shades,\n    theme: daily.theme\n}\n\nif ((now < daily.sunrise) || (now >= daily.bedtime)) {\n\n    msg.payload.time = 'night'\n\n} else if (now > daily.sunset) {\n\n    msg.payload.time = 'evening'\n\n} else if (position.azimuth > 0) {\n\n    if (position.altitude < 0.8) {\n\n        msg.payload.time = 'afternoon'\n\n    } else {\n\n        msg.payload.time = 'midday'\n\n    }\n\n} else {\n\n    if (position.altitude > 0.8) {\n\n        msg.payload.time = 'midday'\n\n    } else {\n\n        msg.payload.time = 'morning'\n\n    }\n}\n\nnode.status({\n    text: msg.payload.time,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [
+            {
+                "var": "suncalc",
+                "module": "suncalc"
+            }
+        ],
+        "x": 970,
+        "y": 600,
+        "wires": [
+            [
+                "a3864a0d07101185"
+            ]
+        ],
+        "outputLabels": [
+            "time"
+        ],
+        "info": "Use [suncalc](https://www.npmjs.com/package/suncalc) to send a message\ncontaining a string denoting the current time of day.\n\n# Input\n\n- `msg.payload.now` contains the current timestamp\n- `msg.payload.daily` contains on object with `sunrise`, `sunset`,\n  `bedtime` and `theme` properties, as described below.\n\n# Outputs\n\n- `msg.topic` is `time`\n- `msg.payload` is an object with the following properties:\n\n  | Property               | Description                                   |\n  |------------------------|-----------------------------------------------|\n  | `msg.payload.lighting` | Value of the `lighting` flow context variable |\n  | `msg.payload.shades`   | Value of the `shades` flow context variable   |\n  | `msg.payload.theme`    | Passed through from the input                 |\n  | `msg.payload.time`     | One of the `time` strings described below     |\n\n# Details\n\nThis function requires permission to load the _suncalc_ package and\nthat environment variables named `LATITUDE` and `LONGITUDE` specify the\ngeographical coordinates to use when calling `suncalc.getPosition()`.\n\nIt uses the values of `msg.payload.now`, `msg.payload.daily.sunrise`,\n`msg.payload.daily.sunset` and `msg.payload.daily.bedtime` in the\ninput to set `msg.payload.time` to one of the following values in\nin the output:\n\n| `msg.payload.time` | Description                                                                                              |\n|--------------------|----------------------------------------------------------------------------------------------------------|\n| `morning`          | Starts at sunrise; ends when the sun is coming from the east and risen above a particular alitude        |\n| `midday`           | Starts when the sun has reached a particular altitude; ends when the sun has dropped below that altitude |\n| `afternoon`        | Starts when the sun is coming from the west and is below a particular altitude                           |\n| `evening`          | Starts at sunset; ends at bedtime                                                                        |\n| `night`            | Starts at bedtime; ends at sunrise the next day                                                          |"
+    },
+    {
+        "id": "6a14f93e5d6efc13",
+        "type": "link out",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "trigger",
+        "mode": "link",
+        "links": [
+            "8083b56440c292c8",
+            "a9a05d5f14d5310e",
+            "64fa5f1cef66ef07"
+        ],
+        "x": 1175,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "8ea23957849f9e6c",
+        "type": "link out",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "daily",
+        "mode": "link",
+        "links": [
+            "dd8c04e3e7a29933"
+        ],
+        "x": 815,
+        "y": 640,
+        "wires": []
+    },
+    {
+        "id": "617c23c03011acd7",
+        "type": "link in",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "update shades dashboard",
+        "links": [
+            "aeb4f335b3eb97b3",
+            "e15932987c8aeb5e",
+            "2426a08e2a2b03ac"
+        ],
+        "x": 425,
+        "y": 340,
+        "wires": [
+            [
+                "e147ba939c07a9a6"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "e147ba939c07a9a6",
+        "type": "ui_switch",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "",
+        "label": "Enable Shades",
+        "tooltip": "",
+        "group": "d45acf67bdd65c8f",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "shades",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 540,
+        "y": 320,
+        "wires": [
+            [
+                "e49473b0bae32aa7"
+            ]
+        ],
+        "info": "Dashboard switch allowing users to enable or disable window shades\nautomation."
+    },
+    {
+        "id": "e49473b0bae32aa7",
+        "type": "change",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "#:(file)::shades",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 320,
+        "wires": [
+            [
+                "e15932987c8aeb5e"
+            ]
+        ],
+        "info": "Set `flow.shades` to `msg.payload` using the context store named\n`file`."
+    },
+    {
+        "id": "e15932987c8aeb5e",
+        "type": "link out",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "shades",
+        "mode": "link",
+        "links": [
+            "617c23c03011acd7",
+            "829d6487fc430502"
+        ],
+        "x": 835,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "028e5ae634a130e8",
+        "type": "function",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "get flow.shades",
+        "func": "msg.topic = 'shades'\nmsg.payload = flow.get('shades', 'file') || false\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 300,
+        "wires": [
+            [
+                "e147ba939c07a9a6"
+            ]
+        ],
+        "info": "Set `msg.payload` to the value of `flow.shades` using the context store\nnamed `file` or to `false` if `flow.shades` is undefined."
+    },
+    {
+        "id": "b681bcc695abf3d1",
+        "type": "link in",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "update lighting dashboard",
+        "links": [
+            "1ca93b0df7e6648c",
+            "c5b9a97f9cc97bd1",
+            "f1e8d4076621b4b4"
+        ],
+        "x": 425,
+        "y": 440,
+        "wires": [
+            [
+                "895d1c6f5d4cf269"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "895d1c6f5d4cf269",
+        "type": "ui_switch",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "",
+        "label": "Enable Lighting",
+        "tooltip": "",
+        "group": "d45acf67bdd65c8f",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "decouple": "true",
+        "topic": "lighting",
+        "topicType": "str",
+        "style": "",
+        "onvalue": "true",
+        "onvalueType": "bool",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "false",
+        "offvalueType": "bool",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 540,
+        "y": 420,
+        "wires": [
+            [
+                "bbc7973a5447198c"
+            ]
+        ],
+        "info": "Dashboard switch allowing users to enable or disable lighting\nautomation."
+    },
+    {
+        "id": "bbc7973a5447198c",
+        "type": "change",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "#:(file)::lighting",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 720,
+        "y": 420,
+        "wires": [
+            [
+                "c5b9a97f9cc97bd1"
+            ]
+        ],
+        "info": "Set `flow.lighting` to the value of `msg.payload` using the context\nstore named `file`."
+    },
+    {
+        "id": "c5b9a97f9cc97bd1",
+        "type": "link out",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "lighting",
+        "mode": "link",
+        "links": [
+            "829d6487fc430502",
+            "b681bcc695abf3d1"
+        ],
+        "x": 835,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "6c8f562f25df6bd3",
+        "type": "function",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "get flow.lighting",
+        "func": "msg.topic = 'lighting'\nmsg.payload = flow.get('lighting', 'file') || false\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 400,
+        "wires": [
+            [
+                "895d1c6f5d4cf269"
+            ]
+        ],
+        "info": "Set `msg.payload` to the value of `flow.lighting` using the context\nstore named `file` or to `false` if `flow.lighting` is undefined."
+    },
+    {
+        "id": "a3864a0d07101185",
+        "type": "rbe",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 1090,
+        "y": 600,
+        "wires": [
+            [
+                "6a14f93e5d6efc13"
+            ]
+        ]
+    },
+    {
+        "id": "6397de314a021b18",
+        "type": "comment",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "assumes that a filesystem-backed context store exists named 'file', that function nodes are permitted to load the suncalc package and that ${LATITUDE} and ${LONGITUDE} are defined",
+        "info": "",
+        "x": 640,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "a9a05d5f14d5310e",
+        "type": "link in",
+        "z": "2182cc80719b7a81",
+        "g": "49f5aae09949b530",
+        "name": "trigger shades",
+        "links": [
+            "6a14f93e5d6efc13"
+        ],
+        "x": 155,
+        "y": 120,
+        "wires": [
+            [
+                "31e39e81f78fa235"
+            ]
+        ]
+    },
+    {
+        "id": "31e39e81f78fa235",
+        "type": "switch",
+        "z": "2182cc80719b7a81",
+        "g": "49f5aae09949b530",
+        "name": "payload.shades",
+        "property": "payload.shades",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 120,
+        "wires": [
+            [
+                "37bac7a6b658ade4"
+            ]
+        ],
+        "info": "Block unless shades automation is enabled by a user."
+    },
+    {
+        "id": "37bac7a6b658ade4",
+        "type": "switch",
+        "z": "2182cc80719b7a81",
+        "g": "49f5aae09949b530",
+        "name": "payload.time",
+        "property": "payload.time",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "morning",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "midday",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "afternoon",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "night",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 450,
+        "y": 120,
+        "wires": [
+            [
+                "ec730ac674a50f58"
+            ],
+            [
+                "4517f2c78c9498d7"
+            ],
+            [
+                "3d7ec93adc3b5b60"
+            ],
+            [
+                "bbbb4e53c2082d73"
+            ]
+        ],
+        "info": "Trigger window shades automation for the specified `time`."
+    },
+    {
+        "id": "ec730ac674a50f58",
+        "type": "link out",
+        "z": "2182cc80719b7a81",
+        "g": "49f5aae09949b530",
+        "name": "activate morning shades scene",
+        "mode": "link",
+        "links": [
+            "8810232073bb1f9d"
+        ],
+        "x": 575,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "4517f2c78c9498d7",
+        "type": "link out",
+        "z": "2182cc80719b7a81",
+        "g": "49f5aae09949b530",
+        "name": "open all shades",
+        "mode": "link",
+        "links": [
+            "1e9e0b9fd7d051f1"
+        ],
+        "x": 575,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "3d7ec93adc3b5b60",
+        "type": "link out",
+        "z": "2182cc80719b7a81",
+        "g": "49f5aae09949b530",
+        "name": "activate afternoon shades scene",
+        "mode": "link",
+        "links": [
+            "ab48edf506472b79"
+        ],
+        "x": 575,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "bbbb4e53c2082d73",
+        "type": "link out",
+        "z": "2182cc80719b7a81",
+        "g": "49f5aae09949b530",
+        "name": "close all shades",
+        "mode": "link",
+        "links": [
+            "1e6c0ad384e7aca2"
+        ],
+        "x": 575,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "b6ce3321e4119a91",
+        "type": "change",
+        "z": "2182cc80719b7a81",
+        "g": "2d9ad017d6aeb18f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "'http://' & $env('POWERVIEW_ADDRESS') & '/api/scenes?sceneId=' & payload",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 400,
+        "wires": [
+            [
+                "26124b0246ef158d"
+            ]
+        ],
+        "info": "Set `msg.url` to the URL with query string to activate the scene\nspecified by `msg.payload` using the IP address specified by the\nenvironment variable named `POWERVIEW_ADDRESS`."
+    },
+    {
+        "id": "689bb9bf9977b2c7",
+        "type": "link in",
+        "z": "2182cc80719b7a81",
+        "g": "2d9ad017d6aeb18f",
+        "name": "activate powerview scene",
+        "links": [
+            "81d6c43098a91e64",
+            "6f2a76cdcf373136"
+        ],
+        "x": 365,
+        "y": 320,
+        "wires": [
+            [
+                "b6ce3321e4119a91"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "9a4ac3fab7c9e137",
+        "type": "change",
+        "z": "2182cc80719b7a81",
+        "g": "2d9ad017d6aeb18f",
+        "name": "Morning Shades",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "56393",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 360,
+        "wires": [
+            [
+                "b6ce3321e4119a91"
+            ]
+        ],
+        "info": "Set `msg.payload` to the scene id for _Morning Shades_."
+    },
+    {
+        "id": "8810232073bb1f9d",
+        "type": "link in",
+        "z": "2182cc80719b7a81",
+        "g": "2d9ad017d6aeb18f",
+        "name": "morning shades",
+        "links": [
+            "c95abc8baf5c70d7",
+            "ec730ac674a50f58"
+        ],
+        "x": 155,
+        "y": 360,
+        "wires": [
+            [
+                "9a4ac3fab7c9e137"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "fab23e5be84c202c",
+        "type": "change",
+        "z": "2182cc80719b7a81",
+        "g": "2d9ad017d6aeb18f",
+        "name": "Open All Shades",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "7307",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 400,
+        "wires": [
+            [
+                "b6ce3321e4119a91"
+            ]
+        ],
+        "info": "Set `msg.payload` to the scene id for _Open All Shades_."
+    },
+    {
+        "id": "1e9e0b9fd7d051f1",
+        "type": "link in",
+        "z": "2182cc80719b7a81",
+        "g": "2d9ad017d6aeb18f",
+        "name": "open all shades",
+        "links": [
+            "902becb2bd0fe563",
+            "4517f2c78c9498d7"
+        ],
+        "x": 155,
+        "y": 400,
+        "wires": [
+            [
+                "fab23e5be84c202c"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "83d0e35629e294d4",
+        "type": "change",
+        "z": "2182cc80719b7a81",
+        "g": "2d9ad017d6aeb18f",
+        "name": "Afternoon Shades",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "42686",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 440,
+        "wires": [
+            [
+                "b6ce3321e4119a91"
+            ]
+        ],
+        "info": "Set `msg.payload` to the scene id for _Afternoon Shades_."
+    },
+    {
+        "id": "ab48edf506472b79",
+        "type": "link in",
+        "z": "2182cc80719b7a81",
+        "g": "2d9ad017d6aeb18f",
+        "name": "afternoon shades",
+        "links": [
+            "d5f5092f9ed20c72",
+            "3d7ec93adc3b5b60"
+        ],
+        "x": 155,
+        "y": 440,
+        "wires": [
+            [
+                "83d0e35629e294d4"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "78d97384c0e5dc0d",
+        "type": "change",
+        "z": "2182cc80719b7a81",
+        "g": "2d9ad017d6aeb18f",
+        "name": "Close All Shades",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "15208",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 290,
+        "y": 480,
+        "wires": [
+            [
+                "b6ce3321e4119a91"
+            ]
+        ],
+        "info": "Set `msg.payload` to the scene id for _Close All Shades_."
+    },
+    {
+        "id": "1e6c0ad384e7aca2",
+        "type": "link in",
+        "z": "2182cc80719b7a81",
+        "g": "2d9ad017d6aeb18f",
+        "name": "close all shades",
+        "links": [
+            "19d70dca04f61d44",
+            "bbbb4e53c2082d73"
+        ],
+        "x": 155,
+        "y": 480,
+        "wires": [
+            [
+                "78d97384c0e5dc0d"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "26124b0246ef158d",
+        "type": "link call",
+        "z": "2182cc80719b7a81",
+        "g": "2d9ad017d6aeb18f",
+        "name": "",
+        "links": [
+            "a250d71416af8250"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 710,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e90c8c66623d3a7b",
+        "type": "comment",
+        "z": "2182cc80719b7a81",
+        "g": "2d9ad017d6aeb18f",
+        "name": "assumes ${POWERVIEW_ADDRESS} is defined",
+        "info": "",
+        "x": 320,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "8083b56440c292c8",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "trigger lighting",
+        "links": [
+            "6a14f93e5d6efc13"
+        ],
+        "x": 155,
+        "y": 180,
+        "wires": [
+            [
+                "21d5dda80821a109"
+            ]
+        ]
+    },
+    {
+        "id": "21d5dda80821a109",
+        "type": "switch",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "payload.lighting",
+        "property": "payload.lighting",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 180,
+        "wires": [
+            [
+                "aae17e5a30471de5"
+            ]
+        ],
+        "info": "Block unless lighting automation is enabled by a user."
+    },
+    {
+        "id": "aae17e5a30471de5",
+        "type": "switch",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "payload.time",
+        "property": "payload.time",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "morning",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "evening",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "night",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 3,
+        "x": 450,
+        "y": 180,
+        "wires": [
+            [
+                "961b3a3f24cec00c"
+            ],
+            [
+                "7ed122d84c5e7167"
+            ],
+            [
+                "c6c885de97bd8e99"
+            ]
+        ],
+        "info": "Trigger lighting automation for the specified `time`."
+    },
+    {
+        "id": "f590050ce69df70f",
+        "type": "switch",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "payload.theme",
+        "property": "payload.theme",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "tribal",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "spooky",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "jolly",
+                "vt": "str"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 700,
+        "y": 140,
+        "wires": [
+            [
+                "5074d2c62a31146b"
+            ],
+            [
+                "276ab966afd5e0f9"
+            ],
+            [
+                "3558695087d0fa53"
+            ],
+            [
+                "21c53d52d5277b4c"
+            ]
+        ],
+        "info": "Trigger evening lighting automation for the specified `theme`."
+    },
+    {
+        "id": "961b3a3f24cec00c",
+        "type": "link out",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "turn off all lighting",
+        "mode": "link",
+        "links": [
+            "2bb38044a932fa69",
+            "52f0cba3f9b87632",
+            "df41f3a116d28de2"
+        ],
+        "x": 635,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "c6c885de97bd8e99",
+        "type": "link out",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "activate night light scene",
+        "mode": "link",
+        "links": [
+            "012902774c9657f1",
+            "0acba8178934baa1",
+            "2bb38044a932fa69"
+        ],
+        "x": 635,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "43ec488110790f7e",
+        "type": "link out",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "activate interior evening scene",
+        "mode": "link",
+        "links": [
+            "fe5fdd858e8b907d"
+        ],
+        "x": 635,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "5074d2c62a31146b",
+        "type": "link out",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "activate exterior tribal scene",
+        "mode": "link",
+        "links": [
+            "510f4653645e17d0"
+        ],
+        "x": 835,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "276ab966afd5e0f9",
+        "type": "link out",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "activate exterior spooky scene",
+        "mode": "link",
+        "links": [
+            "feaf54e6c16337c1"
+        ],
+        "x": 835,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "3558695087d0fa53",
+        "type": "link out",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "activate exterior jolly scene",
+        "mode": "link",
+        "links": [
+            "cb0bc87b9e465a2f"
+        ],
+        "x": 835,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "21c53d52d5277b4c",
+        "type": "link out",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "activate exterior standard scene",
+        "mode": "link",
+        "links": [
+            "b11c745f6ce17117"
+        ],
+        "x": 835,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "2bb38044a932fa69",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "f8dce80b21d7f706",
+        "name": "yard off",
+        "links": [
+            "708d354d950d19eb",
+            "97109be4ca9dbd4b",
+            "a1db3da3b816bb81",
+            "40d535f9f0dc79c3",
+            "c50a9ab8c6e28b16",
+            "961b3a3f24cec00c",
+            "6a2af355c7e5c74b",
+            "c6c885de97bd8e99"
+        ],
+        "x": 735,
+        "y": 380,
+        "wires": [
+            [
+                "64a68d2a2d2e93cd"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "64a68d2a2d2e93cd",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "f8dce80b21d7f706",
+        "name": "off",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"on\":{\"on\":false}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/grouped_light/bad8480b-b404-42d1-a9e7-a4a69f400971",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 850,
+        "y": 380,
+        "wires": [
+            [
+                "cfbe73c13aeb3e35"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill turn off the lights in the _Yard_ \"room\"."
+    },
+    {
+        "id": "b11c745f6ce17117",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "f8dce80b21d7f706",
+        "name": "yard sunset",
+        "links": [
+            "1e2c3cc4b2754bfd",
+            "70e1b215df27b7fd",
+            "d8ca66b40ecd68e4",
+            "21c53d52d5277b4c"
+        ],
+        "x": 735,
+        "y": 540,
+        "wires": [
+            [
+                "7e843abc77537f92"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "7e843abc77537f92",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "f8dce80b21d7f706",
+        "name": "sunset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/scene/9b6935e2-f8ed-4f91-83a2-2bff1850da99",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"recall\":{\"action\":\"dynamic_palette\"}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 850,
+        "y": 540,
+        "wires": [
+            [
+                "cfbe73c13aeb3e35"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Yard_ \"room's\" _Sunset_ scene."
+    },
+    {
+        "id": "510f4653645e17d0",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "f8dce80b21d7f706",
+        "name": "yard tribal",
+        "links": [
+            "72b67acee9086432",
+            "f339be9fba5ba6ec",
+            "c5c529cdf8b84719",
+            "5074d2c62a31146b"
+        ],
+        "x": 735,
+        "y": 420,
+        "wires": [
+            [
+                "67013f62ca5bcb43"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "67013f62ca5bcb43",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "f8dce80b21d7f706",
+        "name": "tribal",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/scene/c4681d32-3368-43cd-9cf1-436132521068",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"recall\":{\"action\":\"dynamic_palette\"}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 850,
+        "y": 420,
+        "wires": [
+            [
+                "cfbe73c13aeb3e35"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Yard_ \"room's\" _Tribal_ scene."
+    },
+    {
+        "id": "feaf54e6c16337c1",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "f8dce80b21d7f706",
+        "name": "yard spooky",
+        "links": [
+            "dc256829240ace2c",
+            "f3c3179450c625bd",
+            "99e93917a5c68492",
+            "276ab966afd5e0f9"
+        ],
+        "x": 735,
+        "y": 460,
+        "wires": [
+            [
+                "d92030613c5ce50e"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "d92030613c5ce50e",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "f8dce80b21d7f706",
+        "name": "spooky",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/scene/70a0a8a6-b4b7-4b24-a9cf-0ecea0f359cc",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"recall\":{\"action\":\"dynamic_palette\"}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 840,
+        "y": 460,
+        "wires": [
+            [
+                "cfbe73c13aeb3e35"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Yard_ \"room's\" _Spooky_ scene."
+    },
+    {
+        "id": "cb0bc87b9e465a2f",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "f8dce80b21d7f706",
+        "name": "yard jolly",
+        "links": [
+            "4c902e29f125424f",
+            "5432e91e8ec7e0ae",
+            "e4b5f430b3d0826a",
+            "3558695087d0fa53"
+        ],
+        "x": 735,
+        "y": 500,
+        "wires": [
+            [
+                "da79b96d161e1c28"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "da79b96d161e1c28",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "f8dce80b21d7f706",
+        "name": "jolly",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/scene/12571f23-7714-4b47-8e75-a3040389b788",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"recall\":{\"action\":\"dynamic_palette\"}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 850,
+        "y": 500,
+        "wires": [
+            [
+                "cfbe73c13aeb3e35"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Yard_ \"room's\" _Jolly_ scene."
+    },
+    {
+        "id": "cfbe73c13aeb3e35",
+        "type": "link call",
+        "z": "448b73182a92925c",
+        "g": "f8dce80b21d7f706",
+        "name": "",
+        "links": [
+            "f87cd6036de631b7"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 1110,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "52f0cba3f9b87632",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "b1ee6e019c90396d",
+        "name": "main floor off",
+        "links": [
+            "708d354d950d19eb",
+            "4fdd7be8efbd6674",
+            "40d535f9f0dc79c3",
+            "961b3a3f24cec00c"
+        ],
+        "x": 155,
+        "y": 420,
+        "wires": [
+            [
+                "72acc2a8bcbc1528"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "72acc2a8bcbc1528",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "b1ee6e019c90396d",
+        "name": "off",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/grouped_light/9c1c7975-2f47-4552-bac8-c19b643cd678",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"on\":{\"on\":false}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 420,
+        "wires": [
+            [
+                "b5961ce82d77690f"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill turn off the lights in the _Main Floor_ zone."
+    },
+    {
+        "id": "0acba8178934baa1",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "b1ee6e019c90396d",
+        "name": "main floor nightlight",
+        "links": [
+            "97109be4ca9dbd4b",
+            "472a921caf51348a",
+            "c50a9ab8c6e28b16",
+            "c6c885de97bd8e99"
+        ],
+        "x": 155,
+        "y": 380,
+        "wires": [
+            [
+                "1c5888bd24d0a311"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "1c5888bd24d0a311",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "b1ee6e019c90396d",
+        "name": "night light",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/scene/48c39b9f-1599-4a5c-b7f6-bad6cad4029a",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"recall\":{\"action\":\"active\"}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 380,
+        "wires": [
+            [
+                "b5961ce82d77690f"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Main Floor_ zone's _Nightlight_ scene."
+    },
+    {
+        "id": "fe5fdd858e8b907d",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "b1ee6e019c90396d",
+        "name": "main floor sunset",
+        "links": [
+            "af32bd7d7849f47b",
+            "82d25a034e8e45d6",
+            "ce777904bf6154e9",
+            "43ec488110790f7e"
+        ],
+        "x": 155,
+        "y": 460,
+        "wires": [
+            [
+                "64afce8ff0b75f48"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "64afce8ff0b75f48",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "b1ee6e019c90396d",
+        "name": "sunset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/scene/6eff0801-01e2-4803-9840-e31c06cee079",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"recall\":{\"action\":\"dynamic_palette\"}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 460,
+        "wires": [
+            [
+                "b5961ce82d77690f"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Main Floor_ zone's _Sunset_ scene."
+    },
+    {
+        "id": "b5961ce82d77690f",
+        "type": "link call",
+        "z": "448b73182a92925c",
+        "g": "b1ee6e019c90396d",
+        "name": "",
+        "links": [
+            "f87cd6036de631b7"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 490,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "df41f3a116d28de2",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "f848d645bd1abc5b",
+        "name": "main bathroom off",
+        "links": [
+            "708d354d950d19eb",
+            "73f8e53c0f7616d7",
+            "40d535f9f0dc79c3",
+            "961b3a3f24cec00c"
+        ],
+        "x": 155,
+        "y": 600,
+        "wires": [
+            [
+                "a122f1a4fc3399e5"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "a122f1a4fc3399e5",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "f848d645bd1abc5b",
+        "name": "off",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"on\":{\"on\":false}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/grouped_light/aea74e74-d544-4d08-ad71-3b6665045256",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 270,
+        "y": 600,
+        "wires": [
+            [
+                "a3ebd5d5a2bab049"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill turn off the lights in the _Main Bathroom_."
+    },
+    {
+        "id": "012902774c9657f1",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "f848d645bd1abc5b",
+        "name": "main bathroom nightlight",
+        "links": [
+            "97109be4ca9dbd4b",
+            "9780606e5aa9bc42",
+            "0b5bbb0a5f24ef74",
+            "c50a9ab8c6e28b16",
+            "c6c885de97bd8e99"
+        ],
+        "x": 155,
+        "y": 560,
+        "wires": [
+            [
+                "90cec6147a7de28f"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "90cec6147a7de28f",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "f848d645bd1abc5b",
+        "name": "night light",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"recall\":{\"action\":\"active\"}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/scene/5d507fb6-89f6-459a-b327-0fffd0c6dc48",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 560,
+        "wires": [
+            [
+                "a3ebd5d5a2bab049"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Main Bathroom_'s _Nightlight_ scene."
+    },
+    {
+        "id": "a3ebd5d5a2bab049",
+        "type": "link call",
+        "z": "448b73182a92925c",
+        "g": "f848d645bd1abc5b",
+        "name": "",
+        "links": [
+            "f87cd6036de631b7"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 470,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "70e42b6637f4c865",
+        "type": "delay",
+        "z": "dcb190a34f9985d0",
+        "g": "eaaca1e226cc9251",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": true,
+        "outputs": 1,
+        "x": 250,
+        "y": 80,
+        "wires": [
+            [
+                "413305fe8cf8bc16"
+            ]
+        ],
+        "info": "Limit the rate at which messages are sent to the PowerView hub to 1 per\nsecond."
+    },
+    {
+        "id": "413305fe8cf8bc16",
+        "type": "http request",
+        "z": "dcb190a34f9985d0",
+        "g": "eaaca1e226cc9251",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 410,
+        "y": 80,
+        "wires": [
+            [
+                "3b9aea255e25c86d",
+                "450c11f088a3f9ee"
+            ]
+        ],
+        "info": "Send `msg.url` as a `GET` request to the PowerView hub."
+    },
+    {
+        "id": "3b9aea255e25c86d",
+        "type": "function",
+        "z": "dcb190a34f9985d0",
+        "g": "eaaca1e226cc9251",
+        "name": "check status code",
+        "func": "let fill = 'green'\n\ntry {\n\n    if ((typeof msg.statusCode) != 'number') {\n\n        fill = 'red'\n        return msg\n\n    }\n\n    if ((msg.statusCode < 200) || (msg.statusCode >= 300)) {\n\n        fill = 'red'\n        return msg\n\n    }\n\n    if (msg.statusCode != 200) {\n\n        fill = 'yellow'\n\n    }\n\n    return null\n\n} finally {\n\n    node.status({\n        text: msg.statusCode,\n        shape: 'dot',\n        fill: fill\n    })\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 590,
+        "y": 100,
+        "wires": [
+            [
+                "b528e18246309ead"
+            ]
+        ],
+        "outputLabels": [
+            "success"
+        ],
+        "info": "Block unless the response indicates an error occurred."
+    },
+    {
+        "id": "b528e18246309ead",
+        "type": "subflow:4a8af92611acc27a",
+        "z": "dcb190a34f9985d0",
+        "g": "eaaca1e226cc9251",
+        "name": "",
+        "x": 750,
+        "y": 100,
+        "wires": [],
+        "info": "Display error messages on the dashboard and in the debug pane."
+    },
+    {
+        "id": "450c11f088a3f9ee",
+        "type": "link out",
+        "z": "dcb190a34f9985d0",
+        "g": "eaaca1e226cc9251",
+        "name": "powerview response",
+        "mode": "return",
+        "links": [],
+        "x": 515,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "a250d71416af8250",
+        "type": "link in",
+        "z": "dcb190a34f9985d0",
+        "g": "eaaca1e226cc9251",
+        "name": "send to powerview",
+        "links": [],
+        "x": 135,
+        "y": 80,
+        "wires": [
+            [
+                "70e42b6637f4c865"
+            ]
+        ]
+    },
+    {
+        "id": "02eb116aa3a7efad",
+        "type": "change",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "'http://' & $env('POWERVIEW_ADDRESS') & '/api/scenes/'",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 250,
+        "y": 260,
+        "wires": [
+            [
+                "a2ce2f10f0cbc3b4"
+            ]
+        ],
+        "info": "Set `msg.url` to request the list of scenes from the PowerView hub."
+    },
+    {
+        "id": "a2ce2f10f0cbc3b4",
+        "type": "link call",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "links": [
+            "a250d71416af8250"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 430,
+        "y": 260,
+        "wires": [
+            [
+                "4597056c8e33d1d2"
+            ]
+        ]
+    },
+    {
+        "id": "4597056c8e33d1d2",
+        "type": "change",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.sceneData",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 260,
+        "wires": [
+            [
+                "a4b2cb7314b93cec"
+            ]
+        ],
+        "info": "Set `msg.payload` to `msg.payload.sceneData`."
+    },
+    {
+        "id": "a4b2cb7314b93cec",
+        "type": "split",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 770,
+        "y": 260,
+        "wires": [
+            [
+                "e89d138990a2c571"
+            ]
+        ],
+        "info": "Divide array into a sequence of individual messages."
+    },
+    {
+        "id": "e89d138990a2c571",
+        "type": "change",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"sceneName\":$base64decode(payload.name),\"sceneId\":payload.id,\"roomId\":payload.roomId}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 260,
+        "wires": [
+            [
+                "09ed6328f31946db"
+            ]
+        ],
+        "info": "Extract the salient metadata into `msg.payload`."
+    },
+    {
+        "id": "09ed6328f31946db",
+        "type": "join",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1070,
+        "y": 260,
+        "wires": [
+            [
+                "ca455aa5752d94d8"
+            ]
+        ],
+        "info": "Join split messages into an array."
+    },
+    {
+        "id": "a4115f1a663ecf84",
+        "type": "change",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "'http://' & $env('POWERVIEW_ADDRESS') & '/api/rooms/'",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 250,
+        "y": 320,
+        "wires": [
+            [
+                "b3fa2dd0b396e5ba"
+            ]
+        ],
+        "info": "Set `msg.url` to request the list of room from the PowerView hub."
+    },
+    {
+        "id": "b3fa2dd0b396e5ba",
+        "type": "link call",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "links": [
+            "a250d71416af8250"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 430,
+        "y": 320,
+        "wires": [
+            [
+                "7379bd9759e06a98"
+            ]
+        ]
+    },
+    {
+        "id": "7379bd9759e06a98",
+        "type": "change",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.roomData",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 620,
+        "y": 320,
+        "wires": [
+            [
+                "fa994326c2180556"
+            ]
+        ],
+        "info": "Set `msg.payload` to `msg.payload.roomData`."
+    },
+    {
+        "id": "fa994326c2180556",
+        "type": "split",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "",
+        "x": 770,
+        "y": 320,
+        "wires": [
+            [
+                "97d89691a9505bb9"
+            ]
+        ],
+        "info": "Divide array into a sequence of individual messages."
+    },
+    {
+        "id": "97d89691a9505bb9",
+        "type": "change",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"roomName\":$base64decode(payload.name),\"roomId\":payload.id}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 920,
+        "y": 320,
+        "wires": [
+            [
+                "23ce9cde77523965"
+            ]
+        ],
+        "info": "Extract the salient metadata into `msg.payload`."
+    },
+    {
+        "id": "23ce9cde77523965",
+        "type": "join",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "mode": "auto",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 1070,
+        "y": 320,
+        "wires": [
+            [
+                "b3b32f662f388893"
+            ]
+        ],
+        "info": "Join split messages into an array."
+    },
+    {
+        "id": "ca455aa5752d94d8",
+        "type": "change",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "scenes",
+                "tot": "str",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1210,
+        "y": 260,
+        "wires": [
+            [
+                "78a3fbe808d63c4c"
+            ]
+        ],
+        "info": "Set `msg.topic` to `scenes`."
+    },
+    {
+        "id": "78a3fbe808d63c4c",
+        "type": "link out",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "get rooms",
+        "mode": "link",
+        "links": [
+            "b6e07b7b99531b02"
+        ],
+        "x": 1315,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "8d7e72df780c1561",
+        "type": "link in",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "refresh powerview rooms",
+        "links": [
+            "2cbe03b901af4142",
+            "d3e8ba34d44f67aa"
+        ],
+        "x": 135,
+        "y": 320,
+        "wires": [
+            [
+                "a4115f1a663ecf84"
+            ]
+        ]
+    },
+    {
+        "id": "9950e52333199d8f",
+        "type": "link out",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "powerview metadata",
+        "mode": "link",
+        "links": [
+            "b6e07b7b99531b02"
+        ],
+        "x": 1315,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "b6e07b7b99531b02",
+        "type": "link in",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "powerview metadata",
+        "links": [
+            "9950e52333199d8f",
+            "78a3fbe808d63c4c"
+        ],
+        "x": 135,
+        "y": 380,
+        "wires": [
+            [
+                "75f0adce74746386"
+            ]
+        ]
+    },
+    {
+        "id": "b3b32f662f388893",
+        "type": "change",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "rooms",
+                "tot": "str",
+                "dc": true
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1210,
+        "y": 320,
+        "wires": [
+            [
+                "9950e52333199d8f"
+            ]
+        ],
+        "info": "Set `msg.topic` to `rooms`."
+    },
+    {
+        "id": "7fb1bd1acb1ca5f7",
+        "type": "function",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "for dashboard",
+        "func": "msg.dashboard = []\n\nfunction findScenes(roomId) {\n\n    const scenes = []\n\n    for (const scene of msg.payload.scenes) {\n\n        if (scene.roomId == roomId) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes.sort((a, b) => {\n        return a.sceneName.localeCompare(b.sceneName)\n    })\n}\n\nfor (const room of msg.payload.rooms) {\n\n    const scenes = findScenes(room.roomId)\n\n    if (scenes.length > 0) {\n\n        const roomScenes = []\n\n        for (const scene of scenes) {\n\n            roomScenes.push({\n                sceneName: scene.sceneName,\n                sceneId: scene.sceneId\n            })\n        }\n\n        msg.dashboard.push({\n            roomName: room.roomName,\n            roomScenes: roomScenes\n        })\n    }\n}\n\nmsg.dashboard = msg.dashboard.sort((a, b) => {\n    return a.roomName.localeCompare(b.roomName)\n})\n\ncontext.set('metadata', msg.payload)\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 380,
+        "wires": [
+            [
+                "0a9432f7e85182e1"
+            ]
+        ],
+        "info": "Format `rooms` and `scenes` metadata into a combined data structure\nsuitable for use with a `template` node to dynamically create dashboard\ncontrols."
+    },
+    {
+        "id": "0a9432f7e85182e1",
+        "type": "ui_template",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "group": "bad6261ac75df85d",
+        "name": "Shade Controls",
+        "order": 2,
+        "width": "6",
+        "height": "10",
+        "format": "<div>\n    <div ng-repeat=\"room in msg.dashboard\" style=\"text-align:center\">\n        <hr ng-if=\"$index > 0\">\n        <p style=\"font-style:italic\">{{room.roomName}}</p>\n        <md-button ng-repeat=\"scene in room.roomScenes\" ng-click=\"send({topic:scene.sceneName,payload:scene.sceneId})\">\n            {{scene.sceneName}}\n        </md-button>\n    </div>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 560,
+        "y": 380,
+        "wires": [
+            [
+                "6f2a76cdcf373136"
+            ]
+        ],
+        "info": "Display dynamically created controls on the dashboard."
+    },
+    {
+        "id": "6f2a76cdcf373136",
+        "type": "link out",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "activate powerview scene",
+        "mode": "link",
+        "links": [
+            "689bb9bf9977b2c7"
+        ],
+        "x": 675,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "9b899812a51421bf",
+        "type": "link in",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "refresh powerview scenes",
+        "links": [
+            "2cbe03b901af4142",
+            "d3e8ba34d44f67aa"
+        ],
+        "x": 135,
+        "y": 260,
+        "wires": [
+            [
+                "02eb116aa3a7efad"
+            ]
+        ]
+    },
+    {
+        "id": "75f0adce74746386",
+        "type": "join",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "2",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 230,
+        "y": 380,
+        "wires": [
+            [
+                "7fb1bd1acb1ca5f7"
+            ]
+        ],
+        "info": "Join messages containing `rooms` and `scenes` metadata."
+    },
+    {
+        "id": "ddda84706da2c026",
+        "type": "comment",
+        "z": "dcb190a34f9985d0",
+        "g": "74348749d23b9082",
+        "name": "assumes ${POWERVIEW_ADDRESS} is defined (see https://motorisation.hde.nl/hd/powerview/general-guides/API/)",
+        "info": "",
+        "x": 510,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f87cd6036de631b7",
+        "type": "link in",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "send ground floor hue command",
+        "links": [
+            "b377dfca55193e3b",
+            "5453ecd10d2275d7",
+            "5539f5e5fa8f4bb2"
+        ],
+        "x": 135,
+        "y": 240,
+        "wires": [
+            [
+                "0226968bb49f22c5"
+            ]
+        ]
+    },
+    {
+        "id": "b9049fede42c5a94",
+        "type": "comment",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "https://developers.meethue.com/develop/hue-api-v2/",
+        "info": "",
+        "x": 310,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "0226968bb49f22c5",
+        "type": "subflow:dd3a1235085c7ed7",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "Send Ground Floor Hue Command",
+        "env": [
+            {
+                "name": "ADDRESS",
+                "value": "ADDRESS",
+                "type": "env"
+            },
+            {
+                "name": "KEY",
+                "value": "KEY",
+                "type": "env"
+            }
+        ],
+        "x": 320,
+        "y": 240,
+        "wires": [
+            [
+                "acac97da53ff2812"
+            ],
+            [
+                "4ebca8a3aa5763e5"
+            ]
+        ],
+        "info": "Send rate-limited messages to the _Ground Floor_ Hue bridge."
+    },
+    {
+        "id": "4ebca8a3aa5763e5",
+        "type": "subflow:4a8af92611acc27a",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "",
+        "x": 530,
+        "y": 260,
+        "wires": [],
+        "info": "Display error messages on the dashboard and in the debug pane."
+    },
+    {
+        "id": "466fb66350e127f2",
+        "type": "comment",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "assumes ${GROUND_FLOOR_HUE_ADDRESS} and ${GROUND_FLOOR_HUE_KEY} are defined for the flow",
+        "info": "",
+        "x": 500,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "acac97da53ff2812",
+        "type": "link out",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "ground floor hue response",
+        "mode": "return",
+        "links": [],
+        "x": 495,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "460867bbae94da5a",
+        "type": "subflow:d61db14468b910ab",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "Ground Floor Hue",
+        "env": [
+            {
+                "name": "ADDRESS",
+                "value": "ADDRESS",
+                "type": "env"
+            },
+            {
+                "name": "KEY",
+                "value": "KEY",
+                "type": "env"
+            },
+            {
+                "name": "TARGET",
+                "value": "TARGET",
+                "type": "env"
+            },
+            {
+                "name": "BRIDGE",
+                "value": "BRIDGE",
+                "type": "env"
+            }
+        ],
+        "x": 270,
+        "y": 360,
+        "wires": [
+            [
+                "f4e7f3f6609ec608"
+            ],
+            [
+                "5c8a7c32ac4b3bf1"
+            ],
+            [
+                "5c8a7c32ac4b3bf1"
+            ],
+            [
+                "3572083b1ce8b5cb"
+            ]
+        ],
+        "info": "Subscribe to server-sent events from the _Ground Floor_ Hue bridge."
+    },
+    {
+        "id": "915b3721df3bd41d",
+        "type": "link in",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "refresh ground floor hue controls",
+        "links": [
+            "52e5f31145044b3d",
+            "e819d6033c29b3a7",
+            "2cbe03b901af4142",
+            "d3e8ba34d44f67aa"
+        ],
+        "x": 135,
+        "y": 360,
+        "wires": [
+            [
+                "460867bbae94da5a"
+            ]
+        ]
+    },
+    {
+        "id": "f4e7f3f6609ec608",
+        "type": "ui_template",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "group": "21f11f110d626f5a",
+        "name": "Ground Floor Hue Controls",
+        "order": 2,
+        "width": "6",
+        "height": "26",
+        "format": "",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 520,
+        "y": 320,
+        "wires": [
+            [
+                "13a8932676232537"
+            ]
+        ],
+        "info": "Display dynamically created dashboard controls for the _Ground Floor_\nHue bridge."
+    },
+    {
+        "id": "13a8932676232537",
+        "type": "link call",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "",
+        "links": [
+            "f87cd6036de631b7"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 790,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "33da30d97725e077",
+        "type": "status",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "ground floor hue status",
+        "scope": [
+            "460867bbae94da5a"
+        ],
+        "x": 220,
+        "y": 460,
+        "wires": [
+            [
+                "7ff8e33c2fe0f536"
+            ]
+        ],
+        "info": "Monitor `EventSource.readyState` for the _Ground Floor_ Hue bridge."
+    },
+    {
+        "id": "5c8a7c32ac4b3bf1",
+        "type": "change",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "ground-floor-hue-connection",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 360,
+        "wires": [
+            [
+                "615c8c80e4e28048"
+            ]
+        ],
+        "info": "Set `msg.topic` for `EventSource` life-cycle event messages sent by the\n_Ground Floor_ Hue bridge."
+    },
+    {
+        "id": "615c8c80e4e28048",
+        "type": "link out",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "ground floor hue connection",
+        "mode": "link",
+        "links": [
+            "aacdb5b99748f94f",
+            "a28627f346ed1da3"
+        ],
+        "x": 575,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "e178773d828de62d",
+        "type": "comment",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "${ADDRESS}, ${KEY}, ${BRIDGE} and ${TARGET} are set by this group",
+        "info": "",
+        "x": 380,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "7ff8e33c2fe0f536",
+        "type": "link out",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "ground floor hue status",
+        "mode": "link",
+        "links": [
+            "37ceae934f23da16"
+        ],
+        "x": 355,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "54d0bf270c658aca",
+        "type": "comment",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "https://github.com/parasaurolophus/create-hue-application-key",
+        "info": "",
+        "x": 340,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "3572083b1ce8b5cb",
+        "type": "link out",
+        "z": "d090d7f6da3c673d",
+        "g": "f773f7f5615b8215",
+        "name": "ground floor hue event",
+        "mode": "link",
+        "links": [
+            "71e6df34eadbe15a"
+        ],
+        "x": 415,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "10c74bd3ce62390f",
+        "type": "link in",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "send basement hue command",
+        "links": [],
+        "x": 135,
+        "y": 240,
+        "wires": [
+            [
+                "85c6aa31ab17c911"
+            ]
+        ]
+    },
+    {
+        "id": "85c6aa31ab17c911",
+        "type": "subflow:dd3a1235085c7ed7",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "Send Basement Hue Command",
+        "env": [
+            {
+                "name": "ADDRESS",
+                "value": "ADDRESS",
+                "type": "env"
+            },
+            {
+                "name": "KEY",
+                "value": "KEY",
+                "type": "env"
+            }
+        ],
+        "x": 310,
+        "y": 240,
+        "wires": [
+            [
+                "40f45c398a50b05e"
+            ],
+            [
+                "ef72c1743493465e"
+            ]
+        ],
+        "info": "Send rate-limited messages to the _Basement_ Hue bridge."
+    },
+    {
+        "id": "ef72c1743493465e",
+        "type": "subflow:4a8af92611acc27a",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "",
+        "x": 510,
+        "y": 260,
+        "wires": [],
+        "info": "Display error messages on the dashboard and in the debug pane."
+    },
+    {
+        "id": "214548005f7e99ab",
+        "type": "comment",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "assumes ${BASEMENT_HUE_ADDRESS} and ${BASEMENT_HUE_KEY} are defined for the flow",
+        "info": "",
+        "x": 460,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "40f45c398a50b05e",
+        "type": "link out",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "basement hue response",
+        "mode": "return",
+        "links": [],
+        "x": 475,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "3f8329fdc5c54932",
+        "type": "link in",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "refresh basement hue controls",
+        "links": [
+            "52e5f31145044b3d",
+            "e819d6033c29b3a7",
+            "2cbe03b901af4142",
+            "d3e8ba34d44f67aa"
+        ],
+        "x": 135,
+        "y": 360,
+        "wires": [
+            [
+                "3600df219088f5a6"
+            ]
+        ]
+    },
+    {
+        "id": "3600df219088f5a6",
+        "type": "subflow:d61db14468b910ab",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "Basement Hue",
+        "env": [
+            {
+                "name": "ADDRESS",
+                "value": "ADDRESS",
+                "type": "env"
+            },
+            {
+                "name": "KEY",
+                "value": "KEY",
+                "type": "env"
+            },
+            {
+                "name": "TARGET",
+                "value": "TARGET",
+                "type": "env"
+            },
+            {
+                "name": "BRIDGE",
+                "value": "BRIDGE",
+                "type": "env"
+            }
+        ],
+        "x": 260,
+        "y": 360,
+        "wires": [
+            [
+                "e53ba9a7af486095"
+            ],
+            [
+                "d7f22263a9cd899a"
+            ],
+            [
+                "d7f22263a9cd899a"
+            ],
+            [
+                "5b06452387fe80e3"
+            ]
+        ],
+        "info": "Subscribe to server-sent events from the _Basement_ Hue bridge."
+    },
+    {
+        "id": "e53ba9a7af486095",
+        "type": "ui_template",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "group": "ab9e7529ab02c320",
+        "name": "Basement Hue Controls",
+        "order": 2,
+        "width": "6",
+        "height": "16",
+        "format": "",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 490,
+        "y": 320,
+        "wires": [
+            [
+                "ab59aff7c27c6728"
+            ]
+        ],
+        "info": "Display dynamically created dashboard controls for the _Basement_\nHue bridge."
+    },
+    {
+        "id": "ab59aff7c27c6728",
+        "type": "link call",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "",
+        "links": [
+            "10c74bd3ce62390f"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 750,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "46ac9274524ad523",
+        "type": "link out",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "basement hue connection",
+        "mode": "link",
+        "links": [
+            "9a0ebc96f768ceb8"
+        ],
+        "x": 555,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "d7f22263a9cd899a",
+        "type": "change",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "basement-hue-connection",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 450,
+        "y": 360,
+        "wires": [
+            [
+                "46ac9274524ad523"
+            ]
+        ],
+        "info": "Set `msg.topic` for `EventSource` life-cycle event messages sent by the\n_Basement_ Hue bridge."
+    },
+    {
+        "id": "299a8ff9654c4b2a",
+        "type": "comment",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "${ADDRESS}, ${KEY}, ${BRIDGE} and ${TARGET} are set by this group",
+        "info": "",
+        "x": 380,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "0236f877cea9aa1b",
+        "type": "status",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "basement hue status",
+        "scope": [
+            "3600df219088f5a6"
+        ],
+        "x": 210,
+        "y": 460,
+        "wires": [
+            [
+                "2cc43613b1b953f9"
+            ]
+        ],
+        "info": "Monitor `EventSource.readyState` for the _Basement_ Hue bridge."
+    },
+    {
+        "id": "2cc43613b1b953f9",
+        "type": "link out",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "basement hue status",
+        "mode": "link",
+        "links": [
+            "9990a00c003ca563"
+        ],
+        "x": 335,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "b26df763264faaa4",
+        "type": "comment",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "https://developers.meethue.com/develop/hue-api-v2/",
+        "info": "",
+        "x": 310,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "1180af1e760ed933",
+        "type": "comment",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "https://github.com/parasaurolophus/create-hue-application-key",
+        "info": "",
+        "x": 340,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "5b06452387fe80e3",
+        "type": "link out",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "basement hue event",
+        "mode": "link",
+        "links": [],
+        "x": 395,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "dd8c04e3e7a29933",
+        "type": "link in",
+        "z": "5f4fc72ed0a33627",
+        "g": "773980010e098c1d",
+        "name": "monitor daily",
+        "links": [
+            "8ea23957849f9e6c"
+        ],
+        "x": 175,
+        "y": 380,
+        "wires": [
+            [
+                "583e7746d1fa7f88"
+            ]
+        ]
+    },
+    {
+        "id": "583e7746d1fa7f88",
+        "type": "function",
+        "z": "5f4fc72ed0a33627",
+        "g": "773980010e098c1d",
+        "name": "locale strings",
+        "func": "function toLocaleString(value) {\n\n    if (value instanceof Date) {\n\n        return value.toLocaleString()\n\n    }\n\n    if (Number.isInteger(value)) {\n\n        return new Date(value).toLocaleString()\n\n    }\n\n    if (Array.isArray(value)) {\n\n        return value.map(toLocaleString)\n\n    }\n\n    if ((typeof value) == 'object') {\n\n        const result = {}\n\n        for (let key in value) {\n\n            result[key] = toLocaleString(value[key])\n\n        }\n\n        return result\n\n    }\n\n    return value\n\n}\n\nmsg.payload = toLocaleString(msg.payload)\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 290,
+        "y": 380,
+        "wires": [
+            [
+                "e7a7dc5db8821c29"
+            ]
+        ],
+        "info": "Replace `msg.payload` by recursively walking input value, substituting\n`Date.toLocaleString()` wherever a `Date` object or an integer is\ndetected.\n\nThis only works if all integers in `msg.payload` are, in fact,\ntimestamps that should be displayed to the user as dates."
+    },
+    {
+        "id": "64fa5f1cef66ef07",
+        "type": "link in",
+        "z": "5f4fc72ed0a33627",
+        "g": "c788c5f426cb2e80",
+        "name": "automation triggered",
+        "links": [
+            "6a14f93e5d6efc13"
+        ],
+        "x": 175,
+        "y": 480,
+        "wires": [
+            [
+                "0384befea96e64d6"
+            ]
+        ]
+    },
+    {
+        "id": "0384befea96e64d6",
+        "type": "function",
+        "z": "5f4fc72ed0a33627",
+        "g": "c788c5f426cb2e80",
+        "name": "stringify",
+        "func": "msg.now = new Date().toLocaleString()\nmsg.payload = JSON.stringify(msg.payload, undefined, 1)\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 480,
+        "wires": [
+            [
+                "f3eeda3b6470e2cf"
+            ]
+        ],
+        "info": "Pretty-print `msg.payload` and add the current date and time as\n`msg.now`."
+    },
+    {
+        "id": "f3eeda3b6470e2cf",
+        "type": "ui_template",
+        "z": "5f4fc72ed0a33627",
+        "g": "c788c5f426cb2e80",
+        "group": "64285772c6ce65e8",
+        "name": "Trigger",
+        "order": 7,
+        "width": "6",
+        "height": "4",
+        "format": "<div>\n    <p style=\"font-style:italic;text-align:center\">{{msg.now}}</p>\n    <p style=\"font-weight:bold;text-align:center\">{{msg.topic}}</p>\n    <pre ng-bind-html=\"msg.payload\"></pre>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 420,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aacdb5b99748f94f",
+        "type": "link in",
+        "z": "5f4fc72ed0a33627",
+        "g": "d12cf5959a668653",
+        "name": "ground floor hue connection",
+        "links": [
+            "615c8c80e4e28048"
+        ],
+        "x": 175,
+        "y": 120,
+        "wires": [
+            [
+                "6f2b37e9e0163a69"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "6f2b37e9e0163a69",
+        "type": "function",
+        "z": "5f4fc72ed0a33627",
+        "g": "d12cf5959a668653",
+        "name": "stringify",
+        "func": "msg.now = new Date().toLocaleString()\nmsg.payload = JSON.stringify(msg.payload, undefined, 1)\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 120,
+        "wires": [
+            [
+                "d2682f043a62593b"
+            ]
+        ],
+        "info": "Pretty-print `msg.payload` and add the current date and time as\n`msg.now`."
+    },
+    {
+        "id": "d2682f043a62593b",
+        "type": "ui_template",
+        "z": "5f4fc72ed0a33627",
+        "g": "d12cf5959a668653",
+        "group": "64285772c6ce65e8",
+        "name": "Ground Floor Hue Connection",
+        "order": 2,
+        "width": "6",
+        "height": "3",
+        "format": "<div style=\"margin:1em\">\n    <p style=\"font-style:italic;text-align:center\">{{msg.now}}</p>\n    <p style=\"font-weight:bold;text-align:center\">{{msg.topic}}</p>\n    <pre>{{msg.payload}}</pre>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 490,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e741bdeb4a0992af",
+        "type": "ui_text",
+        "z": "5f4fc72ed0a33627",
+        "g": "d12cf5959a668653",
+        "group": "64285772c6ce65e8",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Ground Floor Hue Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 550,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "0696c3dfdfb89df9",
+        "type": "subflow:a0b7d0294edc5956",
+        "z": "5f4fc72ed0a33627",
+        "g": "d12cf5959a668653",
+        "name": "Ground Floor Status",
+        "x": 320,
+        "y": 60,
+        "wires": [
+            [
+                "e741bdeb4a0992af"
+            ]
+        ]
+    },
+    {
+        "id": "37ceae934f23da16",
+        "type": "link in",
+        "z": "5f4fc72ed0a33627",
+        "g": "d12cf5959a668653",
+        "name": "ground floor hue status",
+        "links": [
+            "7ff8e33c2fe0f536"
+        ],
+        "x": 175,
+        "y": 60,
+        "wires": [
+            [
+                "0696c3dfdfb89df9"
+            ]
+        ]
+    },
+    {
+        "id": "9a0ebc96f768ceb8",
+        "type": "link in",
+        "z": "5f4fc72ed0a33627",
+        "g": "8b35b76a6e9c0b6d",
+        "name": "basement hue connection",
+        "links": [
+            "46ac9274524ad523"
+        ],
+        "x": 175,
+        "y": 280,
+        "wires": [
+            [
+                "703bbe856b326d23"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "703bbe856b326d23",
+        "type": "function",
+        "z": "5f4fc72ed0a33627",
+        "g": "8b35b76a6e9c0b6d",
+        "name": "stringify",
+        "func": "msg.now = new Date().toLocaleString()\nmsg.payload = JSON.stringify(msg.payload, undefined, 1)\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 280,
+        "wires": [
+            [
+                "27a1d5e6b32b490c"
+            ]
+        ],
+        "info": "Pretty-print `msg.payload` and add the current date and time as\n`msg.now`."
+    },
+    {
+        "id": "27a1d5e6b32b490c",
+        "type": "ui_template",
+        "z": "5f4fc72ed0a33627",
+        "g": "8b35b76a6e9c0b6d",
+        "group": "64285772c6ce65e8",
+        "name": "Basement Hue Connection",
+        "order": 4,
+        "width": "6",
+        "height": "3",
+        "format": "<div style=\"margin:1em\">\n    <p style=\"font-style:italic;text-align:center\">{{msg.now}}</p>\n    <p style=\"font-weight:bold;text-align:center\">{{msg.topic}}</p>\n    <pre>{{msg.payload}}</pre>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": true,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 480,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d150b3ca21a4fa2a",
+        "type": "ui_text",
+        "z": "5f4fc72ed0a33627",
+        "g": "8b35b76a6e9c0b6d",
+        "group": "64285772c6ce65e8",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Basement Hue Status",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "className": "",
+        "x": 520,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "174b7dc47587b326",
+        "type": "subflow:a0b7d0294edc5956",
+        "z": "5f4fc72ed0a33627",
+        "g": "8b35b76a6e9c0b6d",
+        "name": "Basement Status",
+        "x": 310,
+        "y": 220,
+        "wires": [
+            [
+                "d150b3ca21a4fa2a"
+            ]
+        ]
+    },
+    {
+        "id": "9990a00c003ca563",
+        "type": "link in",
+        "z": "5f4fc72ed0a33627",
+        "g": "8b35b76a6e9c0b6d",
+        "name": "basement hue status",
+        "links": [
+            "2cc43613b1b953f9"
+        ],
+        "x": 175,
+        "y": 220,
+        "wires": [
+            [
+                "174b7dc47587b326"
+            ]
+        ]
+    },
+    {
+        "id": "aebfdc0a1c3b976e",
+        "type": "ui_template",
+        "z": "5f4fc72ed0a33627",
+        "g": "773980010e098c1d",
+        "group": "64285772c6ce65e8",
+        "name": "Daily",
+        "order": 5,
+        "width": "6",
+        "height": "4",
+        "format": "<div>\n    <p style=\"font-style:italic;text-align:center\">{{msg.now}}</p>\n    <p style=\"font-weight:bold;text-align:center\">{{msg.topic}}</p>\n    <pre ng-bind-html=\"msg.payload\"></pre>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 570,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e7a7dc5db8821c29",
+        "type": "function",
+        "z": "5f4fc72ed0a33627",
+        "g": "773980010e098c1d",
+        "name": "stringify",
+        "func": "msg.now = new Date().toLocaleString()\nmsg.payload = JSON.stringify(msg.payload, undefined, 1)\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 380,
+        "wires": [
+            [
+                "aebfdc0a1c3b976e"
+            ]
+        ],
+        "info": "Pretty-print `msg.payload` and add the current date and time as\n`msg.now`."
+    }
+]
