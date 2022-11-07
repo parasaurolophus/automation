@@ -1,0 +1,12 @@
+{
+    "name": "automation",
+    "description": "Monitor and control Philips Hue lights and Hunter-Douglas PowerView window shades using Node-RED",
+    "version": "0.0.1",
+    "dependencies": {},
+    "node-red": {
+        "settings": {
+            "flowFile": "flow.json",
+            "credentialsFile": "flow_cred.json"
+        }
+    }
+}
