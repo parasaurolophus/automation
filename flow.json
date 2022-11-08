@@ -548,7 +548,9 @@
             "afd10513e80a6c06"
         ],
         "x": 74,
-        "y": 319
+        "y": 319,
+        "w": 602,
+        "h": 122
     },
     {
         "id": "061d94914ef0f0c0",
@@ -572,7 +574,9 @@
             "c9d3ee76b8c11967"
         ],
         "x": 74,
-        "y": 119
+        "y": 119,
+        "w": 912,
+        "h": 147
     },
     {
         "id": "ad76998e48254ce7",
@@ -590,7 +594,9 @@
             "5e8b87d6d8f0fed7"
         ],
         "x": 74,
-        "y": 19
+        "y": 19,
+        "w": 432,
+        "h": 82
     },
     {
         "id": "86efe0cfe1142093",
@@ -613,7 +619,9 @@
             "d29c26656d2e74ae"
         ],
         "x": 794,
-        "y": 279
+        "y": 279,
+        "w": 422,
+        "h": 162
     },
     {
         "id": "f773f7f5615b8215",
@@ -669,7 +677,9 @@
             }
         ],
         "x": 94,
-        "y": 19
+        "y": 19,
+        "w": 852,
+        "h": 482
     },
     {
         "id": "595f21be09dd9396",
@@ -725,7 +735,9 @@
             }
         ],
         "x": 94,
-        "y": 19
+        "y": 19,
+        "w": 812,
+        "h": 482
     },
     {
         "id": "773980010e098c1d",
@@ -746,7 +758,9 @@
             "e7a7dc5db8821c29"
         ],
         "x": 134,
-        "y": 339
+        "y": 339,
+        "w": 512,
+        "h": 82
     },
     {
         "id": "c788c5f426cb2e80",
@@ -766,7 +780,9 @@
             "f3eeda3b6470e2cf"
         ],
         "x": 134,
-        "y": 439
+        "y": 439,
+        "w": 372,
+        "h": 82
     },
     {
         "id": "d12cf5959a668653",
@@ -789,7 +805,9 @@
             "37ceae934f23da16"
         ],
         "x": 134,
-        "y": 19
+        "y": 19,
+        "w": 552,
+        "h": 142
     },
     {
         "id": "8b35b76a6e9c0b6d",
@@ -812,7 +830,9 @@
             "9990a00c003ca563"
         ],
         "x": 134,
-        "y": 179
+        "y": 179,
+        "w": 512,
+        "h": 142
     },
     {
         "id": "f8dce80b21d7f706",
@@ -948,7 +968,9 @@
             "8cd24b2b4ab64410"
         ],
         "x": 74,
-        "y": 459
+        "y": 459,
+        "w": 1142,
+        "h": 262
     },
     {
         "id": "7ed122d84c5e7167",
@@ -1585,8 +1607,8 @@
         "type": "function",
         "z": "d61db14468b910ab",
         "g": "2c4eab1ce95057ef",
-        "name": "merge metadata",
-        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue') || {}\nconst bridge = hue[bridgeName] || {}\nconst resources = {}\nconst merged = []\nconst events = []\nlet index = 0\n\nfunction findScenes(group) {\n\n    const scenes = []\n\n    for (let id in resources.scene) {\n\n        const scene = resources.scene[id]\n\n        if (scene.group.rid == group.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes\n\n}\n\nfunction findGroup(grouped_light) {\n\n    const groups = resources[grouped_light.owner.rtype]\n\n    for (let id in groups) {\n\n        const group = groups[id]\n\n        if (id == grouped_light.owner.rid) {\n\n            return {\n                grouped_light: grouped_light,\n                group: group,\n                scenes: findScenes(group)\n            }\n        }\n    }\n\n    node.error('no group found for grouped_light ' + grouped_light.id, msg)\n\n}\n\nif (msg.statusCode != 200) {\n\n    node.error('response status ' + msg.statusCode + ' from ' + bridgeName + ' hue bridge', msg)\n\n}\n\nfor (let resource of msg.payload.data) {\n\n    const type = resources[resource.type] || {}\n\n    type[resource.id] = resource\n    resources[resource.type] = type\n\n}\n\nbridge.resources = resources\n\nfor (let id in resources.grouped_light) {\n\n    const grouped_light = resources.grouped_light[id]\n    merged.push(findGroup(grouped_light))\n\n}\n\nbridge.merged = merged\nhue[bridgeName] = bridge\nflow.set('$parent.hue', hue)\n\nfor (let entry of merged) {\n\n    events.push({\n        topic: 'update',\n        payload: entry.grouped_light,\n        parts: {\n            id: msg._msgid,\n            type: 'array',\n            len: 1,\n            count: merged.length,\n            index: index++\n        }\n    })\n}\n\nreturn [\n    events,\n    {\n        payload: merged\n    }\n]",
+        "name": "parse metadata",
+        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue') || {}\nconst bridge = hue[bridgeName] || {}\nconst resources = {}\nconst events = []\n\nif (msg.statusCode != 200) {\n\n    node.error('response status ' + msg.statusCode + ' from ' + bridgeName + ' hue bridge', msg)\n\n}\n\nfor (let resource of msg.payload.data) {\n\n    const type = resources[resource.type] || {}\n\n    type[resource.id] = resource\n    resources[resource.type] = type\n\n}\n\nbridge.resources = resources\nbridge.merged = []\nhue[bridgeName] = bridge\nflow.set('$parent.hue', hue)\n\nfor (let id in resources.grouped_light) {\n\n    const grouped_light = resources.grouped_light[id]\n\n    events.push({\n        topic: 'add',\n        payload: grouped_light\n    })\n}\n\nreturn [\n    events,\n    {\n        payload: true\n    }\n]",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -1606,7 +1628,7 @@
             "events",
             ""
         ],
-        "info": "Reformat the resource data received from the Hue bridge for more\nefficient access while processing server-sent events and dynamically\nmanaging dashboard controls. Store the reformatted data in flow\ncontext. \"Prime the pump\" for server-sent event handling.\n\n# Input\n\nResponse from a Hue bridge containing response to a `/resource` request.\n\n# Outputs\n\n1. A stream of `grouped_light` events in the same format that would\n   be received as server-sent events\n2. Forwards the response message, but only if an error is indicated\n\n# Details\n\nUse the value of `${BRIDGE}` as a key to store this subflow instance's\ndata in flow context as `$parent.hue.${BRIDGE}`."
+        "info": "Reformat the resource data received from the Hue bridge for more\nefficient access while processing server-sent events and dynamically\nmanaging dashboard controls. Store the reformatted data in flow\ncontext. \"Prime the pump\" for server-sent event handling.\n\n# Input\n\nResponse from a Hue bridge containing response to a `/resource` request.\n\n# Outputs\n\n1. A stream of `grouped_light` events in the same format that would\n   be received as server-sent events\n2. A message used to signal that the flow context is ready to start\n   receiving event messages sent by the Hue bridge.\n\n# Details\n\nUse the value of `${BRIDGE}` as a key to store this subflow instance's\ndata in flow context as `$parent.hue.${BRIDGE}`."
     },
     {
         "id": "d48dd4b5aa1368b0",
@@ -1949,7 +1971,7 @@
         "z": "d61db14468b910ab",
         "g": "061d94914ef0f0c0",
         "name": "format metadata",
-        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue')\nconst bridge = hue[bridgeName]\nconst merged = bridge.merged\nconst resources = bridge.resources\nconst model = []\n\nfor (let entry of merged) {\n\n    const grouped_light = entry.grouped_light\n    const group = entry.group\n    const scenes = entry.scenes\n    const label = (group.metadata ? group.metadata.name : 'All Lights')\n\n    model.push({\n        label: label,\n        id: grouped_light.id,\n        state: resources.grouped_light[grouped_light.id].on.on,\n        scenes: scenes.map((scene) => {\n            return {\n                id: scene.id,\n                name: scene.metadata.name\n            }\n        }).sort((a, b) => {\n\n            return a.name.localeCompare(b.name)\n\n        })\n    })\n}\n\nmsg.payload = model.sort((a, b) => {\n\n    return a.label.localeCompare(b.label)\n\n})\n\nreturn msg",
+        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue')\nconst bridge = hue[bridgeName]\nconst merged = bridge.merged || []\nconst resources = bridge.resources\nconst model = []\n\nfor (let entry of merged) {\n\n    const grouped_light = entry.grouped_light\n    const group = entry.group\n    const scenes = entry.scenes\n    const label = (group.metadata ? group.metadata.name : 'All Lights')\n\n    model.push({\n        label: label,\n        id: grouped_light.id,\n        state: resources.grouped_light[grouped_light.id].on.on,\n        scenes: scenes.map((scene) => {\n            return {\n                id: scene.id,\n                name: scene.metadata.name\n            }\n        }).sort((a, b) => {\n\n            return a.name.localeCompare(b.name)\n\n        })\n    })\n}\n\nmsg.payload = model.sort((a, b) => {\n\n    return a.label.localeCompare(b.label)\n\n})\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2133,7 +2155,7 @@
         "z": "d61db14468b910ab",
         "g": "86efe0cfe1142093",
         "name": "add",
-        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue')\nconst bridge = hue[bridgeName] || {}\nconst resources = bridge.resources || {}\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfunction findScenes(group) {\n\n    const scenes = []\n\n    for (let id in resources.scene) {\n\n        const scene = resources.scene[id]\n\n        if (scene.group.rid == group.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes\n\n}\n\nfunction findGroup(grouped_light) {\n\n    const groups = resources[grouped_light.owner.rtype]\n\n    for (let id in groups) {\n\n        const group = groups[id]\n\n        if (id == grouped_light.owner.rid) {\n\n            return {\n                grouped_light: grouped_light,\n                group: group,\n                scenes: findScenes(group)\n            }\n        }\n    }\n\n    node.error('no group found for grouped_light ' + grouped_light.id, msg)\n\n}\n\nif (msg.payload.type == 'grouped_light') {\n\n    const merged = bridge.merged || []\n    const group = findGroup(msg.payload)\n    const entry = {\n        grouped_light: msg.payload,\n        group: group,\n        scenes: findScenes(group)\n    }\n\n    merged.push(entry)\n    bridge.merged = merged\n\n}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nbridge.resources = resources\nhue[bridgeName] = bridge\nflow.set('$parent.hue', hue)\n\nreturn msg",
+        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue')\nconst bridge = hue[bridgeName] || {}\nconst resources = bridge.resources || {}\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfunction findScenes(group) {\n\n    const scenes = []\n\n    for (let id in resources.scene) {\n\n        const scene = resources.scene[id]\n\n        if (scene.group.rid == group.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes\n\n}\n\nfunction findGroup(grouped_light) {\n\n    const groups = resources[grouped_light.owner.rtype]\n\n    for (let id in groups) {\n\n        const group = groups[id]\n\n        if (id == grouped_light.owner.rid) {\n\n            return {\n                grouped_light: grouped_light,\n                group: group,\n                scenes: findScenes(group)\n            }\n        }\n    }\n\n    node.error('no group found for grouped_light ' + grouped_light.id, msg)\n\n}\n\nif (resource.type == 'grouped_light') {\n\n    const merged = bridge.merged\n\n    merged.push(findGroup(resource))\n    bridge.merged = merged\n\n}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nbridge.resources = resources\nhue[bridgeName] = bridge\nflow.set('$parent.hue', hue)\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
