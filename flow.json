@@ -225,11 +225,6 @@
                 "name": "TARGET",
                 "type": "str",
                 "value": ""
-            },
-            {
-                "name": "BRIDGE",
-                "type": "str",
-                "value": ""
             }
         ],
         "meta": {
@@ -1608,7 +1603,7 @@
         "z": "d61db14468b910ab",
         "g": "2c4eab1ce95057ef",
         "name": "parse metadata",
-        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue') || {}\nconst bridge = hue[bridgeName] || {}\nconst resources = {}\nconst events = []\n\nif (msg.statusCode != 200) {\n\n    node.error('response status ' + msg.statusCode + ' from ' + bridgeName + ' hue bridge', msg)\n\n}\n\nfor (let resource of msg.payload.data) {\n\n    const type = resources[resource.type] || {}\n\n    type[resource.id] = resource\n    resources[resource.type] = type\n\n}\n\nbridge.resources = resources\nbridge.merged = []\nhue[bridgeName] = bridge\nflow.set('$parent.hue', hue)\n\nfor (let id in resources.grouped_light) {\n\n    const grouped_light = resources.grouped_light[id]\n\n    events.push({\n        topic: 'add',\n        payload: grouped_light\n    })\n}\n\nreturn [\n    events,\n    {\n        payload: true\n    }\n]",
+        "func": "if (msg.statusCode != 200) {\n\n    throw 'response status ' + msg.statusCode + ' from Hue API'\n\n}\n\nconst resources = flow.get('resources') || {}\nconst events = []\n\nfor (let resource of msg.payload.data) {\n\n    const type = resources[resource.type] || {}\n\n    type[resource.id] = resource\n    resources[resource.type] = type\n\n}\n\nflow.set('resources', resources)\n\nfor (let id in resources.grouped_light) {\n\n    const grouped_light = resources.grouped_light[id]\n\n    events.push({\n        topic: 'add',\n        payload: grouped_light\n    })\n}\n\nreturn [\n    events,\n    {\n        payload: true\n    }\n]",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -1887,7 +1882,7 @@
         "z": "d61db14468b910ab",
         "g": "86efe0cfe1142093",
         "name": "update",
-        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue')\nconst bridge = hue[bridgeName] || {}\nconst resources = bridge.resources || {}\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nbridge.resources = resources\nhue[bridgeName] = bridge\nflow.set('$parent.hue', hue)\n\nreturn msg",
+        "func": "const resources = flow.get('resources')\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nflow.set('resources', resources)\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1950,7 +1945,7 @@
         "z": "d61db14468b910ab",
         "g": "86efe0cfe1142093",
         "name": "delete",
-        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue')\nconst bridge = hue[bridgeName] || {}\nconst resources = bridge.resources || {}\nconst type = resources[msg.payload.type] || {}\n\ndelete type[msg.payload.id]\nresources[msg.payload.type] = type\nbridge.resources = resources\n\nif (msg.payload.type == 'grouped_light') {\n\n    const oldMerged = bridge.merged || []\n    const newMerged = []\n\n    for (let entry of oldMerged) {\n\n        if (msg.payload.id != entry.grouped_light.id) {\n\n            newMerged.push(entry)\n\n        }\n    }\n\n    bridge.merged = newMerged\n\n}\n\nhue[bridgeName] = bridge\nflow.set('$parent.hue', hue)\nreturn msg",
+        "func": "const resources = flow.get('resources') || {}\nconst type = resources[msg.payload.type] || {}\n\ndelete type[msg.payload.id]\nresources[msg.payload.type] = type\nflow.set('resources', resources)\n\nif (msg.payload.type == 'grouped_light') {\n\n    const oldMerged = flow.get('merged') || []\n    const newMerged = []\n\n    for (let entry of oldMerged) {\n\n        if (msg.payload.id != entry.grouped_light.id) {\n\n            newMerged.push(entry)\n\n        }\n    }\n\n    flow.set('merged', newMerged)\n\n}\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -1971,7 +1966,7 @@
         "z": "d61db14468b910ab",
         "g": "061d94914ef0f0c0",
         "name": "format metadata",
-        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue')\nconst bridge = hue[bridgeName]\nconst merged = bridge.merged || []\nconst resources = bridge.resources\nconst model = []\n\nfor (let entry of merged) {\n\n    const grouped_light = entry.grouped_light\n    const group = entry.group\n    const scenes = entry.scenes\n    const label = (group.metadata ? group.metadata.name : 'All Lights')\n\n    model.push({\n        label: label,\n        id: grouped_light.id,\n        state: resources.grouped_light[grouped_light.id].on.on,\n        scenes: scenes.map((scene) => {\n            return {\n                id: scene.id,\n                name: scene.metadata.name\n            }\n        }).sort((a, b) => {\n\n            return a.name.localeCompare(b.name)\n\n        })\n    })\n}\n\nmsg.payload = model.sort((a, b) => {\n\n    return a.label.localeCompare(b.label)\n\n})\n\nreturn msg",
+        "func": "const merged = flow.get('merged') || []\nconst resources = flow.get('resources') || {}\nconst model = []\n\nfor (let entry of merged) {\n\n    const grouped_light = entry.grouped_light\n    const group = entry.group\n    const scenes = entry.scenes\n    const label = (group.metadata ? group.metadata.name : 'All Lights')\n\n    model.push({\n        label: label,\n        id: grouped_light.id,\n        state: resources.grouped_light[grouped_light.id].on.on,\n        scenes: scenes.map((scene) => {\n            return {\n                id: scene.id,\n                name: scene.metadata.name\n            }\n        }).sort((a, b) => {\n\n            return a.name.localeCompare(b.name)\n\n        })\n    })\n}\n\nmsg.payload = model.sort((a, b) => {\n\n    return a.label.localeCompare(b.label)\n\n})\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2155,7 +2150,7 @@
         "z": "d61db14468b910ab",
         "g": "86efe0cfe1142093",
         "name": "add",
-        "func": "const bridgeName = env.get('BRIDGE') || node.error('${BRIDGE} is not defined', msg)\nconst hue = flow.get('$parent.hue')\nconst bridge = hue[bridgeName] || {}\nconst resources = bridge.resources || {}\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfunction findScenes(group) {\n\n    const scenes = []\n\n    for (let id in resources.scene) {\n\n        const scene = resources.scene[id]\n\n        if (scene.group.rid == group.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes\n\n}\n\nfunction findGroup(grouped_light) {\n\n    const groups = resources[grouped_light.owner.rtype]\n\n    for (let id in groups) {\n\n        const group = groups[id]\n\n        if (id == grouped_light.owner.rid) {\n\n            return {\n                grouped_light: grouped_light,\n                group: group,\n                scenes: findScenes(group)\n            }\n        }\n    }\n\n    node.error('no group found for grouped_light ' + grouped_light.id, msg)\n\n}\n\nif (resource.type == 'grouped_light') {\n\n    const merged = bridge.merged\n\n    merged.push(findGroup(resource))\n    bridge.merged = merged\n\n}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nbridge.resources = resources\nhue[bridgeName] = bridge\nflow.set('$parent.hue', hue)\n\nreturn msg",
+        "func": "const resources = flow.get('resources') || {}\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfunction findScenes(group) {\n\n    const scenes = []\n\n    for (let id in resources.scene) {\n\n        const scene = resources.scene[id]\n\n        if (scene.group.rid == group.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes\n\n}\n\nfunction findGroup(grouped_light) {\n\n    const groups = resources[grouped_light.owner.rtype]\n\n    for (let id in groups) {\n\n        const group = groups[id]\n\n        if (id == grouped_light.owner.rid) {\n\n            return {\n                grouped_light: grouped_light,\n                group: group,\n                scenes: findScenes(group)\n            }\n        }\n    }\n\n    throw 'no group found for grouped_light ' + grouped_light.id\n\n}\n\nif (resource.type == 'grouped_light') {\n\n    const merged = flow.get('merged') || []\n\n    merged.push(findGroup(resource))\n    flow.set('merged', merged)\n\n}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nflow.set('resources',resources)\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
