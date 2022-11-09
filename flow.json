@@ -672,9 +672,7 @@
             }
         ],
         "x": 94,
-        "y": 19,
-        "w": 852,
-        "h": 482
+        "y": 19
     },
     {
         "id": "595f21be09dd9396",
@@ -730,9 +728,7 @@
             }
         ],
         "x": 94,
-        "y": 19,
-        "w": 812,
-        "h": 482
+        "y": 19
     },
     {
         "id": "773980010e098c1d",
@@ -753,9 +749,7 @@
             "e7a7dc5db8821c29"
         ],
         "x": 134,
-        "y": 339,
-        "w": 512,
-        "h": 82
+        "y": 339
     },
     {
         "id": "c788c5f426cb2e80",
@@ -775,9 +769,7 @@
             "f3eeda3b6470e2cf"
         ],
         "x": 134,
-        "y": 439,
-        "w": 372,
-        "h": 82
+        "y": 439
     },
     {
         "id": "d12cf5959a668653",
@@ -800,9 +792,7 @@
             "37ceae934f23da16"
         ],
         "x": 134,
-        "y": 19,
-        "w": 552,
-        "h": 142
+        "y": 19
     },
     {
         "id": "8b35b76a6e9c0b6d",
@@ -825,9 +815,7 @@
             "9990a00c003ca563"
         ],
         "x": 134,
-        "y": 179,
-        "w": 512,
-        "h": 142
+        "y": 179
     },
     {
         "id": "f8dce80b21d7f706",
@@ -2333,7 +2321,7 @@
         "z": "24510f25743eef8c",
         "g": "ff5e6c57350b517d",
         "name": "sun",
-        "func": "/*global suncalc*/\n\nconst LATITUDE = env.get('LATITUDE') || node.error('${LATITUDE} is not defined', msg)\nconst LONGITUDE = env.get('LONGITUDE') || node.error('${LONGITUDE} is not defined', msg)\n\nconst date = new Date(msg.payload.time)\n\n// work around bug in suncalc\nconst times = suncalc.getTimes(\n    new Date(\n        date.getFullYear(),\n        date.getMonth(),\n        date.getDate(),\n        1,\n        1,\n        0,\n        0),\n    LATITUDE,\n    LONGITUDE)\n\nmsg.payload.sunrise = times.sunrise.getTime()\nmsg.payload.sunset = times.sunset.getTime()\n\nnode.status({\n    text: times.sunrise.toLocaleDateString(),\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "func": "/*global suncalc*/\n\nconst LATITUDE = Number.parseFloat(env.get('LATITUDE'))\nconst LONGITUDE = Number.parseFloat(env.get('LONGITUDE'))\n\nconst date = new Date(msg.payload.time)\n\n// work around bug in suncalc\nconst times = suncalc.getTimes(\n    new Date(\n        date.getFullYear(),\n        date.getMonth(),\n        date.getDate(),\n        1,\n        1,\n        0,\n        0),\n    LATITUDE,\n    LONGITUDE)\n\nmsg.payload.sunrise = times.sunrise.getTime()\nmsg.payload.sunset = times.sunset.getTime()\n\nnode.status({\n    text: times.sunrise.toLocaleDateString(),\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2782,7 +2770,7 @@
         "z": "24510f25743eef8c",
         "g": "ff5e6c57350b517d",
         "name": "time",
-        "func": "/*global suncalc*/\n\nconst LATITUDE = env.get('LATITUDE') || node.error('${LATITUDE} is not defined', msg)\nconst LONGITUDE = env.get('LONGITUDE') || node.error('${LONGITUDE} is not defined', msg)\n\nconst now = msg.payload.now\nconst daily = msg.payload.daily\nconst lighting = flow.get('lighting', 'file') || false\nconst shades = flow.get('shades', 'file') || false\nconst position = suncalc.getPosition(new Date(now), LATITUDE, LONGITUDE)\n\nmsg.topic = 'trigger'\nmsg.payload = {\n    lighting: lighting,\n    shades: shades,\n    theme: daily.theme\n}\n\nif ((now < daily.sunrise) || (now >= daily.bedtime)) {\n\n    msg.payload.time = 'night'\n\n} else if (now > daily.sunset) {\n\n    msg.payload.time = 'evening'\n\n} else if (position.azimuth > 0) {\n\n    if (position.altitude < 0.8) {\n\n        msg.payload.time = 'afternoon'\n\n    } else {\n\n        msg.payload.time = 'midday'\n\n    }\n\n} else {\n\n    if (position.altitude > 0.8) {\n\n        msg.payload.time = 'midday'\n\n    } else {\n\n        msg.payload.time = 'morning'\n\n    }\n}\n\nnode.status({\n    text: msg.payload.time,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "func": "/*global suncalc*/\n\nconst LATITUDE = Number.parseFloat(env.get('LATITUDE'))\nconst LONGITUDE = Number.parseFloat(env.get('LONGITUDE'))\n\nconst now = msg.payload.now\nconst daily = msg.payload.daily\nconst lighting = flow.get('lighting', 'file') || false\nconst shades = flow.get('shades', 'file') || false\nconst position = suncalc.getPosition(new Date(now), LATITUDE, LONGITUDE)\n\nmsg.topic = 'trigger'\nmsg.payload = {\n    lighting: lighting,\n    shades: shades,\n    theme: daily.theme\n}\n\nif ((now < daily.sunrise) || (now >= daily.bedtime)) {\n\n    msg.payload.time = 'night'\n\n} else if (now > daily.sunset) {\n\n    msg.payload.time = 'evening'\n\n} else if (position.azimuth > 0) {\n\n    if (position.altitude < 0.8) {\n\n        msg.payload.time = 'afternoon'\n\n    } else {\n\n        msg.payload.time = 'midday'\n\n    }\n\n} else {\n\n    if (position.altitude > 0.8) {\n\n        msg.payload.time = 'midday'\n\n    } else {\n\n        msg.payload.time = 'morning'\n\n    }\n}\n\nnode.status({\n    text: msg.payload.time,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
