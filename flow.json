@@ -24,25 +24,9 @@
         "env": []
     },
     {
-        "id": "d090d7f6da3c673d",
-        "type": "tab",
-        "label": "Ground Floor Hue",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "86021a0ae2220c2b",
         "type": "tab",
-        "label": "Basement Hue",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
-        "id": "5f4fc72ed0a33627",
-        "type": "tab",
-        "label": "Monitoring",
+        "label": "Hue",
         "disabled": false,
         "info": "",
         "env": []
@@ -110,7 +94,7 @@
         ],
         "out": [
             {
-                "x": 760,
+                "x": 780,
                 "y": 100,
                 "wires": [
                     {
@@ -120,7 +104,13 @@
                 ]
             }
         ],
-        "env": [],
+        "env": [
+            {
+                "name": "CLASS",
+                "type": "str",
+                "value": ""
+            }
+        ],
         "meta": {
             "module": "@parasaurolophus/node-red-eventsource-readystate",
             "type": "eventsource-readystate",
@@ -133,7 +123,7 @@
         "color": "#3FADB5",
         "icon": "node-red-dashboard/ui_text.png",
         "status": {
-            "x": 940,
+            "x": 960,
             "y": 180,
             "wires": [
                 {
@@ -424,7 +414,6 @@
             "c45a75a4ea70bf3a",
             "6a14f93e5d6efc13",
             "8e8260bf6d0fb1d1",
-            "8ea23957849f9e6c",
             "a3864a0d07101185",
             "6397de314a021b18",
             "26656249d7cbd1bd",
@@ -465,23 +454,18 @@
             "8bd183126cc5beaf",
             "c015dc9dbd457ad9",
             "e69068dc88fed591",
-            "6501cfe4cd83bd6f",
-            "d4c675446d1a635a",
-            "7958c0e3336d8aba",
-            "733a9020ecfc01bc",
-            "f071e67216c3798e",
             "ece9e398ddf1a6a0",
             "fa502f5378dbe770",
             "28d0a7dae21e1fcf",
             "9fff86ab30bd6e09",
             "e913f94a740c212f",
             "91fe88dbcdcfd5fc",
-            "fc46f09965539057"
+            "59515344b6be644c",
+            "d16bfe986e4d4a68",
+            "945e6e160c72332c"
         ],
         "x": 74,
-        "y": 19,
-        "w": 1292,
-        "h": 542
+        "y": 19
     },
     {
         "id": "2da3e0020db1582c",
@@ -536,9 +520,7 @@
             "a250d71416af8250"
         ],
         "x": 94,
-        "y": 119,
-        "w": 732,
-        "h": 122
+        "y": 119
     },
     {
         "id": "74348749d23b9082",
@@ -579,9 +561,7 @@
             "ddda84706da2c026"
         ],
         "x": 94,
-        "y": 259,
-        "w": 1262,
-        "h": 262
+        "y": 259
     },
     {
         "id": "2c4eab1ce95057ef",
@@ -603,9 +583,7 @@
             "afd10513e80a6c06"
         ],
         "x": 74,
-        "y": 319,
-        "w": 602,
-        "h": 122
+        "y": 319
     },
     {
         "id": "061d94914ef0f0c0",
@@ -629,9 +607,7 @@
             "c9d3ee76b8c11967"
         ],
         "x": 74,
-        "y": 119,
-        "w": 912,
-        "h": 147
+        "y": 119
     },
     {
         "id": "ad76998e48254ce7",
@@ -649,9 +625,7 @@
             "5e8b87d6d8f0fed7"
         ],
         "x": 74,
-        "y": 19,
-        "w": 432,
-        "h": 82
+        "y": 19
     },
     {
         "id": "86efe0cfe1142093",
@@ -674,67 +648,7 @@
             "d29c26656d2e74ae"
         ],
         "x": 794,
-        "y": 279,
-        "w": 422,
-        "h": 162
-    },
-    {
-        "id": "f773f7f5615b8215",
-        "type": "group",
-        "z": "d090d7f6da3c673d",
-        "name": "ground floor hue bridge",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "f87cd6036de631b7",
-            "0226968bb49f22c5",
-            "4ebca8a3aa5763e5",
-            "466fb66350e127f2",
-            "acac97da53ff2812",
-            "460867bbae94da5a",
-            "915b3721df3bd41d",
-            "f4e7f3f6609ec608",
-            "13a8932676232537",
-            "5c8a7c32ac4b3bf1",
-            "615c8c80e4e28048",
-            "e178773d828de62d",
-            "33da30d97725e077",
-            "7ff8e33c2fe0f536",
-            "b9049fede42c5a94",
-            "54d0bf270c658aca",
-            "3572083b1ce8b5cb"
-        ],
-        "env": [
-            {
-                "name": "ADDRESS",
-                "value": "GROUND_FLOOR_HUE_ADDRESS",
-                "type": "env"
-            },
-            {
-                "name": "KEY",
-                "value": "GROUND_FLOOR_HUE_KEY",
-                "type": "env"
-            },
-            {
-                "name": "BRIDGE",
-                "value": "ground-floor",
-                "type": "str"
-            },
-            {
-                "name": "TARGET",
-                "value": "send ground floor hue command",
-                "type": "str"
-            }
-        ],
-        "x": 94,
-        "y": 19,
-        "w": 852,
-        "h": 482
+        "y": 279
     },
     {
         "id": "595f21be09dd9396",
@@ -758,14 +672,10 @@
             "3600df219088f5a6",
             "e53ba9a7af486095",
             "ab59aff7c27c6728",
-            "46ac9274524ad523",
-            "d7f22263a9cd899a",
-            "299a8ff9654c4b2a",
             "0236f877cea9aa1b",
-            "2cc43613b1b953f9",
-            "b26df763264faaa4",
-            "1180af1e760ed933",
-            "5b06452387fe80e3"
+            "299a8ff9654c4b2a",
+            "174b7dc47587b326",
+            "46486cd695774a6c"
         ],
         "env": [
             {
@@ -789,105 +699,10 @@
                 "type": "str"
             }
         ],
-        "x": 94,
-        "y": 19,
-        "w": 812,
-        "h": 482
-    },
-    {
-        "id": "773980010e098c1d",
-        "type": "group",
-        "z": "5f4fc72ed0a33627",
-        "name": "monitor automation daily events",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "dd8c04e3e7a29933",
-            "583e7746d1fa7f88",
-            "aebfdc0a1c3b976e",
-            "e7a7dc5db8821c29"
-        ],
-        "x": 134,
-        "y": 339,
-        "w": 512,
-        "h": 82
-    },
-    {
-        "id": "c788c5f426cb2e80",
-        "type": "group",
-        "z": "5f4fc72ed0a33627",
-        "name": "monitor automation trigger events",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "64fa5f1cef66ef07",
-            "0384befea96e64d6",
-            "f3eeda3b6470e2cf"
-        ],
-        "x": 134,
-        "y": 439,
-        "w": 372,
-        "h": 82
-    },
-    {
-        "id": "d12cf5959a668653",
-        "type": "group",
-        "z": "5f4fc72ed0a33627",
-        "name": "monitor ground floor hue connection status",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "aacdb5b99748f94f",
-            "6f2b37e9e0163a69",
-            "d2682f043a62593b",
-            "e741bdeb4a0992af",
-            "0696c3dfdfb89df9",
-            "37ceae934f23da16"
-        ],
-        "x": 134,
-        "y": 19,
-        "w": 552,
-        "h": 142
-    },
-    {
-        "id": "8b35b76a6e9c0b6d",
-        "type": "group",
-        "z": "5f4fc72ed0a33627",
-        "name": "monitor basement hue connection status",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "9a0ebc96f768ceb8",
-            "703bbe856b326d23",
-            "27a1d5e6b32b490c",
-            "d150b3ca21a4fa2a",
-            "174b7dc47587b326",
-            "9990a00c003ca563"
-        ],
-        "x": 134,
-        "y": 179,
-        "w": 512,
-        "h": 142
+        "x": 514,
+        "y": 379,
+        "w": 792,
+        "h": 342
     },
     {
         "id": "d6d68c481562616a",
@@ -915,9 +730,7 @@
             "8cd24b2b4ab64410"
         ],
         "x": 74,
-        "y": 459,
-        "w": 1142,
-        "h": 262
+        "y": 459
     },
     {
         "id": "2d9ad017d6aeb18f",
@@ -938,9 +751,7 @@
             "e90c8c66623d3a7b"
         ],
         "x": 94,
-        "y": 539,
-        "w": 452,
-        "h": 122
+        "y": 539
     },
     {
         "id": "da437f2ac1efc073",
@@ -958,9 +769,7 @@
             "74e55c13e48dd047"
         ],
         "x": 94,
-        "y": 19,
-        "w": 492,
-        "h": 82
+        "y": 19
     },
     {
         "id": "49f5aae09949b530",
@@ -986,9 +795,7 @@
             "cd74e5b3da0290a6"
         ],
         "x": 74,
-        "y": 579,
-        "w": 822,
-        "h": 202
+        "y": 579
     },
     {
         "id": "398a971f596a3c77",
@@ -1007,32 +814,85 @@
             "1f1835bd1f7a046b",
             "d3e8ba34d44f67aa"
         ],
-        "x": 874,
+        "x": 894,
         "y": 279,
         "w": 382,
         "h": 82
     },
     {
-        "id": "fc46f09965539057",
+        "id": "c1cff1a3486c905d",
         "type": "group",
-        "z": "448b73182a92925c",
-        "g": "60e4d1c056ed3a0c",
+        "z": "86021a0ae2220c2b",
         "name": "",
         "style": {
-            "stroke": "#ffffff",
-            "stroke-opacity": "0.1",
-            "fill": "none",
-            "label": true
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
         },
         "nodes": [
-            "59515344b6be644c",
-            "d16bfe986e4d4a68",
-            "945e6e160c72332c"
+            "b26df763264faaa4",
+            "1180af1e760ed933"
         ],
-        "x": 114,
-        "y": 439,
-        "w": 282,
-        "h": 82
+        "x": 14,
+        "y": 19,
+        "w": 492,
+        "h": 122
+    },
+    {
+        "id": "f773f7f5615b8215",
+        "type": "group",
+        "z": "86021a0ae2220c2b",
+        "name": "ground floor hue bridge",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "f87cd6036de631b7",
+            "0226968bb49f22c5",
+            "4ebca8a3aa5763e5",
+            "466fb66350e127f2",
+            "acac97da53ff2812",
+            "460867bbae94da5a",
+            "915b3721df3bd41d",
+            "f4e7f3f6609ec608",
+            "13a8932676232537",
+            "e178773d828de62d",
+            "33da30d97725e077",
+            "0696c3dfdfb89df9",
+            "6b013bba424e77d0"
+        ],
+        "env": [
+            {
+                "name": "ADDRESS",
+                "value": "GROUND_FLOOR_HUE_ADDRESS",
+                "type": "env"
+            },
+            {
+                "name": "KEY",
+                "value": "GROUND_FLOOR_HUE_KEY",
+                "type": "env"
+            },
+            {
+                "name": "BRIDGE",
+                "value": "ground-floor",
+                "type": "str"
+            },
+            {
+                "name": "TARGET",
+                "value": "send ground floor hue command",
+                "type": "str"
+            }
+        ],
+        "x": 514,
+        "y": 19,
+        "w": 832,
+        "h": 342
     },
     {
         "id": "7ed122d84c5e7167",
@@ -1052,7 +912,7 @@
         "id": "834d9349d1ebe8de",
         "type": "junction",
         "z": "a0b7d0294edc5956",
-        "x": 700,
+        "x": 720,
         "y": 140,
         "wires": [
             [
@@ -1223,17 +1083,6 @@
         "name": "Automation",
         "tab": "6e79e7537966793f",
         "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": true,
-        "className": ""
-    },
-    {
-        "id": "64285772c6ce65e8",
-        "type": "ui_group",
-        "name": "Monitor",
-        "tab": "6e79e7537966793f",
-        "order": 5,
         "disp": true,
         "width": "6",
         "collapse": true,
@@ -1477,6 +1326,13 @@
                 "pt": "msg",
                 "to": "unitialized",
                 "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "className",
+                "pt": "msg",
+                "to": "${CLASS}-white",
+                "tot": "env"
             }
         ],
         "action": "",
@@ -1484,7 +1340,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 500,
+        "x": 560,
         "y": 60,
         "wires": [
             [
@@ -1496,14 +1352,21 @@
         "id": "69ef20c042513eec",
         "type": "change",
         "z": "a0b7d0294edc5956",
-        "name": "closed",
+        "name": "connecting",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "closed",
+                "to": "connecting",
                 "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "className",
+                "pt": "msg",
+                "to": "${CLASS}-yellow",
+                "tot": "env"
             }
         ],
         "action": "",
@@ -1511,7 +1374,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 490,
+        "x": 550,
         "y": 100,
         "wires": [
             [
@@ -1523,14 +1386,21 @@
         "id": "621754612c4b4783",
         "type": "change",
         "z": "a0b7d0294edc5956",
-        "name": "open",
+        "name": "connected",
         "rules": [
             {
                 "t": "set",
                 "p": "payload",
                 "pt": "msg",
-                "to": "open",
+                "to": "connected",
                 "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "className",
+                "pt": "msg",
+                "to": "${CLASS}-green",
+                "tot": "env"
             }
         ],
         "action": "",
@@ -1538,7 +1408,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 490,
+        "x": 550,
         "y": 140,
         "wires": [
             [
@@ -1558,6 +1428,13 @@
                 "pt": "msg",
                 "to": "failed",
                 "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "className",
+                "pt": "msg",
+                "to": "${CLASS}-red",
+                "tot": "env"
             }
         ],
         "action": "",
@@ -1565,7 +1442,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 490,
+        "x": 570,
         "y": 180,
         "wires": [
             [
@@ -1581,10 +1458,10 @@
         "rules": [
             {
                 "t": "set",
-                "p": "payload",
+                "p": "className",
                 "pt": "msg",
-                "to": "invalid",
-                "tot": "str"
+                "to": "${CLASS}-grey",
+                "tot": "env"
             }
         ],
         "action": "",
@@ -1592,7 +1469,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 490,
+        "x": 570,
         "y": 220,
         "wires": [
             [
@@ -1619,7 +1496,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 820,
+        "x": 840,
         "y": 180,
         "wires": [
             []
@@ -2611,8 +2488,7 @@
         "y": 200,
         "wires": [
             [
-                "54c207974d22c913",
-                "8ea23957849f9e6c"
+                "54c207974d22c913"
             ]
         ],
         "info": "Block for each topic unless the payload changes."
@@ -2664,7 +2540,7 @@
         "topic": "topic",
         "topicType": "msg",
         "className": "",
-        "x": 350,
+        "x": 370,
         "y": 380,
         "wires": [
             [
@@ -2695,7 +2571,7 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 980,
+        "x": 1000,
         "y": 320,
         "wires": [
             [
@@ -2734,7 +2610,7 @@
             "829d6487fc430502",
             "8802b0ac9b530f7c"
         ],
-        "x": 475,
+        "x": 495,
         "y": 380,
         "wires": []
     },
@@ -2795,7 +2671,7 @@
         "payloadType": "date",
         "topic": "refresh",
         "topicType": "str",
-        "x": 1120,
+        "x": 1140,
         "y": 320,
         "wires": [
             [
@@ -2818,7 +2694,7 @@
             "d857f6ba793e2430",
             "3f8329fdc5c54932"
         ],
-        "x": 1215,
+        "x": 1235,
         "y": 320,
         "wires": []
     },
@@ -2895,20 +2771,6 @@
         ],
         "x": 1235,
         "y": 180,
-        "wires": []
-    },
-    {
-        "id": "8ea23957849f9e6c",
-        "type": "link out",
-        "z": "24510f25743eef8c",
-        "g": "ff5e6c57350b517d",
-        "name": "daily",
-        "mode": "link",
-        "links": [
-            "dd8c04e3e7a29933"
-        ],
-        "x": 875,
-        "y": 220,
         "wires": []
     },
     {
@@ -3130,7 +2992,7 @@
                 "type": "num"
             }
         ],
-        "x": 170,
+        "x": 180,
         "y": 380,
         "wires": [
             [
@@ -4039,7 +3901,7 @@
         "id": "59515344b6be644c",
         "type": "link in",
         "z": "448b73182a92925c",
-        "g": "fc46f09965539057",
+        "g": "60e4d1c056ed3a0c",
         "name": "yard off",
         "links": [],
         "x": 155,
@@ -4054,7 +3916,7 @@
         "id": "d16bfe986e4d4a68",
         "type": "change",
         "z": "448b73182a92925c",
-        "g": "fc46f09965539057",
+        "g": "60e4d1c056ed3a0c",
         "name": "yard off",
         "rules": [
             {
@@ -4097,7 +3959,7 @@
         "id": "945e6e160c72332c",
         "type": "link out",
         "z": "448b73182a92925c",
-        "g": "fc46f09965539057",
+        "g": "60e4d1c056ed3a0c",
         "name": "yard off",
         "mode": "return",
         "links": [],
@@ -4908,328 +4770,14 @@
         "wires": []
     },
     {
-        "id": "f87cd6036de631b7",
-        "type": "link in",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "send ground floor hue command",
-        "links": [
-            "b377dfca55193e3b",
-            "5453ecd10d2275d7",
-            "5539f5e5fa8f4bb2"
-        ],
-        "x": 135,
-        "y": 240,
-        "wires": [
-            [
-                "0226968bb49f22c5"
-            ]
-        ]
-    },
-    {
-        "id": "b9049fede42c5a94",
-        "type": "comment",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "https://developers.meethue.com/develop/hue-api-v2/",
-        "info": "",
-        "x": 310,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "0226968bb49f22c5",
-        "type": "subflow:dd3a1235085c7ed7",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "Send Ground Floor Hue Command",
-        "env": [
-            {
-                "name": "ADDRESS",
-                "value": "ADDRESS",
-                "type": "env"
-            },
-            {
-                "name": "KEY",
-                "value": "KEY",
-                "type": "env"
-            }
-        ],
-        "x": 320,
-        "y": 240,
-        "wires": [
-            [
-                "acac97da53ff2812"
-            ],
-            [
-                "4ebca8a3aa5763e5"
-            ]
-        ],
-        "info": "Send rate-limited messages to the _Ground Floor_ Hue bridge."
-    },
-    {
-        "id": "4ebca8a3aa5763e5",
-        "type": "subflow:4a8af92611acc27a",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "",
-        "x": 530,
-        "y": 260,
-        "wires": [],
-        "info": "Display error messages on the dashboard and in the debug pane."
-    },
-    {
-        "id": "466fb66350e127f2",
-        "type": "comment",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "assumes ${GROUND_FLOOR_HUE_ADDRESS} and ${GROUND_FLOOR_HUE_KEY} are defined for the flow",
-        "info": "",
-        "x": 500,
-        "y": 140,
-        "wires": []
-    },
-    {
-        "id": "acac97da53ff2812",
-        "type": "link out",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "ground floor hue response",
-        "mode": "return",
-        "links": [],
-        "x": 495,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "460867bbae94da5a",
-        "type": "subflow:d61db14468b910ab",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "Ground Floor Hue",
-        "env": [
-            {
-                "name": "ADDRESS",
-                "value": "ADDRESS",
-                "type": "env"
-            },
-            {
-                "name": "KEY",
-                "value": "KEY",
-                "type": "env"
-            },
-            {
-                "name": "TARGET",
-                "value": "TARGET",
-                "type": "env"
-            },
-            {
-                "name": "BRIDGE",
-                "value": "BRIDGE",
-                "type": "env"
-            }
-        ],
-        "x": 270,
-        "y": 360,
-        "wires": [
-            [
-                "f4e7f3f6609ec608"
-            ],
-            [
-                "5c8a7c32ac4b3bf1"
-            ],
-            [
-                "5c8a7c32ac4b3bf1"
-            ],
-            [
-                "3572083b1ce8b5cb"
-            ]
-        ],
-        "info": "Subscribe to server-sent events from the _Ground Floor_ Hue bridge."
-    },
-    {
-        "id": "915b3721df3bd41d",
-        "type": "link in",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "refresh ground floor hue controls",
-        "links": [
-            "52e5f31145044b3d",
-            "e819d6033c29b3a7",
-            "2cbe03b901af4142",
-            "d3e8ba34d44f67aa"
-        ],
-        "x": 135,
-        "y": 360,
-        "wires": [
-            [
-                "460867bbae94da5a"
-            ]
-        ]
-    },
-    {
-        "id": "f4e7f3f6609ec608",
-        "type": "ui_template",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "group": "21f11f110d626f5a",
-        "name": "Ground Floor Hue Controls",
-        "order": 2,
-        "width": "6",
-        "height": "26",
-        "format": "",
-        "storeOutMessages": false,
-        "fwdInMessages": false,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 520,
-        "y": 320,
-        "wires": [
-            [
-                "13a8932676232537"
-            ]
-        ],
-        "info": "Display dynamically created dashboard controls for the _Ground Floor_\nHue bridge."
-    },
-    {
-        "id": "13a8932676232537",
-        "type": "link call",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "",
-        "links": [
-            "f87cd6036de631b7"
-        ],
-        "linkType": "static",
-        "timeout": "30",
-        "x": 790,
-        "y": 320,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "33da30d97725e077",
-        "type": "status",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "ground floor hue status",
-        "scope": [
-            "460867bbae94da5a"
-        ],
-        "x": 220,
-        "y": 460,
-        "wires": [
-            [
-                "7ff8e33c2fe0f536"
-            ]
-        ],
-        "info": "Monitor `EventSource.readyState` for the _Ground Floor_ Hue bridge."
-    },
-    {
-        "id": "5c8a7c32ac4b3bf1",
-        "type": "change",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "ground-floor-hue-connection",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 470,
-        "y": 360,
-        "wires": [
-            [
-                "615c8c80e4e28048"
-            ]
-        ],
-        "info": "Set `msg.topic` for `EventSource` life-cycle event messages sent by the\n_Ground Floor_ Hue bridge."
-    },
-    {
-        "id": "615c8c80e4e28048",
-        "type": "link out",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "ground floor hue connection",
-        "mode": "link",
-        "links": [
-            "aacdb5b99748f94f",
-            "a28627f346ed1da3"
-        ],
-        "x": 575,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "e178773d828de62d",
-        "type": "comment",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "${ADDRESS}, ${KEY}, ${BRIDGE} and ${TARGET} are set by this group",
-        "info": "",
-        "x": 380,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "7ff8e33c2fe0f536",
-        "type": "link out",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "ground floor hue status",
-        "mode": "link",
-        "links": [
-            "37ceae934f23da16"
-        ],
-        "x": 355,
-        "y": 460,
-        "wires": []
-    },
-    {
-        "id": "54d0bf270c658aca",
-        "type": "comment",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "https://github.com/parasaurolophus/create-hue-application-key",
-        "info": "",
-        "x": 340,
-        "y": 180,
-        "wires": []
-    },
-    {
-        "id": "3572083b1ce8b5cb",
-        "type": "link out",
-        "z": "d090d7f6da3c673d",
-        "g": "f773f7f5615b8215",
-        "name": "ground floor hue event",
-        "mode": "link",
-        "links": [
-            "71e6df34eadbe15a"
-        ],
-        "x": 415,
-        "y": 400,
-        "wires": []
-    },
-    {
         "id": "10c74bd3ce62390f",
         "type": "link in",
         "z": "86021a0ae2220c2b",
         "g": "595f21be09dd9396",
         "name": "send basement hue command",
         "links": [],
-        "x": 135,
-        "y": 240,
+        "x": 555,
+        "y": 520,
         "wires": [
             [
                 "85c6aa31ab17c911"
@@ -5254,8 +4802,8 @@
                 "type": "env"
             }
         ],
-        "x": 310,
-        "y": 240,
+        "x": 730,
+        "y": 520,
         "wires": [
             [
                 "40f45c398a50b05e"
@@ -5272,8 +4820,8 @@
         "z": "86021a0ae2220c2b",
         "g": "595f21be09dd9396",
         "name": "",
-        "x": 510,
-        "y": 260,
+        "x": 930,
+        "y": 540,
         "wires": [],
         "info": "Display error messages on the dashboard and in the debug pane."
     },
@@ -5282,10 +4830,10 @@
         "type": "comment",
         "z": "86021a0ae2220c2b",
         "g": "595f21be09dd9396",
-        "name": "assumes ${BASEMENT_HUE_ADDRESS} and ${BASEMENT_HUE_KEY} are defined for the flow",
+        "name": "assumes ${BASEMENT_HUE_ADDRESS} and ${BASEMENT_HUE_KEY} are defined",
         "info": "",
-        "x": 460,
-        "y": 140,
+        "x": 840,
+        "y": 420,
         "wires": []
     },
     {
@@ -5296,8 +4844,8 @@
         "name": "basement hue response",
         "mode": "return",
         "links": [],
-        "x": 475,
-        "y": 220,
+        "x": 895,
+        "y": 500,
         "wires": []
     },
     {
@@ -5312,8 +4860,8 @@
             "2cbe03b901af4142",
             "d3e8ba34d44f67aa"
         ],
-        "x": 135,
-        "y": 360,
+        "x": 555,
+        "y": 600,
         "wires": [
             [
                 "3600df219088f5a6"
@@ -5348,21 +4896,15 @@
                 "type": "env"
             }
         ],
-        "x": 260,
-        "y": 360,
+        "x": 680,
+        "y": 600,
         "wires": [
             [
                 "e53ba9a7af486095"
             ],
-            [
-                "d7f22263a9cd899a"
-            ],
-            [
-                "d7f22263a9cd899a"
-            ],
-            [
-                "5b06452387fe80e3"
-            ]
+            [],
+            [],
+            []
         ],
         "info": "Subscribe to server-sent events from the _Basement_ Hue bridge."
     },
@@ -5382,8 +4924,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 490,
-        "y": 320,
+        "x": 890,
+        "y": 600,
         "wires": [
             [
                 "ab59aff7c27c6728"
@@ -5402,54 +4944,11 @@
         ],
         "linkType": "static",
         "timeout": "30",
-        "x": 750,
-        "y": 320,
+        "x": 1150,
+        "y": 600,
         "wires": [
             []
         ]
-    },
-    {
-        "id": "46ac9274524ad523",
-        "type": "link out",
-        "z": "86021a0ae2220c2b",
-        "g": "595f21be09dd9396",
-        "name": "basement hue connection",
-        "mode": "link",
-        "links": [
-            "9a0ebc96f768ceb8"
-        ],
-        "x": 555,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "d7f22263a9cd899a",
-        "type": "change",
-        "z": "86021a0ae2220c2b",
-        "g": "595f21be09dd9396",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "basement-hue-connection",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 450,
-        "y": 360,
-        "wires": [
-            [
-                "46ac9274524ad523"
-            ]
-        ],
-        "info": "Set `msg.topic` for `EventSource` life-cycle event messages sent by the\n_Basement_ Hue bridge."
     },
     {
         "id": "299a8ff9654c4b2a",
@@ -5458,8 +4957,8 @@
         "g": "595f21be09dd9396",
         "name": "${ADDRESS}, ${KEY}, ${BRIDGE} and ${TARGET} are set by this group",
         "info": "",
-        "x": 380,
-        "y": 100,
+        "x": 800,
+        "y": 460,
         "wires": []
     },
     {
@@ -5471,37 +4970,23 @@
         "scope": [
             "3600df219088f5a6"
         ],
-        "x": 210,
-        "y": 460,
+        "x": 630,
+        "y": 680,
         "wires": [
             [
-                "2cc43613b1b953f9"
+                "174b7dc47587b326"
             ]
         ],
         "info": "Monitor `EventSource.readyState` for the _Basement_ Hue bridge."
     },
     {
-        "id": "2cc43613b1b953f9",
-        "type": "link out",
-        "z": "86021a0ae2220c2b",
-        "g": "595f21be09dd9396",
-        "name": "basement hue status",
-        "mode": "link",
-        "links": [
-            "9990a00c003ca563"
-        ],
-        "x": 335,
-        "y": 460,
-        "wires": []
-    },
-    {
         "id": "b26df763264faaa4",
         "type": "comment",
         "z": "86021a0ae2220c2b",
-        "g": "595f21be09dd9396",
+        "g": "c1cff1a3486c905d",
         "name": "https://developers.meethue.com/develop/hue-api-v2/",
         "info": "",
-        "x": 310,
+        "x": 230,
         "y": 60,
         "wires": []
     },
@@ -5509,384 +4994,311 @@
         "id": "1180af1e760ed933",
         "type": "comment",
         "z": "86021a0ae2220c2b",
-        "g": "595f21be09dd9396",
+        "g": "c1cff1a3486c905d",
         "name": "https://github.com/parasaurolophus/create-hue-application-key",
         "info": "",
-        "x": 340,
-        "y": 180,
+        "x": 260,
+        "y": 100,
         "wires": []
     },
     {
-        "id": "5b06452387fe80e3",
+        "id": "f87cd6036de631b7",
+        "type": "link in",
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
+        "name": "send ground floor hue command",
+        "links": [
+            "b377dfca55193e3b",
+            "5453ecd10d2275d7",
+            "5539f5e5fa8f4bb2"
+        ],
+        "x": 555,
+        "y": 160,
+        "wires": [
+            [
+                "0226968bb49f22c5"
+            ]
+        ]
+    },
+    {
+        "id": "0226968bb49f22c5",
+        "type": "subflow:dd3a1235085c7ed7",
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
+        "name": "Send Ground Floor Hue Command",
+        "env": [
+            {
+                "name": "ADDRESS",
+                "value": "ADDRESS",
+                "type": "env"
+            },
+            {
+                "name": "KEY",
+                "value": "KEY",
+                "type": "env"
+            }
+        ],
+        "x": 740,
+        "y": 160,
+        "wires": [
+            [
+                "acac97da53ff2812"
+            ],
+            [
+                "4ebca8a3aa5763e5"
+            ]
+        ],
+        "info": "Send rate-limited messages to the _Ground Floor_ Hue bridge."
+    },
+    {
+        "id": "4ebca8a3aa5763e5",
+        "type": "subflow:4a8af92611acc27a",
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
+        "name": "",
+        "x": 950,
+        "y": 180,
+        "wires": [],
+        "info": "Display error messages on the dashboard and in the debug pane."
+    },
+    {
+        "id": "466fb66350e127f2",
+        "type": "comment",
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
+        "name": "assumes ${GROUND_FLOOR_HUE_ADDRESS} and ${GROUND_FLOOR_HUE_KEY} are defined",
+        "info": "",
+        "x": 880,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "acac97da53ff2812",
         "type": "link out",
         "z": "86021a0ae2220c2b",
-        "g": "595f21be09dd9396",
-        "name": "basement hue event",
-        "mode": "link",
+        "g": "f773f7f5615b8215",
+        "name": "ground floor hue response",
+        "mode": "return",
         "links": [],
-        "x": 395,
-        "y": 400,
+        "x": 915,
+        "y": 140,
         "wires": []
     },
     {
-        "id": "dd8c04e3e7a29933",
-        "type": "link in",
-        "z": "5f4fc72ed0a33627",
-        "g": "773980010e098c1d",
-        "name": "monitor daily",
-        "links": [
-            "8ea23957849f9e6c"
+        "id": "460867bbae94da5a",
+        "type": "subflow:d61db14468b910ab",
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
+        "name": "Ground Floor Hue",
+        "env": [
+            {
+                "name": "ADDRESS",
+                "value": "ADDRESS",
+                "type": "env"
+            },
+            {
+                "name": "KEY",
+                "value": "KEY",
+                "type": "env"
+            },
+            {
+                "name": "TARGET",
+                "value": "TARGET",
+                "type": "env"
+            },
+            {
+                "name": "BRIDGE",
+                "value": "BRIDGE",
+                "type": "env"
+            }
         ],
-        "x": 175,
-        "y": 380,
+        "x": 690,
+        "y": 240,
         "wires": [
             [
-                "583e7746d1fa7f88"
+                "f4e7f3f6609ec608"
+            ],
+            [],
+            [],
+            []
+        ],
+        "info": "Subscribe to server-sent events from the _Ground Floor_ Hue bridge."
+    },
+    {
+        "id": "915b3721df3bd41d",
+        "type": "link in",
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
+        "name": "refresh ground floor hue controls",
+        "links": [
+            "52e5f31145044b3d",
+            "e819d6033c29b3a7",
+            "2cbe03b901af4142",
+            "d3e8ba34d44f67aa"
+        ],
+        "x": 555,
+        "y": 240,
+        "wires": [
+            [
+                "460867bbae94da5a"
             ]
         ]
     },
     {
-        "id": "583e7746d1fa7f88",
-        "type": "function",
-        "z": "5f4fc72ed0a33627",
-        "g": "773980010e098c1d",
-        "name": "locale strings",
-        "func": "function toLocaleString(value) {\n\n    if (value instanceof Date) {\n\n        return value.toLocaleString()\n\n    }\n\n    if (Number.isInteger(value)) {\n\n        return new Date(value).toLocaleString()\n\n    }\n\n    if (Array.isArray(value)) {\n\n        return value.map(toLocaleString)\n\n    }\n\n    if ((typeof value) == 'object') {\n\n        const result = {}\n\n        for (let key in value) {\n\n            result[key] = toLocaleString(value[key])\n\n        }\n\n        return result\n\n    }\n\n    return value\n\n}\n\nmsg.payload = toLocaleString(msg.payload)\nreturn msg",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 290,
-        "y": 380,
-        "wires": [
-            [
-                "e7a7dc5db8821c29"
-            ]
-        ],
-        "info": "Replace `msg.payload` by recursively walking input value, substituting\n`Date.toLocaleString()` wherever a `Date` object or an integer is\ndetected.\n\nThis only works if all integers in `msg.payload` are, in fact,\ntimestamps that should be displayed to the user as dates."
-    },
-    {
-        "id": "64fa5f1cef66ef07",
-        "type": "link in",
-        "z": "5f4fc72ed0a33627",
-        "g": "c788c5f426cb2e80",
-        "name": "automation triggered",
-        "links": [
-            "6a14f93e5d6efc13"
-        ],
-        "x": 175,
-        "y": 480,
-        "wires": [
-            [
-                "0384befea96e64d6"
-            ]
-        ]
-    },
-    {
-        "id": "0384befea96e64d6",
-        "type": "function",
-        "z": "5f4fc72ed0a33627",
-        "g": "c788c5f426cb2e80",
-        "name": "stringify",
-        "func": "msg.now = new Date().toLocaleString()\nmsg.payload = JSON.stringify(msg.payload, undefined, 1)\nreturn msg",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 280,
-        "y": 480,
-        "wires": [
-            [
-                "f3eeda3b6470e2cf"
-            ]
-        ],
-        "info": "Pretty-print `msg.payload` and add the current date and time as\n`msg.now`."
-    },
-    {
-        "id": "f3eeda3b6470e2cf",
+        "id": "f4e7f3f6609ec608",
         "type": "ui_template",
-        "z": "5f4fc72ed0a33627",
-        "g": "c788c5f426cb2e80",
-        "group": "64285772c6ce65e8",
-        "name": "Trigger",
-        "order": 7,
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
+        "group": "21f11f110d626f5a",
+        "name": "Ground Floor Hue Controls",
+        "order": 2,
         "width": "6",
-        "height": "4",
-        "format": "<div>\n    <p style=\"font-style:italic;text-align:center\">{{msg.now}}</p>\n    <p style=\"font-weight:bold;text-align:center\">{{msg.topic}}</p>\n    <pre ng-bind-html=\"msg.payload\"></pre>\n</div>",
+        "height": "26",
+        "format": "",
         "storeOutMessages": false,
         "fwdInMessages": false,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 420,
-        "y": 480,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "aacdb5b99748f94f",
-        "type": "link in",
-        "z": "5f4fc72ed0a33627",
-        "g": "d12cf5959a668653",
-        "name": "ground floor hue connection",
-        "links": [
-            "615c8c80e4e28048"
-        ],
-        "x": 175,
-        "y": 120,
+        "x": 920,
+        "y": 240,
         "wires": [
             [
-                "6f2b37e9e0163a69"
+                "13a8932676232537"
             ]
         ],
-        "info": "// nrlint align-to-grid:off\n"
+        "info": "Display dynamically created dashboard controls for the _Ground Floor_\nHue bridge."
     },
     {
-        "id": "6f2b37e9e0163a69",
-        "type": "function",
-        "z": "5f4fc72ed0a33627",
-        "g": "d12cf5959a668653",
-        "name": "stringify",
-        "func": "msg.now = new Date().toLocaleString()\nmsg.payload = JSON.stringify(msg.payload, undefined, 1)\nreturn msg",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 280,
-        "y": 120,
-        "wires": [
-            [
-                "d2682f043a62593b"
-            ]
-        ],
-        "info": "Pretty-print `msg.payload` and add the current date and time as\n`msg.now`."
-    },
-    {
-        "id": "d2682f043a62593b",
-        "type": "ui_template",
-        "z": "5f4fc72ed0a33627",
-        "g": "d12cf5959a668653",
-        "group": "64285772c6ce65e8",
-        "name": "Ground Floor Hue Connection",
-        "order": 2,
-        "width": "6",
-        "height": "3",
-        "format": "<div style=\"margin:1em\">\n    <p style=\"font-style:italic;text-align:center\">{{msg.now}}</p>\n    <p style=\"font-weight:bold;text-align:center\">{{msg.topic}}</p>\n    <pre>{{msg.payload}}</pre>\n</div>",
-        "storeOutMessages": false,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 490,
-        "y": 120,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "e741bdeb4a0992af",
-        "type": "ui_text",
-        "z": "5f4fc72ed0a33627",
-        "g": "d12cf5959a668653",
-        "group": "64285772c6ce65e8",
-        "order": 1,
-        "width": 0,
-        "height": 0,
+        "id": "13a8932676232537",
+        "type": "link call",
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
         "name": "",
-        "label": "Ground Floor Hue Status",
-        "format": "{{msg.payload}}",
-        "layout": "row-spread",
-        "className": "",
-        "x": 550,
-        "y": 60,
+        "links": [
+            "f87cd6036de631b7"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 1190,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e178773d828de62d",
+        "type": "comment",
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
+        "name": "${ADDRESS}, ${KEY}, ${BRIDGE} and ${TARGET} are set by this group",
+        "info": "",
+        "x": 800,
+        "y": 100,
         "wires": []
     },
     {
-        "id": "0696c3dfdfb89df9",
-        "type": "subflow:a0b7d0294edc5956",
-        "z": "5f4fc72ed0a33627",
-        "g": "d12cf5959a668653",
-        "name": "Ground Floor Status",
-        "x": 320,
-        "y": 60,
-        "wires": [
-            [
-                "e741bdeb4a0992af"
-            ]
-        ]
-    },
-    {
-        "id": "37ceae934f23da16",
-        "type": "link in",
-        "z": "5f4fc72ed0a33627",
-        "g": "d12cf5959a668653",
+        "id": "33da30d97725e077",
+        "type": "status",
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
         "name": "ground floor hue status",
-        "links": [
-            "7ff8e33c2fe0f536"
+        "scope": [
+            "460867bbae94da5a"
         ],
-        "x": 175,
-        "y": 60,
+        "x": 640,
+        "y": 320,
         "wires": [
             [
                 "0696c3dfdfb89df9"
             ]
-        ]
+        ],
+        "info": "Monitor `EventSource.readyState` for the _Ground Floor_ Hue bridge."
     },
     {
-        "id": "9a0ebc96f768ceb8",
-        "type": "link in",
-        "z": "5f4fc72ed0a33627",
-        "g": "8b35b76a6e9c0b6d",
-        "name": "basement hue connection",
-        "links": [
-            "46ac9274524ad523"
+        "id": "0696c3dfdfb89df9",
+        "type": "subflow:a0b7d0294edc5956",
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
+        "name": "Ground Floor Status",
+        "env": [
+            {
+                "name": "CLASS",
+                "value": "BRIDGE",
+                "type": "env"
+            }
         ],
-        "x": 175,
-        "y": 280,
+        "x": 860,
+        "y": 320,
         "wires": [
             [
-                "703bbe856b326d23"
+                "6b013bba424e77d0"
             ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "703bbe856b326d23",
-        "type": "function",
-        "z": "5f4fc72ed0a33627",
-        "g": "8b35b76a6e9c0b6d",
-        "name": "stringify",
-        "func": "msg.now = new Date().toLocaleString()\nmsg.payload = JSON.stringify(msg.payload, undefined, 1)\nreturn msg",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 280,
-        "y": 280,
-        "wires": [
-            [
-                "27a1d5e6b32b490c"
-            ]
-        ],
-        "info": "Pretty-print `msg.payload` and add the current date and time as\n`msg.now`."
-    },
-    {
-        "id": "27a1d5e6b32b490c",
-        "type": "ui_template",
-        "z": "5f4fc72ed0a33627",
-        "g": "8b35b76a6e9c0b6d",
-        "group": "64285772c6ce65e8",
-        "name": "Basement Hue Connection",
-        "order": 4,
-        "width": "6",
-        "height": "3",
-        "format": "<div style=\"margin:1em\">\n    <p style=\"font-style:italic;text-align:center\">{{msg.now}}</p>\n    <p style=\"font-weight:bold;text-align:center\">{{msg.topic}}</p>\n    <pre>{{msg.payload}}</pre>\n</div>",
-        "storeOutMessages": false,
-        "fwdInMessages": true,
-        "resendOnRefresh": true,
-        "templateScope": "local",
-        "className": "",
-        "x": 480,
-        "y": 280,
-        "wires": [
-            []
         ]
-    },
-    {
-        "id": "d150b3ca21a4fa2a",
-        "type": "ui_text",
-        "z": "5f4fc72ed0a33627",
-        "g": "8b35b76a6e9c0b6d",
-        "group": "64285772c6ce65e8",
-        "order": 3,
-        "width": 0,
-        "height": 0,
-        "name": "",
-        "label": "Basement Hue Status",
-        "format": "{{msg.payload}}",
-        "layout": "row-spread",
-        "className": "",
-        "x": 520,
-        "y": 220,
-        "wires": []
     },
     {
         "id": "174b7dc47587b326",
         "type": "subflow:a0b7d0294edc5956",
-        "z": "5f4fc72ed0a33627",
-        "g": "8b35b76a6e9c0b6d",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
         "name": "Basement Status",
-        "x": 310,
-        "y": 220,
-        "wires": [
-            [
-                "d150b3ca21a4fa2a"
-            ]
-        ]
-    },
-    {
-        "id": "9990a00c003ca563",
-        "type": "link in",
-        "z": "5f4fc72ed0a33627",
-        "g": "8b35b76a6e9c0b6d",
-        "name": "basement hue status",
-        "links": [
-            "2cc43613b1b953f9"
+        "env": [
+            {
+                "name": "CLASS",
+                "value": "BRIDGE",
+                "type": "env"
+            }
         ],
-        "x": 175,
-        "y": 220,
+        "x": 830,
+        "y": 680,
         "wires": [
             [
-                "174b7dc47587b326"
+                "46486cd695774a6c"
             ]
         ]
     },
     {
-        "id": "aebfdc0a1c3b976e",
+        "id": "6b013bba424e77d0",
         "type": "ui_template",
-        "z": "5f4fc72ed0a33627",
-        "g": "773980010e098c1d",
-        "group": "64285772c6ce65e8",
-        "name": "Daily",
-        "order": 5,
-        "width": "6",
-        "height": "4",
-        "format": "<div>\n    <p style=\"font-style:italic;text-align:center\">{{msg.now}}</p>\n    <p style=\"font-weight:bold;text-align:center\">{{msg.topic}}</p>\n    <pre ng-bind-html=\"msg.payload\"></pre>\n</div>",
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
+        "group": "21f11f110d626f5a",
+        "name": "Ground Floor Hue readyState",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n    .ground-floor {\n        margin: 0;\n        position: relative;\n        height: 100%;\n    }\n\n    .ground-floor-centered {\n        margin: 0;\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n    }\n\n    .ground-floor-grey {\n        color: grey;\n    }\n\n    .ground-floor-white {\n        color: white;\n    }\n\n    .ground-floor-yellow {\n        color: yellow;\n    }\n\n    .ground-floor-green {\n        color: green;\n    }\n\n    .ground-floor-red {\n        color: red;\n    }\n</style>\n<div class=\"ground-floor-centered\" ng-bind-html=\"msg.payload\"></div>",
         "storeOutMessages": false,
         "fwdInMessages": false,
         "resendOnRefresh": true,
         "templateScope": "local",
-        "className": "",
-        "x": 570,
-        "y": 380,
+        "className": "ground-floor",
+        "x": 1110,
+        "y": 320,
         "wires": [
             []
         ]
     },
     {
-        "id": "e7a7dc5db8821c29",
-        "type": "function",
-        "z": "5f4fc72ed0a33627",
-        "g": "773980010e098c1d",
-        "name": "stringify",
-        "func": "msg.now = new Date().toLocaleString()\nmsg.payload = JSON.stringify(msg.payload, undefined, 1)\nreturn msg",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 440,
-        "y": 380,
+        "id": "46486cd695774a6c",
+        "type": "ui_template",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "group": "ab9e7529ab02c320",
+        "name": "Basement Hue readyState",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "format": "<style>\n    .basement {\n        margin: 0;\n        position: relative;\n        height: 100%;\n    }\n\n    .basement-centered {\n        margin: 0;\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n    }\n\n    .basement-grey {\n        color: grey;\n    }\n\n    .basement-white {\n        color: white;\n    }\n\n    .basement-yellow {\n        color: yellow;\n    }\n\n    .basement-green {\n        color: green;\n    }\n\n    .basement-red {\n        color: red;\n    }\n</style>\n<div class=\"basement-centered\" ng-bind-html=\"msg.payload\"></div>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "basement-hue",
+        "x": 1060,
+        "y": 680,
         "wires": [
-            [
-                "aebfdc0a1c3b976e"
-            ]
-        ],
-        "info": "Pretty-print `msg.payload` and add the current date and time as\n`msg.now`."
+            []
+        ]
     }
 ]
