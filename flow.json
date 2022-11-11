@@ -222,7 +222,7 @@
         "meta": {
             "module": "@parasaurolophus/node-red-hue-api-v2",
             "type": "hue-api-v2",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "author": "parasaurolophus <apps@rader.us>",
             "desc": "Wrap the API (V2) exposed by a Philips Hue Bridge",
             "keywords": "node-red,philips-hue,hue",
@@ -328,6 +328,79 @@
         }
     },
     {
+        "id": "9a9103e8b9a05415",
+        "type": "subflow",
+        "name": "Save State",
+        "info": "Save `msg.payload` in parent flow context. At start, send the saved\nvalue or a default value.\n\nThe following environment variables must be configured for each\ninstance of this subflow:\n\n- `TOPIC` is the value for `msg.topic` in output messages\n- `STATE` is the name of flow context variable to use (`$parent.` will\n  be prepended ot `STATE` when accessing flow context)\n- `STORE` is the name of the context store (defaults to `file`)\n- `DEFAULT` is the default value to send at start if there is not yet a\n  stored value for the given `STATE` in the named context `STORE`\n\nNote that `STORE` must be the name of a filesystem-backed context store\nin order for the stored `STATE` to be preserved across restarts. Note\nalso that prepending `$parent.` to `STATE` means that the stored\n`STATE` will be accessible to other nodes in the same flow as an of\nthis subflow.",
+        "category": "",
+        "in": [
+            {
+                "x": 60,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "e4c0d45173cb5dad"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 240,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "e4c0d45173cb5dad",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "TOPIC",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "STATE",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "STORE",
+                "type": "str",
+                "value": "file"
+            },
+            {
+                "name": "DEFAULT",
+                "type": "json",
+                "value": "null"
+            }
+        ],
+        "meta": {
+            "module": "@parasaurolophus/node-red-save-state",
+            "type": "save-state",
+            "version": "1.0.0",
+            "author": "parasaurolophus <apps@rader.us>",
+            "desc": "Store msg.payload in flow context and re-send saved value at start up",
+            "keywords": "node-red",
+            "license": "MIT"
+        },
+        "color": "#3FADB5",
+        "icon": "font-awesome/fa-dashboard",
+        "status": {
+            "x": 240,
+            "y": 120,
+            "wires": [
+                {
+                    "id": "82ef6a5436d70449",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
         "id": "ff5e6c57350b517d",
         "type": "group",
         "z": "24510f25743eef8c",
@@ -424,26 +497,23 @@
         },
         "nodes": [
             "ecfbd237278bdee4",
-            "efb74a364c880c27",
             "8802b0ac9b530f7c",
-            "d91da8bbf302b6c9",
             "3a210f7e37be9ff5",
-            "028e5ae634a130e8",
             "617c23c03011acd7",
             "e147ba939c07a9a6",
-            "e49473b0bae32aa7",
             "e15932987c8aeb5e",
-            "6c8f562f25df6bd3",
             "b681bcc695abf3d1",
             "895d1c6f5d4cf269",
-            "bbc7973a5447198c",
             "c5b9a97f9cc97bd1",
-            "02d93ffb776df2c5"
+            "02d93ffb776df2c5",
+            "974cc61995ad786c",
+            "6ac690b97c6f499a",
+            "e6217093fd1deefe"
         ],
         "x": 14,
         "y": 279,
-        "w": 622,
-        "h": 362
+        "w": 582,
+        "h": 262
     },
     {
         "id": "eaaca1e226cc9251",
@@ -1630,7 +1700,7 @@
         "z": "d61db14468b910ab",
         "g": "2c4eab1ce95057ef",
         "name": "parse metadata",
-        "func": "if (msg.statusCode != 200) {\n\n    throw 'response status ' + msg.statusCode + ' from Hue API'\n\n}\n\nconst resources = flow.get('resources') || {}\nconst events = []\n\nfor (let resource of msg.payload.data) {\n\n    const type = resources[resource.type] || {}\n\n    type[resource.id] = resource\n    resources[resource.type] = type\n\n}\n\nflow.set('resources', resources)\n\nfor (let id in resources.grouped_light) {\n\n    const grouped_light = resources.grouped_light[id]\n\n    events.push({\n        topic: 'add',\n        payload: grouped_light\n    })\n}\n\nreturn [\n    events,\n    {\n        payload: true\n    }\n]",
+        "func": "if (msg.statusCode != 200) {\n\n    throw 'response status ' + msg.statusCode + ' from Hue API'\n\n}\n\nconst resources = {}\nconst events = []\n\nfor (let resource of msg.payload.data) {\n\n    const type = resources[resource.type] || {}\n\n    type[resource.id] = resource\n    resources[resource.type] = type\n\n}\n\nflow.set('resources', resources)\nflow.set('merged', [])\n\nfor (let id in resources.grouped_light) {\n\n    const grouped_light = resources.grouped_light[id]\n\n    events.push({\n        topic: 'add',\n        payload: grouped_light\n    })\n}\n\nreturn [\n    events,\n    {\n        payload: true\n    }\n]",
         "outputs": 2,
         "noerr": 0,
         "initialize": "",
@@ -1972,7 +2042,7 @@
         "z": "d61db14468b910ab",
         "g": "86efe0cfe1142093",
         "name": "delete",
-        "func": "const resources = flow.get('resources') || {}\nconst type = resources[msg.payload.type] || {}\n\ndelete type[msg.payload.id]\nresources[msg.payload.type] = type\nflow.set('resources', resources)\n\nif (msg.payload.type == 'grouped_light') {\n\n    const oldMerged = flow.get('merged') || []\n    const newMerged = []\n\n    for (let entry of oldMerged) {\n\n        if (msg.payload.id != entry.grouped_light.id) {\n\n            newMerged.push(entry)\n\n        }\n    }\n\n    flow.set('merged', newMerged)\n\n}\n\nreturn msg",
+        "func": "const resources = flow.get('resources')\nconst type = resources[msg.payload.type] || {}\n\ndelete type[msg.payload.id]\nresources[msg.payload.type] = type\nflow.set('resources', resources)\n\nif (msg.payload.type == 'grouped_light') {\n\n    const oldMerged = flow.get('merged')\n    const newMerged = []\n\n    for (let entry of oldMerged) {\n\n        if (msg.payload.id != entry.grouped_light.id) {\n\n            newMerged.push(entry)\n\n        }\n    }\n\n    flow.set('merged', newMerged)\n\n}\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2177,7 +2247,7 @@
         "z": "d61db14468b910ab",
         "g": "86efe0cfe1142093",
         "name": "add",
-        "func": "const resources = flow.get('resources') || {}\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfunction findScenes(group) {\n\n    const scenes = []\n\n    for (let id in resources.scene) {\n\n        const scene = resources.scene[id]\n\n        if (scene.group.rid == group.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes\n\n}\n\nfunction findGroup(grouped_light) {\n\n    const groups = resources[grouped_light.owner.rtype]\n\n    for (let id in groups) {\n\n        const group = groups[id]\n\n        if (id == grouped_light.owner.rid) {\n\n            return {\n                grouped_light: grouped_light,\n                group: group,\n                scenes: findScenes(group)\n            }\n        }\n    }\n\n    throw 'no group found for grouped_light ' + grouped_light.id\n\n}\n\nif (resource.type == 'grouped_light') {\n\n    const merged = flow.get('merged') || []\n\n    merged.push(findGroup(resource))\n    flow.set('merged', merged)\n\n}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nflow.set('resources',resources)\n\nreturn msg",
+        "func": "const resources = flow.get('resources')\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfunction findScenes(group) {\n\n    const scenes = []\n\n    for (let id in resources.scene) {\n\n        const scene = resources.scene[id]\n\n        if (scene.group.rid == group.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes\n\n}\n\nfunction findGroup(grouped_light) {\n\n    const groups = resources[grouped_light.owner.rtype]\n\n    for (let id in groups) {\n\n        const group = groups[id]\n\n        if (id == grouped_light.owner.rid) {\n\n            return {\n                grouped_light: grouped_light,\n                group: group,\n                scenes: findScenes(group)\n            }\n        }\n    }\n\n    throw 'no group found for grouped_light ' + grouped_light.id\n\n}\n\nif (resource.type == 'grouped_light') {\n\n    const merged = flow.get('merged')\n\n    merged.push(findGroup(resource))\n    flow.set('merged', merged)\n\n}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nflow.set('resources',resources)\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -2322,6 +2392,38 @@
         "x": 230,
         "y": 60,
         "wires": []
+    },
+    {
+        "id": "e4c0d45173cb5dad",
+        "type": "function",
+        "z": "9a9103e8b9a05415",
+        "name": "state",
+        "func": "const TOPIC = env.get('TOPIC')\nconst STATE = '$parent.' + env.get('STATE')\nconst STORE = env.get('STORE')\n\nmsg.topic = TOPIC\nflow.set(STATE, msg.payload, STORE)\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "const TOPIC = env.get('TOPIC')\nconst STATE = '$parent.' + env.get('STATE')\nconst STORE = env.get('STORE')\nconst DEFAULT = env.get('DEFAULT')\n\nlet state = flow.get(STATE, STORE)\n\nif (state === undefined) {\n\n    state = DEFAULT\n    flow.set(STATE, state, STORE)\n\n}\n\nnode.status({\n    text: state,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nnode.send({ topic: TOPIC, payload: state })",
+        "finalize": "",
+        "libs": [],
+        "x": 150,
+        "y": 60,
+        "wires": [
+            []
+        ],
+        "info": "Set `msg.payload` to the value of `flow.bedtime` using the context\nstore named `file` or to the number 22 (denoting 10PM) if\n`flow.bedtime` is undefined."
+    },
+    {
+        "id": "82ef6a5436d70449",
+        "type": "status",
+        "z": "9a9103e8b9a05415",
+        "name": "state",
+        "scope": [
+            "e4c0d45173cb5dad"
+        ],
+        "x": 150,
+        "y": 120,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "32e4dd9341d63405",
@@ -2531,7 +2633,7 @@
         "type": "ui_dropdown",
         "z": "24510f25743eef8c",
         "g": "2da3e0020db1582c",
-        "name": "",
+        "name": "Bedtime Dropdown",
         "label": "Bedtime",
         "tooltip": "",
         "place": "Select time",
@@ -2562,11 +2664,11 @@
         "topic": "topic",
         "topicType": "msg",
         "className": "",
-        "x": 280,
+        "x": 350,
         "y": 380,
         "wires": [
             [
-                "d91da8bbf302b6c9"
+                "3a210f7e37be9ff5"
             ]
         ],
         "info": "Dashboard dropdown allowing users to select a value to\nuse when calculating each day's bedtime."
@@ -2603,27 +2705,6 @@
         "info": "Send the current timestamp when the flow starts."
     },
     {
-        "id": "efb74a364c880c27",
-        "type": "function",
-        "z": "24510f25743eef8c",
-        "g": "2da3e0020db1582c",
-        "name": "get flow.bedtime",
-        "func": "msg.topic = 'bedtime'\nmsg.payload = flow.get('bedtime', 'file')\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "let bedtime = flow.get('bedtime', 'file')\n\nif (bedtime === undefined) {\n\n    bedtime = 22\n    flow.set('bedtime', bedtime, 'file')\n\n}\n\nnode.status({\n    text: bedtime,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nnode.send({ topic: 'bedtime', payload: bedtime })",
-        "finalize": "",
-        "libs": [],
-        "x": 120,
-        "y": 360,
-        "wires": [
-            [
-                "ecfbd237278bdee4"
-            ]
-        ],
-        "info": "Set `msg.payload` to the value of `flow.bedtime` using the context\nstore named `file` or to the number 22 (denoting 10PM) if\n`flow.bedtime` is undefined."
-    },
-    {
         "id": "8802b0ac9b530f7c",
         "type": "link in",
         "z": "24510f25743eef8c",
@@ -2633,43 +2714,14 @@
             "3a210f7e37be9ff5",
             "5102d6facd1ff9a2"
         ],
-        "x": 185,
-        "y": 400,
-        "wires": [
-            [
-                "ecfbd237278bdee4"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "d91da8bbf302b6c9",
-        "type": "change",
-        "z": "24510f25743eef8c",
-        "g": "2da3e0020db1582c",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "#:(file)::bedtime",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 440,
+        "x": 55,
         "y": 380,
         "wires": [
             [
-                "3a210f7e37be9ff5"
+                "974cc61995ad786c"
             ]
         ],
-        "info": "Set `flow.bedtime` to `msg.payload` using the context store named\n`file`."
+        "info": "// nrlint align-to-grid:off\n"
     },
     {
         "id": "3a210f7e37be9ff5",
@@ -2682,7 +2734,7 @@
             "829d6487fc430502",
             "8802b0ac9b530f7c"
         ],
-        "x": 555,
+        "x": 475,
         "y": 380,
         "wires": []
     },
@@ -2870,11 +2922,11 @@
             "e15932987c8aeb5e",
             "2426a08e2a2b03ac"
         ],
-        "x": 185,
-        "y": 500,
+        "x": 55,
+        "y": 440,
         "wires": [
             [
-                "e147ba939c07a9a6"
+                "6ac690b97c6f499a"
             ]
         ],
         "info": "// nrlint align-to-grid:off\n"
@@ -2884,7 +2936,7 @@
         "type": "ui_switch",
         "z": "24510f25743eef8c",
         "g": "2da3e0020db1582c",
-        "name": "",
+        "name": "Enable Shades Switch",
         "label": "Enable Shades",
         "tooltip": "",
         "group": "d45acf67bdd65c8f",
@@ -2906,43 +2958,14 @@
         "offcolor": "",
         "animate": false,
         "className": "",
-        "x": 300,
-        "y": 480,
-        "wires": [
-            [
-                "e49473b0bae32aa7"
-            ]
-        ],
-        "info": "Dashboard switch allowing users to enable or disable window shades\nautomation."
-    },
-    {
-        "id": "e49473b0bae32aa7",
-        "type": "change",
-        "z": "24510f25743eef8c",
-        "g": "2da3e0020db1582c",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "#:(file)::shades",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 480,
-        "y": 480,
+        "x": 420,
+        "y": 440,
         "wires": [
             [
                 "e15932987c8aeb5e"
             ]
         ],
-        "info": "Set `flow.shades` to `msg.payload` using the context store named\n`file`."
+        "info": "Dashboard switch allowing users to enable or disable window shades\nautomation."
     },
     {
         "id": "e15932987c8aeb5e",
@@ -2955,30 +2978,9 @@
             "617c23c03011acd7",
             "829d6487fc430502"
         ],
-        "x": 595,
-        "y": 480,
+        "x": 555,
+        "y": 440,
         "wires": []
-    },
-    {
-        "id": "028e5ae634a130e8",
-        "type": "function",
-        "z": "24510f25743eef8c",
-        "g": "2da3e0020db1582c",
-        "name": "get flow.shades",
-        "func": "msg.topic = 'shades'\nmsg.payload = flow.get('shades', 'file')\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "let shades = flow.get('shades', 'file')\n\nif (shades === undefined) {\n\n    shades = false\n    flow.set('shades', shades, 'file')\n\n}\n\nnode.status({\n    text: shades,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nnode.send({ topic: 'shades', payload: shades })",
-        "finalize": "",
-        "libs": [],
-        "x": 120,
-        "y": 460,
-        "wires": [
-            [
-                "e147ba939c07a9a6"
-            ]
-        ],
-        "info": "Set `msg.payload` to the value of `flow.shades` using the context store\nnamed `file` or to `false` if `flow.shades` is undefined."
     },
     {
         "id": "b681bcc695abf3d1",
@@ -2991,11 +2993,11 @@
             "c5b9a97f9cc97bd1",
             "f1e8d4076621b4b4"
         ],
-        "x": 185,
-        "y": 600,
+        "x": 65,
+        "y": 500,
         "wires": [
             [
-                "895d1c6f5d4cf269"
+                "e6217093fd1deefe"
             ]
         ],
         "info": "// nrlint align-to-grid:off\n"
@@ -3005,7 +3007,7 @@
         "type": "ui_switch",
         "z": "24510f25743eef8c",
         "g": "2da3e0020db1582c",
-        "name": "",
+        "name": "Enable Lighting Switch",
         "label": "Enable Lighting",
         "tooltip": "",
         "group": "d45acf67bdd65c8f",
@@ -3027,43 +3029,14 @@
         "offcolor": "",
         "animate": false,
         "className": "",
-        "x": 300,
-        "y": 580,
-        "wires": [
-            [
-                "bbc7973a5447198c"
-            ]
-        ],
-        "info": "Dashboard switch allowing users to enable or disable lighting\nautomation."
-    },
-    {
-        "id": "bbc7973a5447198c",
-        "type": "change",
-        "z": "24510f25743eef8c",
-        "g": "2da3e0020db1582c",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "#:(file)::lighting",
-                "pt": "flow",
-                "to": "payload",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 480,
-        "y": 580,
+        "x": 420,
+        "y": 500,
         "wires": [
             [
                 "c5b9a97f9cc97bd1"
             ]
         ],
-        "info": "Set `flow.lighting` to the value of `msg.payload` using the context\nstore named `file`."
+        "info": "Dashboard switch allowing users to enable or disable lighting\nautomation."
     },
     {
         "id": "c5b9a97f9cc97bd1",
@@ -3076,30 +3049,9 @@
             "829d6487fc430502",
             "b681bcc695abf3d1"
         ],
-        "x": 595,
-        "y": 580,
+        "x": 555,
+        "y": 500,
         "wires": []
-    },
-    {
-        "id": "6c8f562f25df6bd3",
-        "type": "function",
-        "z": "24510f25743eef8c",
-        "g": "2da3e0020db1582c",
-        "name": "get flow.lighting",
-        "func": "msg.topic = 'lighting'\nmsg.payload = flow.get('lighting', 'file')\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "let lighting = flow.get('lighting', 'file')\n\nif (lighting === undefined) {\n\n    lighting = false\n    flow.set('lighting', lighting, 'file')\n\n}\n\nnode.status({\n    text: lighting,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nnode.send({ topic: 'lighting', payload: lighting })\n",
-        "finalize": "",
-        "libs": [],
-        "x": 120,
-        "y": 560,
-        "wires": [
-            [
-                "895d1c6f5d4cf269"
-            ]
-        ],
-        "info": "Set `msg.payload` to the value of `flow.lighting` using the context\nstore named `file` or to `false` if `flow.lighting` is undefined."
     },
     {
         "id": "a3864a0d07101185",
@@ -3154,6 +3106,99 @@
         "x": 270,
         "y": 60,
         "wires": []
+    },
+    {
+        "id": "974cc61995ad786c",
+        "type": "subflow:9a9103e8b9a05415",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "Bedtime State",
+        "env": [
+            {
+                "name": "TOPIC",
+                "value": "bedtime",
+                "type": "str"
+            },
+            {
+                "name": "STATE",
+                "value": "bedtime",
+                "type": "str"
+            },
+            {
+                "name": "DEFAULT",
+                "value": "22",
+                "type": "num"
+            }
+        ],
+        "x": 170,
+        "y": 380,
+        "wires": [
+            [
+                "ecfbd237278bdee4"
+            ]
+        ]
+    },
+    {
+        "id": "6ac690b97c6f499a",
+        "type": "subflow:9a9103e8b9a05415",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "Enable Shades State",
+        "env": [
+            {
+                "name": "TOPIC",
+                "value": "shades",
+                "type": "str"
+            },
+            {
+                "name": "STATE",
+                "value": "shades",
+                "type": "str"
+            },
+            {
+                "name": "DEFAULT",
+                "value": "true",
+                "type": "bool"
+            }
+        ],
+        "x": 200,
+        "y": 440,
+        "wires": [
+            [
+                "e147ba939c07a9a6"
+            ]
+        ]
+    },
+    {
+        "id": "e6217093fd1deefe",
+        "type": "subflow:9a9103e8b9a05415",
+        "z": "24510f25743eef8c",
+        "g": "2da3e0020db1582c",
+        "name": "Enable Lighting State",
+        "env": [
+            {
+                "name": "TOPIC",
+                "value": "lighting",
+                "type": "str"
+            },
+            {
+                "name": "STATE",
+                "value": "lighting",
+                "type": "str"
+            },
+            {
+                "name": "DEFAULT",
+                "value": "true",
+                "type": "bool"
+            }
+        ],
+        "x": 200,
+        "y": 500,
+        "wires": [
+            [
+                "895d1c6f5d4cf269"
+            ]
+        ]
     },
     {
         "id": "8083b56440c292c8",
