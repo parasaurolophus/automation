@@ -8,17 +8,9 @@
         "env": []
     },
     {
-        "id": "2182cc80719b7a81",
-        "type": "tab",
-        "label": "Shades",
-        "disabled": false,
-        "info": "",
-        "env": []
-    },
-    {
         "id": "448b73182a92925c",
         "type": "tab",
-        "label": "Lighting",
+        "label": "Automation",
         "disabled": false,
         "info": "",
         "env": []
@@ -339,7 +331,7 @@
         "id": "ff5e6c57350b517d",
         "type": "group",
         "z": "24510f25743eef8c",
-        "name": "send messages for events that occur every minute",
+        "name": "periodically send timer event messages",
         "style": {
             "stroke": "none",
             "fill": "#ffffff",
@@ -361,12 +353,14 @@
             "8e8260bf6d0fb1d1",
             "8ea23957849f9e6c",
             "a3864a0d07101185",
-            "6397de314a021b18"
+            "6397de314a021b18",
+            "26656249d7cbd1bd",
+            "7696fdb01e9be86c"
         ],
         "x": 14,
-        "y": 499,
-        "w": 1252,
-        "h": 182
+        "y": 19,
+        "w": 1262,
+        "h": 242
     },
     {
         "id": "60e4d1c056ed3a0c",
@@ -385,41 +379,36 @@
             "21d5dda80821a109",
             "aae17e5a30471de5",
             "f590050ce69df70f",
-            "961b3a3f24cec00c",
-            "c6c885de97bd8e99",
-            "43ec488110790f7e",
-            "5074d2c62a31146b",
-            "276ab966afd5e0f9",
-            "3558695087d0fa53",
-            "21c53d52d5277b4c",
-            "7ed122d84c5e7167"
+            "7ed122d84c5e7167",
+            "6b81bc8a01c525d8",
+            "0de1a81dd7644afc",
+            "776dedfbba2c68ec",
+            "b314af61e3fe5e68",
+            "5720dd9348b987ef",
+            "c2ebf6c0d74ad0e4",
+            "4e1d20e601e89e22",
+            "31328f7909c93485",
+            "c92600f6307981f9",
+            "8bd183126cc5beaf",
+            "c015dc9dbd457ad9",
+            "e69068dc88fed591",
+            "6501cfe4cd83bd6f",
+            "d4c675446d1a635a",
+            "7958c0e3336d8aba",
+            "733a9020ecfc01bc",
+            "f071e67216c3798e",
+            "ece9e398ddf1a6a0",
+            "fa502f5378dbe770",
+            "28d0a7dae21e1fcf",
+            "9fff86ab30bd6e09",
+            "e913f94a740c212f",
+            "91fe88dbcdcfd5fc",
+            "fc46f09965539057"
         ],
-        "x": 114,
-        "y": 19
-    },
-    {
-        "id": "49f5aae09949b530",
-        "type": "group",
-        "z": "2182cc80719b7a81",
-        "name": "trigger shades automation",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "a9a05d5f14d5310e",
-            "31e39e81f78fa235",
-            "37bac7a6b658ade4",
-            "ec730ac674a50f58",
-            "4517f2c78c9498d7",
-            "3d7ec93adc3b5b60",
-            "bbbb4e53c2082d73"
-        ],
-        "x": 114,
-        "y": 19
+        "x": 74,
+        "y": 19,
+        "w": 1292,
+        "h": 542
     },
     {
         "id": "2da3e0020db1582c",
@@ -435,13 +424,10 @@
         },
         "nodes": [
             "ecfbd237278bdee4",
-            "48fca1b6724de951",
             "efb74a364c880c27",
             "8802b0ac9b530f7c",
             "d91da8bbf302b6c9",
             "3a210f7e37be9ff5",
-            "1f1835bd1f7a046b",
-            "d3e8ba34d44f67aa",
             "028e5ae634a130e8",
             "617c23c03011acd7",
             "e147ba939c07a9a6",
@@ -455,9 +441,9 @@
             "02d93ffb776df2c5"
         ],
         "x": 14,
-        "y": 19,
-        "w": 862,
-        "h": 462
+        "y": 279,
+        "w": 622,
+        "h": 362
     },
     {
         "id": "eaaca1e226cc9251",
@@ -480,7 +466,9 @@
             "a250d71416af8250"
         ],
         "x": 94,
-        "y": 19
+        "y": 119,
+        "w": 732,
+        "h": 122
     },
     {
         "id": "74348749d23b9082",
@@ -521,7 +509,9 @@
             "ddda84706da2c026"
         ],
         "x": 94,
-        "y": 159
+        "y": 259,
+        "w": 1262,
+        "h": 262
     },
     {
         "id": "2c4eab1ce95057ef",
@@ -672,7 +662,9 @@
             }
         ],
         "x": 94,
-        "y": 19
+        "y": 19,
+        "w": 852,
+        "h": 482
     },
     {
         "id": "595f21be09dd9396",
@@ -728,7 +720,9 @@
             }
         ],
         "x": 94,
-        "y": 19
+        "y": 19,
+        "w": 812,
+        "h": 482
     },
     {
         "id": "773980010e098c1d",
@@ -749,7 +743,9 @@
             "e7a7dc5db8821c29"
         ],
         "x": 134,
-        "y": 339
+        "y": 339,
+        "w": 512,
+        "h": 82
     },
     {
         "id": "c788c5f426cb2e80",
@@ -769,7 +765,9 @@
             "f3eeda3b6470e2cf"
         ],
         "x": 134,
-        "y": 439
+        "y": 439,
+        "w": 372,
+        "h": 82
     },
     {
         "id": "d12cf5959a668653",
@@ -792,7 +790,9 @@
             "37ceae934f23da16"
         ],
         "x": 134,
-        "y": 19
+        "y": 19,
+        "w": 552,
+        "h": 142
     },
     {
         "id": "8b35b76a6e9c0b6d",
@@ -815,115 +815,9 @@
             "9990a00c003ca563"
         ],
         "x": 134,
-        "y": 179
-    },
-    {
-        "id": "f8dce80b21d7f706",
-        "type": "group",
-        "z": "448b73182a92925c",
-        "name": "activate yard scene",
-        "style": {
-            "stroke": "none",
-            "stroke-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1"
-        },
-        "nodes": [
-            "2bb38044a932fa69",
-            "64a68d2a2d2e93cd",
-            "b11c745f6ce17117",
-            "7e843abc77537f92",
-            "510f4653645e17d0",
-            "67013f62ca5bcb43",
-            "feaf54e6c16337c1",
-            "d92030613c5ce50e",
-            "cb0bc87b9e465a2f",
-            "da79b96d161e1c28",
-            "cfbe73c13aeb3e35"
-        ],
-        "x": 694,
-        "y": 339,
-        "info": "Set `msg` properties to invoke specific `grouped_light` and `scene` commands targeting the room named \"Yard\" on the ground floor Hue Bridge."
-    },
-    {
-        "id": "b1ee6e019c90396d",
-        "type": "group",
-        "z": "448b73182a92925c",
-        "name": "activate main floor scene",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "52f0cba3f9b87632",
-            "72acc2a8bcbc1528",
-            "0acba8178934baa1",
-            "1c5888bd24d0a311",
-            "fe5fdd858e8b907d",
-            "64afce8ff0b75f48",
-            "b5961ce82d77690f"
-        ],
-        "x": 114,
-        "y": 339,
-        "info": "Set `msg` properties to invoke specific `grouped_light` and `scene` commands targeting the zone named \"Main Floor\" on the ground floor Hue Bridge."
-    },
-    {
-        "id": "2d9ad017d6aeb18f",
-        "type": "group",
-        "z": "2182cc80719b7a81",
-        "name": "activate a powerview scene",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "b6ce3321e4119a91",
-            "689bb9bf9977b2c7",
-            "9a4ac3fab7c9e137",
-            "8810232073bb1f9d",
-            "fab23e5be84c202c",
-            "1e9e0b9fd7d051f1",
-            "83d0e35629e294d4",
-            "ab48edf506472b79",
-            "78d97384c0e5dc0d",
-            "1e6c0ad384e7aca2",
-            "26124b0246ef158d",
-            "e90c8c66623d3a7b"
-        ],
-        "x": 114,
-        "y": 239
-    },
-    {
-        "id": "f848d645bd1abc5b",
-        "type": "group",
-        "z": "448b73182a92925c",
-        "name": "activate main bathroom scene",
-        "style": {
-            "stroke": "none",
-            "stroke-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1"
-        },
-        "nodes": [
-            "df41f3a116d28de2",
-            "a122f1a4fc3399e5",
-            "012902774c9657f1",
-            "90cec6147a7de28f",
-            "a3ebd5d5a2bab049"
-        ],
-        "x": 114,
-        "y": 519,
-        "info": "Set `msg` properties to invoke specific `grouped_light` and `scene` commands targeting the room named \"Main Bathroom\" on the ground floor Hue Bridge."
+        "y": 179,
+        "w": 512,
+        "h": 142
     },
     {
         "id": "d6d68c481562616a",
@@ -956,16 +850,131 @@
         "h": 262
     },
     {
+        "id": "2d9ad017d6aeb18f",
+        "type": "group",
+        "z": "dcb190a34f9985d0",
+        "name": "activate a powerview scene",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "b6ce3321e4119a91",
+            "689bb9bf9977b2c7",
+            "26124b0246ef158d",
+            "e90c8c66623d3a7b"
+        ],
+        "x": 94,
+        "y": 539,
+        "w": 452,
+        "h": 122
+    },
+    {
+        "id": "da437f2ac1efc073",
+        "type": "group",
+        "z": "dcb190a34f9985d0",
+        "name": "",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "74e55c13e48dd047"
+        ],
+        "x": 94,
+        "y": 19,
+        "w": 492,
+        "h": 82
+    },
+    {
+        "id": "49f5aae09949b530",
+        "type": "group",
+        "z": "448b73182a92925c",
+        "name": "trigger shades automation",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "a9a05d5f14d5310e",
+            "31e39e81f78fa235",
+            "37bac7a6b658ade4",
+            "ec730ac674a50f58",
+            "6a9ac472018c38ea",
+            "c8c9c1f0d8b62902",
+            "9e961b1409432775",
+            "db4f7c2c93cd8f30",
+            "cd74e5b3da0290a6"
+        ],
+        "x": 74,
+        "y": 579,
+        "w": 822,
+        "h": 202
+    },
+    {
+        "id": "398a971f596a3c77",
+        "type": "group",
+        "z": "24510f25743eef8c",
+        "name": "initialize dashboard controls at start",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "48fca1b6724de951",
+            "1f1835bd1f7a046b",
+            "d3e8ba34d44f67aa"
+        ],
+        "x": 874,
+        "y": 279,
+        "w": 382,
+        "h": 82
+    },
+    {
+        "id": "fc46f09965539057",
+        "type": "group",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "",
+        "style": {
+            "stroke": "#ffffff",
+            "stroke-opacity": "0.1",
+            "fill": "none",
+            "label": true
+        },
+        "nodes": [
+            "59515344b6be644c",
+            "d16bfe986e4d4a68",
+            "945e6e160c72332c"
+        ],
+        "x": 114,
+        "y": 439,
+        "w": 282,
+        "h": 82
+    },
+    {
         "id": "7ed122d84c5e7167",
         "type": "junction",
         "z": "448b73182a92925c",
         "g": "60e4d1c056ed3a0c",
         "x": 580,
-        "y": 180,
+        "y": 260,
         "wires": [
             [
                 "f590050ce69df70f",
-                "43ec488110790f7e"
+                "c2ebf6c0d74ad0e4"
             ]
         ]
     },
@@ -1001,6 +1010,36 @@
         "y": 620,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "31328f7909c93485",
+        "type": "junction",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "x": 600,
+        "y": 480,
+        "wires": [
+            [
+                "4e1d20e601e89e22",
+                "5720dd9348b987ef",
+                "91fe88dbcdcfd5fc"
+            ]
+        ]
+    },
+    {
+        "id": "8bd183126cc5beaf",
+        "type": "junction",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "x": 580,
+        "y": 100,
+        "wires": [
+            [
+                "c92600f6307981f9",
+                "c015dc9dbd457ad9",
+                "e913f94a740c212f"
+            ]
         ]
     },
     {
@@ -2307,7 +2346,7 @@
         "payload": "true",
         "payloadType": "bool",
         "x": 110,
-        "y": 640,
+        "y": 180,
         "wires": [
             [
                 "8e8260bf6d0fb1d1"
@@ -2332,8 +2371,8 @@
                 "module": "suncalc"
             }
         ],
-        "x": 350,
-        "y": 620,
+        "x": 410,
+        "y": 200,
         "wires": [
             [
                 "9dc6f3432564c1e2"
@@ -2359,8 +2398,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 480,
-        "y": 620,
+        "x": 540,
+        "y": 200,
         "wires": [
             [
                 "47d3d2e7f832edc0"
@@ -2386,8 +2425,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 610,
-        "y": 620,
+        "x": 670,
+        "y": 200,
         "wires": [
             [
                 "c50b52aee3f36be8"
@@ -2414,7 +2453,7 @@
             "c5b9a97f9cc97bd1"
         ],
         "x": 145,
-        "y": 600,
+        "y": 220,
         "wires": [
             [
                 "8e8260bf6d0fb1d1"
@@ -2444,8 +2483,8 @@
         "topic": "now",
         "payload": "",
         "payloadType": "date",
-        "x": 700,
-        "y": 580,
+        "x": 760,
+        "y": 160,
         "wires": [
             [
                 "54c207974d22c913"
@@ -2466,8 +2505,8 @@
         "septopics": true,
         "property": "payload",
         "topi": "topic",
-        "x": 730,
-        "y": 620,
+        "x": 790,
+        "y": 200,
         "wires": [
             [
                 "54c207974d22c913",
@@ -2484,7 +2523,7 @@
         "name": "assumes that a filesystem-backed context store exists named 'file'",
         "info": "",
         "x": 270,
-        "y": 60,
+        "y": 320,
         "wires": []
     },
     {
@@ -2523,8 +2562,8 @@
         "topic": "topic",
         "topicType": "msg",
         "className": "",
-        "x": 520,
-        "y": 220,
+        "x": 280,
+        "y": 380,
         "wires": [
             [
                 "d91da8bbf302b6c9"
@@ -2536,7 +2575,7 @@
         "id": "48fca1b6724de951",
         "type": "inject",
         "z": "24510f25743eef8c",
-        "g": "2da3e0020db1582c",
+        "g": "398a971f596a3c77",
         "name": "at start",
         "props": [
             {
@@ -2554,14 +2593,11 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 120,
-        "y": 240,
+        "x": 980,
+        "y": 320,
         "wires": [
             [
-                "efb74a364c880c27",
-                "1f1835bd1f7a046b",
-                "028e5ae634a130e8",
-                "6c8f562f25df6bd3"
+                "1f1835bd1f7a046b"
             ]
         ],
         "info": "Send the current timestamp when the flow starts."
@@ -2572,14 +2608,14 @@
         "z": "24510f25743eef8c",
         "g": "2da3e0020db1582c",
         "name": "get flow.bedtime",
-        "func": "msg.topic = 'bedtime'\nmsg.payload = flow.get('bedtime', 'file') || 22\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "func": "msg.topic = 'bedtime'\nmsg.payload = flow.get('bedtime', 'file')\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "let bedtime = flow.get('bedtime', 'file')\n\nif (bedtime === undefined) {\n\n    bedtime = 22\n    flow.set('bedtime', bedtime, 'file')\n\n}\n\nnode.status({\n    text: bedtime,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nnode.send({ topic: 'bedtime', payload: bedtime })",
         "finalize": "",
         "libs": [],
-        "x": 360,
-        "y": 200,
+        "x": 120,
+        "y": 360,
         "wires": [
             [
                 "ecfbd237278bdee4"
@@ -2597,8 +2633,8 @@
             "3a210f7e37be9ff5",
             "5102d6facd1ff9a2"
         ],
-        "x": 425,
-        "y": 240,
+        "x": 185,
+        "y": 400,
         "wires": [
             [
                 "ecfbd237278bdee4"
@@ -2626,8 +2662,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 680,
-        "y": 220,
+        "x": 440,
+        "y": 380,
         "wires": [
             [
                 "3a210f7e37be9ff5"
@@ -2646,8 +2682,8 @@
             "829d6487fc430502",
             "8802b0ac9b530f7c"
         ],
-        "x": 795,
-        "y": 220,
+        "x": 555,
+        "y": 380,
         "wires": []
     },
     {
@@ -2655,7 +2691,7 @@
         "type": "change",
         "z": "24510f25743eef8c",
         "g": "ff5e6c57350b517d",
-        "name": "millis",
+        "name": "{\"time\":$millis()}",
         "rules": [
             {
                 "t": "set",
@@ -2677,8 +2713,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 230,
-        "y": 620,
+        "x": 260,
+        "y": 200,
         "wires": [
             [
                 "83852d4482fadfc7"
@@ -2690,7 +2726,7 @@
         "id": "1f1835bd1f7a046b",
         "type": "ui_button",
         "z": "24510f25743eef8c",
-        "g": "2da3e0020db1582c",
+        "g": "398a971f596a3c77",
         "name": "",
         "group": "d45acf67bdd65c8f",
         "order": 4,
@@ -2707,8 +2743,8 @@
         "payloadType": "date",
         "topic": "refresh",
         "topicType": "str",
-        "x": 340,
-        "y": 100,
+        "x": 1120,
+        "y": 320,
         "wires": [
             [
                 "d3e8ba34d44f67aa"
@@ -2720,7 +2756,7 @@
         "id": "d3e8ba34d44f67aa",
         "type": "link out",
         "z": "24510f25743eef8c",
-        "g": "2da3e0020db1582c",
+        "g": "398a971f596a3c77",
         "name": "refresh",
         "mode": "link",
         "links": [
@@ -2730,8 +2766,8 @@
             "d857f6ba793e2430",
             "3f8329fdc5c54932"
         ],
-        "x": 435,
-        "y": 100,
+        "x": 1215,
+        "y": 320,
         "wires": []
     },
     {
@@ -2755,8 +2791,8 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 850,
-        "y": 600,
+        "x": 910,
+        "y": 180,
         "wires": [
             [
                 "c45a75a4ea70bf3a"
@@ -2781,8 +2817,8 @@
                 "module": "suncalc"
             }
         ],
-        "x": 970,
-        "y": 600,
+        "x": 1030,
+        "y": 180,
         "wires": [
             [
                 "a3864a0d07101185"
@@ -2805,8 +2841,8 @@
             "a9a05d5f14d5310e",
             "64fa5f1cef66ef07"
         ],
-        "x": 1175,
-        "y": 600,
+        "x": 1235,
+        "y": 180,
         "wires": []
     },
     {
@@ -2819,8 +2855,8 @@
         "links": [
             "dd8c04e3e7a29933"
         ],
-        "x": 815,
-        "y": 640,
+        "x": 875,
+        "y": 220,
         "wires": []
     },
     {
@@ -2834,8 +2870,8 @@
             "e15932987c8aeb5e",
             "2426a08e2a2b03ac"
         ],
-        "x": 425,
-        "y": 340,
+        "x": 185,
+        "y": 500,
         "wires": [
             [
                 "e147ba939c07a9a6"
@@ -2870,8 +2906,8 @@
         "offcolor": "",
         "animate": false,
         "className": "",
-        "x": 540,
-        "y": 320,
+        "x": 300,
+        "y": 480,
         "wires": [
             [
                 "e49473b0bae32aa7"
@@ -2899,8 +2935,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 720,
-        "y": 320,
+        "x": 480,
+        "y": 480,
         "wires": [
             [
                 "e15932987c8aeb5e"
@@ -2919,8 +2955,8 @@
             "617c23c03011acd7",
             "829d6487fc430502"
         ],
-        "x": 835,
-        "y": 320,
+        "x": 595,
+        "y": 480,
         "wires": []
     },
     {
@@ -2929,14 +2965,14 @@
         "z": "24510f25743eef8c",
         "g": "2da3e0020db1582c",
         "name": "get flow.shades",
-        "func": "msg.topic = 'shades'\nmsg.payload = flow.get('shades', 'file') || false\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "func": "msg.topic = 'shades'\nmsg.payload = flow.get('shades', 'file')\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "let shades = flow.get('shades', 'file')\n\nif (shades === undefined) {\n\n    shades = false\n    flow.set('shades', shades, 'file')\n\n}\n\nnode.status({\n    text: shades,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nnode.send({ topic: 'shades', payload: shades })",
         "finalize": "",
         "libs": [],
-        "x": 360,
-        "y": 300,
+        "x": 120,
+        "y": 460,
         "wires": [
             [
                 "e147ba939c07a9a6"
@@ -2955,8 +2991,8 @@
             "c5b9a97f9cc97bd1",
             "f1e8d4076621b4b4"
         ],
-        "x": 425,
-        "y": 440,
+        "x": 185,
+        "y": 600,
         "wires": [
             [
                 "895d1c6f5d4cf269"
@@ -2991,8 +3027,8 @@
         "offcolor": "",
         "animate": false,
         "className": "",
-        "x": 540,
-        "y": 420,
+        "x": 300,
+        "y": 580,
         "wires": [
             [
                 "bbc7973a5447198c"
@@ -3020,8 +3056,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 720,
-        "y": 420,
+        "x": 480,
+        "y": 580,
         "wires": [
             [
                 "c5b9a97f9cc97bd1"
@@ -3040,8 +3076,8 @@
             "829d6487fc430502",
             "b681bcc695abf3d1"
         ],
-        "x": 835,
-        "y": 420,
+        "x": 595,
+        "y": 580,
         "wires": []
     },
     {
@@ -3050,14 +3086,14 @@
         "z": "24510f25743eef8c",
         "g": "2da3e0020db1582c",
         "name": "get flow.lighting",
-        "func": "msg.topic = 'lighting'\nmsg.payload = flow.get('lighting', 'file') || false\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
+        "func": "msg.topic = 'lighting'\nmsg.payload = flow.get('lighting', 'file')\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
-        "initialize": "",
+        "initialize": "let lighting = flow.get('lighting', 'file')\n\nif (lighting === undefined) {\n\n    lighting = false\n    flow.set('lighting', lighting, 'file')\n\n}\n\nnode.status({\n    text: lighting,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nnode.send({ topic: 'lighting', payload: lighting })\n",
         "finalize": "",
         "libs": [],
-        "x": 360,
-        "y": 400,
+        "x": 120,
+        "y": 560,
         "wires": [
             [
                 "895d1c6f5d4cf269"
@@ -3078,8 +3114,8 @@
         "septopics": true,
         "property": "payload",
         "topi": "topic",
-        "x": 1090,
-        "y": 600,
+        "x": 1150,
+        "y": 180,
         "wires": [
             [
                 "6a14f93e5d6efc13"
@@ -3091,427 +3127,32 @@
         "type": "comment",
         "z": "24510f25743eef8c",
         "g": "ff5e6c57350b517d",
-        "name": "assumes that a filesystem-backed context store exists named 'file', that function nodes are permitted to load the suncalc package and that ${LATITUDE} and ${LONGITUDE} are defined",
+        "name": "assumes that ${LATITUDE} and ${LONGITUDE} are defined",
         "info": "",
-        "x": 640,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "a9a05d5f14d5310e",
-        "type": "link in",
-        "z": "2182cc80719b7a81",
-        "g": "49f5aae09949b530",
-        "name": "trigger shades",
-        "links": [
-            "6a14f93e5d6efc13"
-        ],
-        "x": 155,
-        "y": 120,
-        "wires": [
-            [
-                "31e39e81f78fa235"
-            ]
-        ]
-    },
-    {
-        "id": "31e39e81f78fa235",
-        "type": "switch",
-        "z": "2182cc80719b7a81",
-        "g": "49f5aae09949b530",
-        "name": "payload.shades",
-        "property": "payload.shades",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "true"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 280,
-        "y": 120,
-        "wires": [
-            [
-                "37bac7a6b658ade4"
-            ]
-        ],
-        "info": "Block unless shades automation is enabled by a user."
-    },
-    {
-        "id": "37bac7a6b658ade4",
-        "type": "switch",
-        "z": "2182cc80719b7a81",
-        "g": "49f5aae09949b530",
-        "name": "payload.time",
-        "property": "payload.time",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "morning",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "midday",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "afternoon",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "night",
-                "vt": "str"
-            }
-        ],
-        "checkall": "false",
-        "repair": false,
-        "outputs": 4,
-        "x": 450,
-        "y": 120,
-        "wires": [
-            [
-                "ec730ac674a50f58"
-            ],
-            [
-                "4517f2c78c9498d7"
-            ],
-            [
-                "3d7ec93adc3b5b60"
-            ],
-            [
-                "bbbb4e53c2082d73"
-            ]
-        ],
-        "info": "Trigger window shades automation for the specified `time`."
-    },
-    {
-        "id": "ec730ac674a50f58",
-        "type": "link out",
-        "z": "2182cc80719b7a81",
-        "g": "49f5aae09949b530",
-        "name": "activate morning shades scene",
-        "mode": "link",
-        "links": [
-            "8810232073bb1f9d"
-        ],
-        "x": 575,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "4517f2c78c9498d7",
-        "type": "link out",
-        "z": "2182cc80719b7a81",
-        "g": "49f5aae09949b530",
-        "name": "open all shades",
-        "mode": "link",
-        "links": [
-            "1e9e0b9fd7d051f1"
-        ],
-        "x": 575,
-        "y": 100,
-        "wires": []
-    },
-    {
-        "id": "3d7ec93adc3b5b60",
-        "type": "link out",
-        "z": "2182cc80719b7a81",
-        "g": "49f5aae09949b530",
-        "name": "activate afternoon shades scene",
-        "mode": "link",
-        "links": [
-            "ab48edf506472b79"
-        ],
-        "x": 575,
+        "x": 260,
         "y": 140,
         "wires": []
     },
     {
-        "id": "bbbb4e53c2082d73",
-        "type": "link out",
-        "z": "2182cc80719b7a81",
-        "g": "49f5aae09949b530",
-        "name": "close all shades",
-        "mode": "link",
-        "links": [
-            "1e6c0ad384e7aca2"
-        ],
-        "x": 575,
-        "y": 180,
+        "id": "26656249d7cbd1bd",
+        "type": "comment",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "assumes that function nodes are permitted to load the suncalc package",
+        "info": "",
+        "x": 290,
+        "y": 100,
         "wires": []
     },
     {
-        "id": "b6ce3321e4119a91",
-        "type": "change",
-        "z": "2182cc80719b7a81",
-        "g": "2d9ad017d6aeb18f",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "url",
-                "pt": "msg",
-                "to": "'http://' & $env('POWERVIEW_ADDRESS') & '/api/scenes?sceneId=' & payload",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 530,
-        "y": 400,
-        "wires": [
-            [
-                "26124b0246ef158d"
-            ]
-        ],
-        "info": "Set `msg.url` to the URL with query string to activate the scene\nspecified by `msg.payload` using the IP address specified by the\nenvironment variable named `POWERVIEW_ADDRESS`."
-    },
-    {
-        "id": "689bb9bf9977b2c7",
-        "type": "link in",
-        "z": "2182cc80719b7a81",
-        "g": "2d9ad017d6aeb18f",
-        "name": "activate powerview scene",
-        "links": [
-            "81d6c43098a91e64",
-            "6f2a76cdcf373136"
-        ],
-        "x": 365,
-        "y": 320,
-        "wires": [
-            [
-                "b6ce3321e4119a91"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "9a4ac3fab7c9e137",
-        "type": "change",
-        "z": "2182cc80719b7a81",
-        "g": "2d9ad017d6aeb18f",
-        "name": "Morning Shades",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "56393",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
-        "y": 360,
-        "wires": [
-            [
-                "b6ce3321e4119a91"
-            ]
-        ],
-        "info": "Set `msg.payload` to the scene id for _Morning Shades_."
-    },
-    {
-        "id": "8810232073bb1f9d",
-        "type": "link in",
-        "z": "2182cc80719b7a81",
-        "g": "2d9ad017d6aeb18f",
-        "name": "morning shades",
-        "links": [
-            "c95abc8baf5c70d7",
-            "ec730ac674a50f58"
-        ],
-        "x": 155,
-        "y": 360,
-        "wires": [
-            [
-                "9a4ac3fab7c9e137"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "fab23e5be84c202c",
-        "type": "change",
-        "z": "2182cc80719b7a81",
-        "g": "2d9ad017d6aeb18f",
-        "name": "Open All Shades",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "7307",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 290,
-        "y": 400,
-        "wires": [
-            [
-                "b6ce3321e4119a91"
-            ]
-        ],
-        "info": "Set `msg.payload` to the scene id for _Open All Shades_."
-    },
-    {
-        "id": "1e9e0b9fd7d051f1",
-        "type": "link in",
-        "z": "2182cc80719b7a81",
-        "g": "2d9ad017d6aeb18f",
-        "name": "open all shades",
-        "links": [
-            "902becb2bd0fe563",
-            "4517f2c78c9498d7"
-        ],
-        "x": 155,
-        "y": 400,
-        "wires": [
-            [
-                "fab23e5be84c202c"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "83d0e35629e294d4",
-        "type": "change",
-        "z": "2182cc80719b7a81",
-        "g": "2d9ad017d6aeb18f",
-        "name": "Afternoon Shades",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "42686",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 290,
-        "y": 440,
-        "wires": [
-            [
-                "b6ce3321e4119a91"
-            ]
-        ],
-        "info": "Set `msg.payload` to the scene id for _Afternoon Shades_."
-    },
-    {
-        "id": "ab48edf506472b79",
-        "type": "link in",
-        "z": "2182cc80719b7a81",
-        "g": "2d9ad017d6aeb18f",
-        "name": "afternoon shades",
-        "links": [
-            "d5f5092f9ed20c72",
-            "3d7ec93adc3b5b60"
-        ],
-        "x": 155,
-        "y": 440,
-        "wires": [
-            [
-                "83d0e35629e294d4"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "78d97384c0e5dc0d",
-        "type": "change",
-        "z": "2182cc80719b7a81",
-        "g": "2d9ad017d6aeb18f",
-        "name": "Close All Shades",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "15208",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 290,
-        "y": 480,
-        "wires": [
-            [
-                "b6ce3321e4119a91"
-            ]
-        ],
-        "info": "Set `msg.payload` to the scene id for _Close All Shades_."
-    },
-    {
-        "id": "1e6c0ad384e7aca2",
-        "type": "link in",
-        "z": "2182cc80719b7a81",
-        "g": "2d9ad017d6aeb18f",
-        "name": "close all shades",
-        "links": [
-            "19d70dca04f61d44",
-            "bbbb4e53c2082d73"
-        ],
-        "x": 155,
-        "y": 480,
-        "wires": [
-            [
-                "78d97384c0e5dc0d"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "26124b0246ef158d",
-        "type": "link call",
-        "z": "2182cc80719b7a81",
-        "g": "2d9ad017d6aeb18f",
-        "name": "",
-        "links": [
-            "a250d71416af8250"
-        ],
-        "linkType": "static",
-        "timeout": "30",
-        "x": 710,
-        "y": 400,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "e90c8c66623d3a7b",
+        "id": "7696fdb01e9be86c",
         "type": "comment",
-        "z": "2182cc80719b7a81",
-        "g": "2d9ad017d6aeb18f",
-        "name": "assumes ${POWERVIEW_ADDRESS} is defined",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "assumes that a filesystem-backed context store exists named 'file'",
         "info": "",
-        "x": 320,
-        "y": 280,
+        "x": 270,
+        "y": 60,
         "wires": []
     },
     {
@@ -3523,8 +3164,8 @@
         "links": [
             "6a14f93e5d6efc13"
         ],
-        "x": 155,
-        "y": 180,
+        "x": 135,
+        "y": 260,
         "wires": [
             [
                 "21d5dda80821a109"
@@ -3547,8 +3188,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 280,
-        "y": 180,
+        "x": 260,
+        "y": 260,
         "wires": [
             [
                 "aae17e5a30471de5"
@@ -3584,17 +3225,17 @@
         "checkall": "false",
         "repair": false,
         "outputs": 3,
-        "x": 450,
-        "y": 180,
+        "x": 430,
+        "y": 260,
         "wires": [
             [
-                "961b3a3f24cec00c"
+                "8bd183126cc5beaf"
             ],
             [
                 "7ed122d84c5e7167"
             ],
             [
-                "c6c885de97bd8e99"
+                "31328f7909c93485"
             ]
         ],
         "info": "Trigger lighting automation for the specified `time`."
@@ -3630,285 +3271,30 @@
         "checkall": "false",
         "repair": false,
         "outputs": 4,
-        "x": 700,
-        "y": 140,
+        "x": 720,
+        "y": 320,
         "wires": [
             [
-                "5074d2c62a31146b"
+                "6b81bc8a01c525d8"
             ],
             [
-                "276ab966afd5e0f9"
+                "0de1a81dd7644afc"
             ],
             [
-                "3558695087d0fa53"
+                "776dedfbba2c68ec"
             ],
             [
-                "21c53d52d5277b4c"
+                "b314af61e3fe5e68"
             ]
         ],
         "info": "Trigger evening lighting automation for the specified `theme`."
     },
     {
-        "id": "961b3a3f24cec00c",
-        "type": "link out",
-        "z": "448b73182a92925c",
-        "g": "60e4d1c056ed3a0c",
-        "name": "turn off all lighting",
-        "mode": "link",
-        "links": [
-            "2bb38044a932fa69",
-            "52f0cba3f9b87632",
-            "df41f3a116d28de2"
-        ],
-        "x": 635,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "c6c885de97bd8e99",
-        "type": "link out",
-        "z": "448b73182a92925c",
-        "g": "60e4d1c056ed3a0c",
-        "name": "activate night light scene",
-        "mode": "link",
-        "links": [
-            "012902774c9657f1",
-            "0acba8178934baa1",
-            "2bb38044a932fa69"
-        ],
-        "x": 635,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "43ec488110790f7e",
-        "type": "link out",
-        "z": "448b73182a92925c",
-        "g": "60e4d1c056ed3a0c",
-        "name": "activate interior evening scene",
-        "mode": "link",
-        "links": [
-            "fe5fdd858e8b907d"
-        ],
-        "x": 635,
-        "y": 220,
-        "wires": []
-    },
-    {
-        "id": "5074d2c62a31146b",
-        "type": "link out",
-        "z": "448b73182a92925c",
-        "g": "60e4d1c056ed3a0c",
-        "name": "activate exterior tribal scene",
-        "mode": "link",
-        "links": [
-            "510f4653645e17d0"
-        ],
-        "x": 835,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "276ab966afd5e0f9",
-        "type": "link out",
-        "z": "448b73182a92925c",
-        "g": "60e4d1c056ed3a0c",
-        "name": "activate exterior spooky scene",
-        "mode": "link",
-        "links": [
-            "feaf54e6c16337c1"
-        ],
-        "x": 835,
-        "y": 120,
-        "wires": []
-    },
-    {
-        "id": "3558695087d0fa53",
-        "type": "link out",
-        "z": "448b73182a92925c",
-        "g": "60e4d1c056ed3a0c",
-        "name": "activate exterior jolly scene",
-        "mode": "link",
-        "links": [
-            "cb0bc87b9e465a2f"
-        ],
-        "x": 835,
-        "y": 160,
-        "wires": []
-    },
-    {
-        "id": "21c53d52d5277b4c",
-        "type": "link out",
-        "z": "448b73182a92925c",
-        "g": "60e4d1c056ed3a0c",
-        "name": "activate exterior standard scene",
-        "mode": "link",
-        "links": [
-            "b11c745f6ce17117"
-        ],
-        "x": 835,
-        "y": 200,
-        "wires": []
-    },
-    {
-        "id": "2bb38044a932fa69",
-        "type": "link in",
-        "z": "448b73182a92925c",
-        "g": "f8dce80b21d7f706",
-        "name": "yard off",
-        "links": [
-            "708d354d950d19eb",
-            "97109be4ca9dbd4b",
-            "a1db3da3b816bb81",
-            "40d535f9f0dc79c3",
-            "c50a9ab8c6e28b16",
-            "961b3a3f24cec00c",
-            "6a2af355c7e5c74b",
-            "c6c885de97bd8e99"
-        ],
-        "x": 735,
-        "y": 380,
-        "wires": [
-            [
-                "64a68d2a2d2e93cd"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "64a68d2a2d2e93cd",
+        "id": "6b81bc8a01c525d8",
         "type": "change",
         "z": "448b73182a92925c",
-        "g": "f8dce80b21d7f706",
-        "name": "off",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"on\":{\"on\":false}}",
-                "tot": "json"
-            },
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "resource/grouped_light/bad8480b-b404-42d1-a9e7-a4a69f400971",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "method",
-                "pt": "msg",
-                "to": "PUT",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 850,
-        "y": 380,
-        "wires": [
-            [
-                "cfbe73c13aeb3e35"
-            ]
-        ],
-        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill turn off the lights in the _Yard_ \"room\"."
-    },
-    {
-        "id": "b11c745f6ce17117",
-        "type": "link in",
-        "z": "448b73182a92925c",
-        "g": "f8dce80b21d7f706",
-        "name": "yard sunset",
-        "links": [
-            "1e2c3cc4b2754bfd",
-            "70e1b215df27b7fd",
-            "d8ca66b40ecd68e4",
-            "21c53d52d5277b4c"
-        ],
-        "x": 735,
-        "y": 540,
-        "wires": [
-            [
-                "7e843abc77537f92"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "7e843abc77537f92",
-        "type": "change",
-        "z": "448b73182a92925c",
-        "g": "f8dce80b21d7f706",
-        "name": "sunset",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "resource/scene/9b6935e2-f8ed-4f91-83a2-2bff1850da99",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"recall\":{\"action\":\"dynamic_palette\"}}",
-                "tot": "json"
-            },
-            {
-                "t": "set",
-                "p": "method",
-                "pt": "msg",
-                "to": "PUT",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 850,
-        "y": 540,
-        "wires": [
-            [
-                "cfbe73c13aeb3e35"
-            ]
-        ],
-        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Yard_ \"room's\" _Sunset_ scene."
-    },
-    {
-        "id": "510f4653645e17d0",
-        "type": "link in",
-        "z": "448b73182a92925c",
-        "g": "f8dce80b21d7f706",
+        "g": "60e4d1c056ed3a0c",
         "name": "yard tribal",
-        "links": [
-            "72b67acee9086432",
-            "f339be9fba5ba6ec",
-            "c5c529cdf8b84719",
-            "5074d2c62a31146b"
-        ],
-        "x": 735,
-        "y": 420,
-        "wires": [
-            [
-                "67013f62ca5bcb43"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "67013f62ca5bcb43",
-        "type": "change",
-        "z": "448b73182a92925c",
-        "g": "f8dce80b21d7f706",
-        "name": "tribal",
         "rules": [
             {
                 "t": "set",
@@ -3937,42 +3323,21 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 850,
-        "y": 420,
+        "x": 940,
+        "y": 260,
         "wires": [
             [
-                "cfbe73c13aeb3e35"
+                "28d0a7dae21e1fcf"
             ]
         ],
         "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Yard_ \"room's\" _Tribal_ scene."
     },
     {
-        "id": "feaf54e6c16337c1",
-        "type": "link in",
-        "z": "448b73182a92925c",
-        "g": "f8dce80b21d7f706",
-        "name": "yard spooky",
-        "links": [
-            "dc256829240ace2c",
-            "f3c3179450c625bd",
-            "99e93917a5c68492",
-            "276ab966afd5e0f9"
-        ],
-        "x": 735,
-        "y": 460,
-        "wires": [
-            [
-                "d92030613c5ce50e"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "d92030613c5ce50e",
+        "id": "0de1a81dd7644afc",
         "type": "change",
         "z": "448b73182a92925c",
-        "g": "f8dce80b21d7f706",
-        "name": "spooky",
+        "g": "60e4d1c056ed3a0c",
+        "name": "yard spooky",
         "rules": [
             {
                 "t": "set",
@@ -4001,42 +3366,21 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 840,
-        "y": 460,
+        "x": 930,
+        "y": 300,
         "wires": [
             [
-                "cfbe73c13aeb3e35"
+                "28d0a7dae21e1fcf"
             ]
         ],
         "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Yard_ \"room's\" _Spooky_ scene."
     },
     {
-        "id": "cb0bc87b9e465a2f",
-        "type": "link in",
-        "z": "448b73182a92925c",
-        "g": "f8dce80b21d7f706",
-        "name": "yard jolly",
-        "links": [
-            "4c902e29f125424f",
-            "5432e91e8ec7e0ae",
-            "e4b5f430b3d0826a",
-            "3558695087d0fa53"
-        ],
-        "x": 735,
-        "y": 500,
-        "wires": [
-            [
-                "da79b96d161e1c28"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "da79b96d161e1c28",
+        "id": "776dedfbba2c68ec",
         "type": "change",
         "z": "448b73182a92925c",
-        "g": "f8dce80b21d7f706",
-        "name": "jolly",
+        "g": "60e4d1c056ed3a0c",
+        "name": "yard jolly",
         "rules": [
             {
                 "t": "set",
@@ -4065,193 +3409,27 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 850,
-        "y": 500,
+        "x": 940,
+        "y": 340,
         "wires": [
             [
-                "cfbe73c13aeb3e35"
+                "28d0a7dae21e1fcf"
             ]
         ],
         "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Yard_ \"room's\" _Jolly_ scene."
     },
     {
-        "id": "cfbe73c13aeb3e35",
-        "type": "link call",
-        "z": "448b73182a92925c",
-        "g": "f8dce80b21d7f706",
-        "name": "",
-        "links": [
-            "f87cd6036de631b7"
-        ],
-        "linkType": "static",
-        "timeout": "30",
-        "x": 1110,
-        "y": 460,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "52f0cba3f9b87632",
-        "type": "link in",
-        "z": "448b73182a92925c",
-        "g": "b1ee6e019c90396d",
-        "name": "main floor off",
-        "links": [
-            "708d354d950d19eb",
-            "4fdd7be8efbd6674",
-            "40d535f9f0dc79c3",
-            "961b3a3f24cec00c"
-        ],
-        "x": 155,
-        "y": 420,
-        "wires": [
-            [
-                "72acc2a8bcbc1528"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "72acc2a8bcbc1528",
+        "id": "b314af61e3fe5e68",
         "type": "change",
         "z": "448b73182a92925c",
-        "g": "b1ee6e019c90396d",
-        "name": "off",
+        "g": "60e4d1c056ed3a0c",
+        "name": "yard sunset",
         "rules": [
             {
                 "t": "set",
                 "p": "topic",
                 "pt": "msg",
-                "to": "resource/grouped_light/9c1c7975-2f47-4552-bac8-c19b643cd678",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"on\":{\"on\":false}}",
-                "tot": "json"
-            },
-            {
-                "t": "set",
-                "p": "method",
-                "pt": "msg",
-                "to": "PUT",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 270,
-        "y": 420,
-        "wires": [
-            [
-                "b5961ce82d77690f"
-            ]
-        ],
-        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill turn off the lights in the _Main Floor_ zone."
-    },
-    {
-        "id": "0acba8178934baa1",
-        "type": "link in",
-        "z": "448b73182a92925c",
-        "g": "b1ee6e019c90396d",
-        "name": "main floor nightlight",
-        "links": [
-            "97109be4ca9dbd4b",
-            "472a921caf51348a",
-            "c50a9ab8c6e28b16",
-            "c6c885de97bd8e99"
-        ],
-        "x": 155,
-        "y": 380,
-        "wires": [
-            [
-                "1c5888bd24d0a311"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "1c5888bd24d0a311",
-        "type": "change",
-        "z": "448b73182a92925c",
-        "g": "b1ee6e019c90396d",
-        "name": "night light",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "resource/scene/48c39b9f-1599-4a5c-b7f6-bad6cad4029a",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"recall\":{\"action\":\"active\"}}",
-                "tot": "json"
-            },
-            {
-                "t": "set",
-                "p": "method",
-                "pt": "msg",
-                "to": "PUT",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 260,
-        "y": 380,
-        "wires": [
-            [
-                "b5961ce82d77690f"
-            ]
-        ],
-        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Main Floor_ zone's _Nightlight_ scene."
-    },
-    {
-        "id": "fe5fdd858e8b907d",
-        "type": "link in",
-        "z": "448b73182a92925c",
-        "g": "b1ee6e019c90396d",
-        "name": "main floor sunset",
-        "links": [
-            "af32bd7d7849f47b",
-            "82d25a034e8e45d6",
-            "ce777904bf6154e9",
-            "43ec488110790f7e"
-        ],
-        "x": 155,
-        "y": 460,
-        "wires": [
-            [
-                "64afce8ff0b75f48"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "64afce8ff0b75f48",
-        "type": "change",
-        "z": "448b73182a92925c",
-        "g": "b1ee6e019c90396d",
-        "name": "sunset",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "resource/scene/6eff0801-01e2-4803-9840-e31c06cee079",
+                "to": "resource/scene/9b6935e2-f8ed-4f91-83a2-2bff1850da99",
                 "tot": "str"
             },
             {
@@ -4274,124 +3452,21 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 270,
-        "y": 460,
+        "x": 930,
+        "y": 380,
         "wires": [
             [
-                "b5961ce82d77690f"
+                "28d0a7dae21e1fcf"
             ]
         ],
-        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Main Floor_ zone's _Sunset_ scene."
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Yard_ \"room's\" _Sunset_ scene."
     },
     {
-        "id": "b5961ce82d77690f",
-        "type": "link call",
-        "z": "448b73182a92925c",
-        "g": "b1ee6e019c90396d",
-        "name": "",
-        "links": [
-            "f87cd6036de631b7"
-        ],
-        "linkType": "static",
-        "timeout": "30",
-        "x": 490,
-        "y": 420,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "df41f3a116d28de2",
-        "type": "link in",
-        "z": "448b73182a92925c",
-        "g": "f848d645bd1abc5b",
-        "name": "main bathroom off",
-        "links": [
-            "708d354d950d19eb",
-            "73f8e53c0f7616d7",
-            "40d535f9f0dc79c3",
-            "961b3a3f24cec00c"
-        ],
-        "x": 155,
-        "y": 600,
-        "wires": [
-            [
-                "a122f1a4fc3399e5"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "a122f1a4fc3399e5",
+        "id": "5720dd9348b987ef",
         "type": "change",
         "z": "448b73182a92925c",
-        "g": "f848d645bd1abc5b",
-        "name": "off",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "{\"on\":{\"on\":false}}",
-                "tot": "json"
-            },
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "resource/grouped_light/aea74e74-d544-4d08-ad71-3b6665045256",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "method",
-                "pt": "msg",
-                "to": "PUT",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 270,
-        "y": 600,
-        "wires": [
-            [
-                "a3ebd5d5a2bab049"
-            ]
-        ],
-        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill turn off the lights in the _Main Bathroom_."
-    },
-    {
-        "id": "012902774c9657f1",
-        "type": "link in",
-        "z": "448b73182a92925c",
-        "g": "f848d645bd1abc5b",
+        "g": "60e4d1c056ed3a0c",
         "name": "main bathroom nightlight",
-        "links": [
-            "97109be4ca9dbd4b",
-            "9780606e5aa9bc42",
-            "0b5bbb0a5f24ef74",
-            "c50a9ab8c6e28b16",
-            "c6c885de97bd8e99"
-        ],
-        "x": 155,
-        "y": 560,
-        "wires": [
-            [
-                "90cec6147a7de28f"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
-    },
-    {
-        "id": "90cec6147a7de28f",
-        "type": "change",
-        "z": "448b73182a92925c",
-        "g": "f848d645bd1abc5b",
-        "name": "night light",
         "rules": [
             {
                 "t": "set",
@@ -4420,30 +3495,607 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 260,
-        "y": 560,
+        "x": 750,
+        "y": 440,
         "wires": [
             [
-                "a3ebd5d5a2bab049"
+                "ece9e398ddf1a6a0"
             ]
         ],
         "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Main Bathroom_'s _Nightlight_ scene."
     },
     {
-        "id": "a3ebd5d5a2bab049",
+        "id": "c2ebf6c0d74ad0e4",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "main floor sunset",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/scene/6eff0801-01e2-4803-9840-e31c06cee079",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"recall\":{\"action\":\"dynamic_palette\"}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 200,
+        "wires": [
+            [
+                "e69068dc88fed591"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Main Floor_ zone's _Sunset_ scene."
+    },
+    {
+        "id": "4e1d20e601e89e22",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "main floor nightlight",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/scene/48c39b9f-1599-4a5c-b7f6-bad6cad4029a",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"recall\":{\"action\":\"active\"}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 770,
+        "y": 480,
+        "wires": [
+            [
+                "ece9e398ddf1a6a0"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill activate the _Main Floor_ zone's _Nightlight_ scene."
+    },
+    {
+        "id": "c92600f6307981f9",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "main floor off",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/grouped_light/9c1c7975-2f47-4552-bac8-c19b643cd678",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"on\":{\"on\":false}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 100,
+        "wires": [
+            [
+                "fa502f5378dbe770"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill turn off the lights in the _Main Floor_ zone."
+    },
+    {
+        "id": "c015dc9dbd457ad9",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "main bathroom off",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"on\":{\"on\":false}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/grouped_light/aea74e74-d544-4d08-ad71-3b6665045256",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 140,
+        "wires": [
+            [
+                "fa502f5378dbe770"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill turn off the lights in the _Main Bathroom_."
+    },
+    {
+        "id": "e69068dc88fed591",
         "type": "link call",
         "z": "448b73182a92925c",
-        "g": "f848d645bd1abc5b",
+        "g": "60e4d1c056ed3a0c",
         "name": "",
         "links": [
             "f87cd6036de631b7"
         ],
         "linkType": "static",
         "timeout": "30",
-        "x": 470,
-        "y": 580,
+        "x": 970,
+        "y": 200,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "ece9e398ddf1a6a0",
+        "type": "link call",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "",
+        "links": [
+            "f87cd6036de631b7"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 1030,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "fa502f5378dbe770",
+        "type": "link call",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "",
+        "links": [
+            "f87cd6036de631b7"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 970,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "28d0a7dae21e1fcf",
+        "type": "link call",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "",
+        "links": [
+            "f87cd6036de631b7"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 1210,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a9a05d5f14d5310e",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "49f5aae09949b530",
+        "name": "trigger shades",
+        "links": [
+            "6a14f93e5d6efc13"
+        ],
+        "x": 155,
+        "y": 680,
+        "wires": [
+            [
+                "31e39e81f78fa235"
+            ]
+        ]
+    },
+    {
+        "id": "31e39e81f78fa235",
+        "type": "switch",
+        "z": "448b73182a92925c",
+        "g": "49f5aae09949b530",
+        "name": "payload.shades",
+        "property": "payload.shades",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 280,
+        "y": 680,
+        "wires": [
+            [
+                "37bac7a6b658ade4"
+            ]
+        ],
+        "info": "Block unless shades automation is enabled by a user."
+    },
+    {
+        "id": "37bac7a6b658ade4",
+        "type": "switch",
+        "z": "448b73182a92925c",
+        "g": "49f5aae09949b530",
+        "name": "payload.time",
+        "property": "payload.time",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "morning",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "midday",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "afternoon",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "night",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "repair": false,
+        "outputs": 4,
+        "x": 450,
+        "y": 680,
+        "wires": [
+            [
+                "6a9ac472018c38ea"
+            ],
+            [
+                "c8c9c1f0d8b62902"
+            ],
+            [
+                "9e961b1409432775"
+            ],
+            [
+                "db4f7c2c93cd8f30"
+            ]
+        ],
+        "info": "Trigger window shades automation for the specified `time`."
+    },
+    {
+        "id": "ec730ac674a50f58",
+        "type": "link out",
+        "z": "448b73182a92925c",
+        "g": "49f5aae09949b530",
+        "name": "activate morning shades scene",
+        "mode": "link",
+        "links": [
+            "8810232073bb1f9d",
+            "689bb9bf9977b2c7"
+        ],
+        "x": 855,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "6a9ac472018c38ea",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "49f5aae09949b530",
+        "name": "Morning Shades",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "56393",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 680,
+        "y": 620,
+        "wires": [
+            [
+                "ec730ac674a50f58"
+            ]
+        ],
+        "info": "Set `msg.payload` to the scene id for _Morning Shades_."
+    },
+    {
+        "id": "c8c9c1f0d8b62902",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "49f5aae09949b530",
+        "name": "Open All Shades",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "7307",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 660,
+        "wires": [
+            [
+                "ec730ac674a50f58"
+            ]
+        ],
+        "info": "Set `msg.payload` to the scene id for _Open All Shades_."
+    },
+    {
+        "id": "9e961b1409432775",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "49f5aae09949b530",
+        "name": "Afternoon Shades",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "42686",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 700,
+        "wires": [
+            [
+                "ec730ac674a50f58"
+            ]
+        ],
+        "info": "Set `msg.payload` to the scene id for _Afternoon Shades_."
+    },
+    {
+        "id": "db4f7c2c93cd8f30",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "49f5aae09949b530",
+        "name": "Close All Shades",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "15208",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 670,
+        "y": 740,
+        "wires": [
+            [
+                "ec730ac674a50f58"
+            ]
+        ],
+        "info": "Set `msg.payload` to the scene id for _Close All Shades_."
+    },
+    {
+        "id": "9fff86ab30bd6e09",
+        "type": "comment",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "https://developers.meethue.com/develop/hue-api-v2/",
+        "info": "",
+        "x": 290,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "cd74e5b3da0290a6",
+        "type": "comment",
+        "z": "448b73182a92925c",
+        "g": "49f5aae09949b530",
+        "name": "https://motorisation.hde.nl/hd/powerview/general-guides/API/",
+        "info": "",
+        "x": 320,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "59515344b6be644c",
+        "type": "link in",
+        "z": "448b73182a92925c",
+        "g": "fc46f09965539057",
+        "name": "yard off",
+        "links": [],
+        "x": 155,
+        "y": 480,
+        "wires": [
+            [
+                "d16bfe986e4d4a68"
+            ]
+        ]
+    },
+    {
+        "id": "d16bfe986e4d4a68",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "fc46f09965539057",
+        "name": "yard off",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"on\":{\"on\":false}}",
+                "tot": "json"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "resource/grouped_light/bad8480b-b404-42d1-a9e7-a4a69f400971",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "method",
+                "pt": "msg",
+                "to": "PUT",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 260,
+        "y": 480,
+        "wires": [
+            [
+                "945e6e160c72332c"
+            ]
+        ],
+        "info": "Set `msg.topic`, `msg.payload` and `msg.method` to the values that\nwill turn off the lights in the _Yard_ \"room\"."
+    },
+    {
+        "id": "945e6e160c72332c",
+        "type": "link out",
+        "z": "448b73182a92925c",
+        "g": "fc46f09965539057",
+        "name": "yard off",
+        "mode": "return",
+        "links": [],
+        "x": 355,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "e913f94a740c212f",
+        "type": "link call",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "",
+        "links": [
+            "59515344b6be644c"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 740,
+        "y": 60,
+        "wires": [
+            [
+                "fa502f5378dbe770"
+            ]
+        ]
+    },
+    {
+        "id": "91fe88dbcdcfd5fc",
+        "type": "link call",
+        "z": "448b73182a92925c",
+        "g": "60e4d1c056ed3a0c",
+        "name": "",
+        "links": [
+            "59515344b6be644c"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 800,
+        "y": 520,
+        "wires": [
+            [
+                "ece9e398ddf1a6a0"
+            ]
         ]
     },
     {
@@ -4465,7 +4117,7 @@
         "allowrate": true,
         "outputs": 1,
         "x": 250,
-        "y": 80,
+        "y": 180,
         "wires": [
             [
                 "413305fe8cf8bc16"
@@ -4491,7 +4143,7 @@
         "senderr": false,
         "headers": [],
         "x": 410,
-        "y": 80,
+        "y": 180,
         "wires": [
             [
                 "3b9aea255e25c86d",
@@ -4513,7 +4165,7 @@
         "finalize": "",
         "libs": [],
         "x": 590,
-        "y": 100,
+        "y": 200,
         "wires": [
             [
                 "b528e18246309ead"
@@ -4531,7 +4183,7 @@
         "g": "eaaca1e226cc9251",
         "name": "",
         "x": 750,
-        "y": 100,
+        "y": 200,
         "wires": [],
         "info": "Display error messages on the dashboard and in the debug pane."
     },
@@ -4544,7 +4196,7 @@
         "mode": "return",
         "links": [],
         "x": 515,
-        "y": 60,
+        "y": 160,
         "wires": []
     },
     {
@@ -4555,7 +4207,7 @@
         "name": "send to powerview",
         "links": [],
         "x": 135,
-        "y": 80,
+        "y": 180,
         "wires": [
             [
                 "70e42b6637f4c865"
@@ -4583,7 +4235,7 @@
         "to": "",
         "reg": false,
         "x": 250,
-        "y": 260,
+        "y": 360,
         "wires": [
             [
                 "a2ce2f10f0cbc3b4"
@@ -4603,7 +4255,7 @@
         "linkType": "static",
         "timeout": "30",
         "x": 430,
-        "y": 260,
+        "y": 360,
         "wires": [
             [
                 "4597056c8e33d1d2"
@@ -4631,7 +4283,7 @@
         "to": "",
         "reg": false,
         "x": 620,
-        "y": 260,
+        "y": 360,
         "wires": [
             [
                 "a4b2cb7314b93cec"
@@ -4652,7 +4304,7 @@
         "stream": false,
         "addname": "",
         "x": 770,
-        "y": 260,
+        "y": 360,
         "wires": [
             [
                 "e89d138990a2c571"
@@ -4681,7 +4333,7 @@
         "to": "",
         "reg": false,
         "x": 920,
-        "y": 260,
+        "y": 360,
         "wires": [
             [
                 "09ed6328f31946db"
@@ -4711,7 +4363,7 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 1070,
-        "y": 260,
+        "y": 360,
         "wires": [
             [
                 "ca455aa5752d94d8"
@@ -4740,7 +4392,7 @@
         "to": "",
         "reg": false,
         "x": 250,
-        "y": 320,
+        "y": 420,
         "wires": [
             [
                 "b3fa2dd0b396e5ba"
@@ -4760,7 +4412,7 @@
         "linkType": "static",
         "timeout": "30",
         "x": 430,
-        "y": 320,
+        "y": 420,
         "wires": [
             [
                 "7379bd9759e06a98"
@@ -4788,7 +4440,7 @@
         "to": "",
         "reg": false,
         "x": 620,
-        "y": 320,
+        "y": 420,
         "wires": [
             [
                 "fa994326c2180556"
@@ -4809,7 +4461,7 @@
         "stream": false,
         "addname": "",
         "x": 770,
-        "y": 320,
+        "y": 420,
         "wires": [
             [
                 "97d89691a9505bb9"
@@ -4838,7 +4490,7 @@
         "to": "",
         "reg": false,
         "x": 920,
-        "y": 320,
+        "y": 420,
         "wires": [
             [
                 "23ce9cde77523965"
@@ -4868,7 +4520,7 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 1070,
-        "y": 320,
+        "y": 420,
         "wires": [
             [
                 "b3b32f662f388893"
@@ -4898,7 +4550,7 @@
         "to": "",
         "reg": false,
         "x": 1210,
-        "y": 260,
+        "y": 360,
         "wires": [
             [
                 "78a3fbe808d63c4c"
@@ -4917,7 +4569,7 @@
             "b6e07b7b99531b02"
         ],
         "x": 1315,
-        "y": 260,
+        "y": 360,
         "wires": []
     },
     {
@@ -4931,7 +4583,7 @@
             "d3e8ba34d44f67aa"
         ],
         "x": 135,
-        "y": 320,
+        "y": 420,
         "wires": [
             [
                 "a4115f1a663ecf84"
@@ -4949,7 +4601,7 @@
             "b6e07b7b99531b02"
         ],
         "x": 1315,
-        "y": 320,
+        "y": 420,
         "wires": []
     },
     {
@@ -4963,7 +4615,7 @@
             "78a3fbe808d63c4c"
         ],
         "x": 135,
-        "y": 380,
+        "y": 480,
         "wires": [
             [
                 "75f0adce74746386"
@@ -4992,7 +4644,7 @@
         "to": "",
         "reg": false,
         "x": 1210,
-        "y": 320,
+        "y": 420,
         "wires": [
             [
                 "9950e52333199d8f"
@@ -5013,7 +4665,7 @@
         "finalize": "",
         "libs": [],
         "x": 380,
-        "y": 380,
+        "y": 480,
         "wires": [
             [
                 "0a9432f7e85182e1"
@@ -5038,7 +4690,7 @@
         "templateScope": "local",
         "className": "",
         "x": 560,
-        "y": 380,
+        "y": 480,
         "wires": [
             [
                 "6f2a76cdcf373136"
@@ -5057,7 +4709,7 @@
             "689bb9bf9977b2c7"
         ],
         "x": 675,
-        "y": 380,
+        "y": 480,
         "wires": []
     },
     {
@@ -5071,7 +4723,7 @@
             "d3e8ba34d44f67aa"
         ],
         "x": 135,
-        "y": 260,
+        "y": 360,
         "wires": [
             [
                 "02eb116aa3a7efad"
@@ -5100,7 +4752,7 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 230,
-        "y": 380,
+        "y": 480,
         "wires": [
             [
                 "7fb1bd1acb1ca5f7"
@@ -5113,10 +4765,101 @@
         "type": "comment",
         "z": "dcb190a34f9985d0",
         "g": "74348749d23b9082",
-        "name": "assumes ${POWERVIEW_ADDRESS} is defined (see https://motorisation.hde.nl/hd/powerview/general-guides/API/)",
+        "name": "assumes ${POWERVIEW_ADDRESS} is defined",
         "info": "",
-        "x": 510,
-        "y": 200,
+        "x": 300,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "b6ce3321e4119a91",
+        "type": "change",
+        "z": "dcb190a34f9985d0",
+        "g": "2d9ad017d6aeb18f",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "'http://' & $env('POWERVIEW_ADDRESS') & '/api/scenes?sceneId=' & payload",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 250,
+        "y": 620,
+        "wires": [
+            [
+                "26124b0246ef158d"
+            ]
+        ],
+        "info": "Set `msg.url` to the URL with query string to activate the scene\nspecified by `msg.payload` using the IP address specified by the\nenvironment variable named `POWERVIEW_ADDRESS`."
+    },
+    {
+        "id": "689bb9bf9977b2c7",
+        "type": "link in",
+        "z": "dcb190a34f9985d0",
+        "g": "2d9ad017d6aeb18f",
+        "name": "activate powerview scene",
+        "links": [
+            "81d6c43098a91e64",
+            "6f2a76cdcf373136",
+            "ec730ac674a50f58",
+            "4517f2c78c9498d7",
+            "3d7ec93adc3b5b60",
+            "bbbb4e53c2082d73"
+        ],
+        "x": 145,
+        "y": 620,
+        "wires": [
+            [
+                "b6ce3321e4119a91"
+            ]
+        ],
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "26124b0246ef158d",
+        "type": "link call",
+        "z": "dcb190a34f9985d0",
+        "g": "2d9ad017d6aeb18f",
+        "name": "",
+        "links": [
+            "a250d71416af8250"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 430,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e90c8c66623d3a7b",
+        "type": "comment",
+        "z": "dcb190a34f9985d0",
+        "g": "2d9ad017d6aeb18f",
+        "name": "assumes ${POWERVIEW_ADDRESS} is defined",
+        "info": "",
+        "x": 300,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "74e55c13e48dd047",
+        "type": "comment",
+        "z": "dcb190a34f9985d0",
+        "g": "da437f2ac1efc073",
+        "name": "https://motorisation.hde.nl/hd/powerview/general-guides/API/",
+        "info": "",
+        "x": 340,
+        "y": 60,
         "wires": []
     },
     {
