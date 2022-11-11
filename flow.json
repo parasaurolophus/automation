@@ -94,11 +94,11 @@
         ],
         "out": [
             {
-                "x": 780,
+                "x": 940,
                 "y": 100,
                 "wires": [
                     {
-                        "id": "834d9349d1ebe8de",
+                        "id": "907c3a162e221669",
                         "port": 0
                     }
                 ]
@@ -457,14 +457,13 @@
             "ece9e398ddf1a6a0",
             "fa502f5378dbe770",
             "28d0a7dae21e1fcf",
-            "9fff86ab30bd6e09",
             "e913f94a740c212f",
             "91fe88dbcdcfd5fc",
             "59515344b6be644c",
             "d16bfe986e4d4a68",
             "945e6e160c72332c"
         ],
-        "x": 74,
+        "x": 94,
         "y": 19
     },
     {
@@ -700,9 +699,7 @@
             }
         ],
         "x": 514,
-        "y": 379,
-        "w": 792,
-        "h": 342
+        "y": 379
     },
     {
         "id": "d6d68c481562616a",
@@ -791,10 +788,9 @@
             "6a9ac472018c38ea",
             "c8c9c1f0d8b62902",
             "9e961b1409432775",
-            "db4f7c2c93cd8f30",
-            "cd74e5b3da0290a6"
+            "db4f7c2c93cd8f30"
         ],
-        "x": 74,
+        "x": 94,
         "y": 579
     },
     {
@@ -836,9 +832,7 @@
             "1180af1e760ed933"
         ],
         "x": 14,
-        "y": 19,
-        "w": 492,
-        "h": 122
+        "y": 19
     },
     {
         "id": "f773f7f5615b8215",
@@ -890,9 +884,7 @@
             }
         ],
         "x": 514,
-        "y": 19,
-        "w": 832,
-        "h": 342
+        "y": 19
     },
     {
         "id": "7ed122d84c5e7167",
@@ -916,7 +908,8 @@
         "y": 140,
         "wires": [
             [
-                "b00c5123ccc7aca8"
+                "b00c5123ccc7aca8",
+                "907c3a162e221669"
             ]
         ]
     },
@@ -1269,19 +1262,19 @@
         "y": 140,
         "wires": [
             [
-                "4585854e9c80742e"
+                "391066e787482e4e"
             ],
             [
-                "69ef20c042513eec"
+                "5eb790bedf5af742"
             ],
             [
-                "621754612c4b4783"
+                "6210109bc86af3d6"
             ],
             [
-                "28f1f48654f5d897"
+                "c003bae9b06f729e"
             ],
             [
-                "d93ad1b014d6eaf4"
+                "54ca900f5d16ed6c"
             ]
         ],
         "info": "Select the string representation of `EventSource.readyState` based on\nits numeric value."
@@ -1315,169 +1308,6 @@
         "info": "Parse `msg.status.text` as a number in `msg.payload`."
     },
     {
-        "id": "4585854e9c80742e",
-        "type": "change",
-        "z": "a0b7d0294edc5956",
-        "name": "unitialized",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "unitialized",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "className",
-                "pt": "msg",
-                "to": "${CLASS}-white",
-                "tot": "env"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 560,
-        "y": 60,
-        "wires": [
-            [
-                "834d9349d1ebe8de"
-            ]
-        ]
-    },
-    {
-        "id": "69ef20c042513eec",
-        "type": "change",
-        "z": "a0b7d0294edc5956",
-        "name": "connecting",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "connecting",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "className",
-                "pt": "msg",
-                "to": "${CLASS}-yellow",
-                "tot": "env"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 550,
-        "y": 100,
-        "wires": [
-            [
-                "834d9349d1ebe8de"
-            ]
-        ]
-    },
-    {
-        "id": "621754612c4b4783",
-        "type": "change",
-        "z": "a0b7d0294edc5956",
-        "name": "connected",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "connected",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "className",
-                "pt": "msg",
-                "to": "${CLASS}-green",
-                "tot": "env"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 550,
-        "y": 140,
-        "wires": [
-            [
-                "834d9349d1ebe8de"
-            ]
-        ]
-    },
-    {
-        "id": "28f1f48654f5d897",
-        "type": "change",
-        "z": "a0b7d0294edc5956",
-        "name": "failed",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "failed",
-                "tot": "str"
-            },
-            {
-                "t": "set",
-                "p": "className",
-                "pt": "msg",
-                "to": "${CLASS}-red",
-                "tot": "env"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 570,
-        "y": 180,
-        "wires": [
-            [
-                "834d9349d1ebe8de"
-            ]
-        ]
-    },
-    {
-        "id": "d93ad1b014d6eaf4",
-        "type": "change",
-        "z": "a0b7d0294edc5956",
-        "name": "invalid",
-        "rules": [
-            {
-                "t": "set",
-                "p": "className",
-                "pt": "msg",
-                "to": "${CLASS}-grey",
-                "tot": "env"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 570,
-        "y": 220,
-        "wires": [
-            [
-                "834d9349d1ebe8de"
-            ]
-        ]
-    },
-    {
         "id": "b00c5123ccc7aca8",
         "type": "change",
         "z": "a0b7d0294edc5956",
@@ -1502,6 +1332,164 @@
             []
         ],
         "info": "Convert the string representation of the `EventSource.readyState` back\ninto this subflow's status."
+    },
+    {
+        "id": "907c3a162e221669",
+        "type": "delay",
+        "z": "a0b7d0294edc5956",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 830,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "391066e787482e4e",
+        "type": "change",
+        "z": "a0b7d0294edc5956",
+        "name": "Unitialized",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "<i class=\"${CLASS}-white fa fa-circle-o\"></i>&nbsp;Unitialized",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 60,
+        "wires": [
+            [
+                "834d9349d1ebe8de"
+            ]
+        ]
+    },
+    {
+        "id": "5eb790bedf5af742",
+        "type": "change",
+        "z": "a0b7d0294edc5956",
+        "name": "Connecting",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "<i class=\"${CLASS}-yellow fa fa-circle-o-notch fa-spin fa-fw\"></i>&nbsp;Connecting",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 100,
+        "wires": [
+            [
+                "834d9349d1ebe8de"
+            ]
+        ]
+    },
+    {
+        "id": "6210109bc86af3d6",
+        "type": "change",
+        "z": "a0b7d0294edc5956",
+        "name": "Connected",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "<i class=\"${CLASS}-green fa fa-circle\"></i>&nbsp;Connected",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 140,
+        "wires": [
+            [
+                "834d9349d1ebe8de"
+            ]
+        ]
+    },
+    {
+        "id": "c003bae9b06f729e",
+        "type": "change",
+        "z": "a0b7d0294edc5956",
+        "name": "Failed",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "<i class=\"${CLASS}-red fa fa-circle-o\"></i>&nbsp;Failed",
+                "tot": "env"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 180,
+        "wires": [
+            [
+                "834d9349d1ebe8de"
+            ]
+        ]
+    },
+    {
+        "id": "54ca900f5d16ed6c",
+        "type": "change",
+        "z": "a0b7d0294edc5956",
+        "name": "Invalid",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "'<i class=\"' & $env('CLASS') & '-grey fa fa-ban\"></i>&nbsp;' & payload",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 220,
+        "wires": [
+            [
+                "834d9349d1ebe8de"
+            ]
+        ]
     },
     {
         "id": "07d9702ee21263d3",
@@ -2688,11 +2676,10 @@
         "name": "refresh",
         "mode": "link",
         "links": [
+            "3f8329fdc5c54932",
             "8d7e72df780c1561",
             "915b3721df3bd41d",
-            "9b899812a51421bf",
-            "d857f6ba793e2430",
-            "3f8329fdc5c54932"
+            "9b899812a51421bf"
         ],
         "x": 1235,
         "y": 320,
@@ -3660,7 +3647,7 @@
         "links": [
             "6a14f93e5d6efc13"
         ],
-        "x": 155,
+        "x": 135,
         "y": 680,
         "wires": [
             [
@@ -3684,7 +3671,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 280,
+        "x": 260,
         "y": 680,
         "wires": [
             [
@@ -3726,7 +3713,7 @@
         "checkall": "false",
         "repair": false,
         "outputs": 4,
-        "x": 450,
+        "x": 430,
         "y": 680,
         "wires": [
             [
@@ -3755,7 +3742,7 @@
             "8810232073bb1f9d",
             "689bb9bf9977b2c7"
         ],
-        "x": 855,
+        "x": 835,
         "y": 680,
         "wires": []
     },
@@ -3779,7 +3766,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 680,
+        "x": 660,
         "y": 620,
         "wires": [
             [
@@ -3808,7 +3795,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 670,
+        "x": 650,
         "y": 660,
         "wires": [
             [
@@ -3837,7 +3824,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 670,
+        "x": 650,
         "y": 700,
         "wires": [
             [
@@ -3866,7 +3853,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 670,
+        "x": 650,
         "y": 740,
         "wires": [
             [
@@ -3876,35 +3863,13 @@
         "info": "Set `msg.payload` to the scene id for _Close All Shades_."
     },
     {
-        "id": "9fff86ab30bd6e09",
-        "type": "comment",
-        "z": "448b73182a92925c",
-        "g": "60e4d1c056ed3a0c",
-        "name": "https://developers.meethue.com/develop/hue-api-v2/",
-        "info": "",
-        "x": 290,
-        "y": 60,
-        "wires": []
-    },
-    {
-        "id": "cd74e5b3da0290a6",
-        "type": "comment",
-        "z": "448b73182a92925c",
-        "g": "49f5aae09949b530",
-        "name": "https://motorisation.hde.nl/hd/powerview/general-guides/API/",
-        "info": "",
-        "x": 320,
-        "y": 620,
-        "wires": []
-    },
-    {
         "id": "59515344b6be644c",
         "type": "link in",
         "z": "448b73182a92925c",
         "g": "60e4d1c056ed3a0c",
         "name": "yard off",
         "links": [],
-        "x": 155,
+        "x": 135,
         "y": 480,
         "wires": [
             [
@@ -3946,7 +3911,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 260,
+        "x": 240,
         "y": 480,
         "wires": [
             [
@@ -3963,7 +3928,7 @@
         "name": "yard off",
         "mode": "return",
         "links": [],
-        "x": 355,
+        "x": 335,
         "y": 480,
         "wires": []
     },
@@ -5267,7 +5232,7 @@
         "order": 1,
         "width": 0,
         "height": 0,
-        "format": "<style>\n    .ground-floor {\n        margin: 0;\n        position: relative;\n        height: 100%;\n    }\n\n    .ground-floor-centered {\n        margin: 0;\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n    }\n\n    .ground-floor-grey {\n        color: grey;\n    }\n\n    .ground-floor-white {\n        color: white;\n    }\n\n    .ground-floor-yellow {\n        color: yellow;\n    }\n\n    .ground-floor-green {\n        color: green;\n    }\n\n    .ground-floor-red {\n        color: red;\n    }\n</style>\n<div class=\"ground-floor-centered\" ng-bind-html=\"msg.payload\"></div>",
+        "format": "<style>\n    .ground-floor {\n        margin: 0;\n        position: relative;\n        height: 100%;\n    }\n\n    .ground-floor-centered {\n        margin: 0 0 0 1em;\n        position: absolute;\n        top: 50%;\n        transform: translateY(-50%);\n    }\n\n    .ground-floor-grey {\n        color: grey;\n    }\n\n    .ground-floor-white {\n        color: white;\n    }\n\n    .ground-floor-yellow {\n        color: yellow;\n    }\n\n    .ground-floor-green {\n        color: green;\n    }\n\n    .ground-floor-red {\n        color: red;\n    }\n</style>\n<div class=\"ground-floor-centered\" ng-bind-html=\"msg.payload\"></div>",
         "storeOutMessages": false,
         "fwdInMessages": false,
         "resendOnRefresh": true,
@@ -5289,7 +5254,7 @@
         "order": 1,
         "width": 0,
         "height": 0,
-        "format": "<style>\n    .basement {\n        margin: 0;\n        position: relative;\n        height: 100%;\n    }\n\n    .basement-centered {\n        margin: 0;\n        position: absolute;\n        top: 50%;\n        left: 50%;\n        transform: translate(-50%, -50%);\n    }\n\n    .basement-grey {\n        color: grey;\n    }\n\n    .basement-white {\n        color: white;\n    }\n\n    .basement-yellow {\n        color: yellow;\n    }\n\n    .basement-green {\n        color: green;\n    }\n\n    .basement-red {\n        color: red;\n    }\n</style>\n<div class=\"basement-centered\" ng-bind-html=\"msg.payload\"></div>",
+        "format": "<style>\n    .basement {\n        margin: 0;\n        position: relative;\n        height: 100%;\n    }\n\n    .basement-centered {\n        margin: 0 0 0 1em;\n        position: absolute;\n        top: 50%;\n        transform: translateY(-50%);\n    }\n\n    .basement-grey {\n        color: grey;\n    }\n\n    .basement-white {\n        color: white;\n    }\n\n    .basement-yellow {\n        color: yellow;\n    }\n\n    .basement-green {\n        color: green;\n    }\n\n    .basement-red {\n        color: red;\n    }\n</style>\n<div class=\"basement-centered\" ng-bind-html=\"msg.payload\"></div>",
         "storeOutMessages": false,
         "fwdInMessages": false,
         "resendOnRefresh": true,
