@@ -417,12 +417,16 @@
             "a3864a0d07101185",
             "6397de314a021b18",
             "26656249d7cbd1bd",
-            "7696fdb01e9be86c"
+            "7696fdb01e9be86c",
+            "04693ea2f7bf465c",
+            "01d2c99c33167e6c",
+            "0e762777dbfcb468",
+            "92f900d768071caa"
         ],
         "x": 14,
         "y": 19,
-        "w": 1262,
-        "h": 242
+        "w": 1282,
+        "h": 322
     },
     {
         "id": "60e4d1c056ed3a0c",
@@ -494,7 +498,7 @@
             "e6217093fd1deefe"
         ],
         "x": 14,
-        "y": 279,
+        "y": 359,
         "w": 582,
         "h": 262
     },
@@ -699,7 +703,9 @@
             }
         ],
         "x": 514,
-        "y": 379
+        "y": 379,
+        "w": 792,
+        "h": 342
     },
     {
         "id": "d6d68c481562616a",
@@ -810,8 +816,8 @@
             "1f1835bd1f7a046b",
             "d3e8ba34d44f67aa"
         ],
-        "x": 894,
-        "y": 279,
+        "x": 914,
+        "y": 359,
         "w": 382,
         "h": 82
     },
@@ -832,7 +838,9 @@
             "1180af1e760ed933"
         ],
         "x": 14,
-        "y": 19
+        "y": 19,
+        "w": 492,
+        "h": 122
     },
     {
         "id": "f773f7f5615b8215",
@@ -884,7 +892,9 @@
             }
         ],
         "x": 514,
-        "y": 19
+        "y": 19,
+        "w": 832,
+        "h": 342
     },
     {
         "id": "7ed122d84c5e7167",
@@ -2451,7 +2461,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 760,
-        "y": 160,
+        "y": 120,
         "wires": [
             [
                 "54c207974d22c913"
@@ -2476,7 +2486,8 @@
         "y": 200,
         "wires": [
             [
-                "54c207974d22c913"
+                "54c207974d22c913",
+                "04693ea2f7bf465c"
             ]
         ],
         "info": "Block for each topic unless the payload changes."
@@ -2489,7 +2500,7 @@
         "name": "assumes that a filesystem-backed context store exists named 'file'",
         "info": "",
         "x": 270,
-        "y": 320,
+        "y": 400,
         "wires": []
     },
     {
@@ -2529,7 +2540,7 @@
         "topicType": "msg",
         "className": "",
         "x": 370,
-        "y": 380,
+        "y": 460,
         "wires": [
             [
                 "3a210f7e37be9ff5"
@@ -2559,8 +2570,8 @@
         "topic": "",
         "payload": "",
         "payloadType": "date",
-        "x": 1000,
-        "y": 320,
+        "x": 1020,
+        "y": 400,
         "wires": [
             [
                 "1f1835bd1f7a046b"
@@ -2579,7 +2590,7 @@
             "5102d6facd1ff9a2"
         ],
         "x": 55,
-        "y": 380,
+        "y": 460,
         "wires": [
             [
                 "974cc61995ad786c"
@@ -2599,7 +2610,7 @@
             "8802b0ac9b530f7c"
         ],
         "x": 495,
-        "y": 380,
+        "y": 460,
         "wires": []
     },
     {
@@ -2659,8 +2670,8 @@
         "payloadType": "date",
         "topic": "refresh",
         "topicType": "str",
-        "x": 1140,
-        "y": 320,
+        "x": 1160,
+        "y": 400,
         "wires": [
             [
                 "d3e8ba34d44f67aa"
@@ -2681,8 +2692,8 @@
             "915b3721df3bd41d",
             "9b899812a51421bf"
         ],
-        "x": 1235,
-        "y": 320,
+        "x": 1255,
+        "y": 400,
         "wires": []
     },
     {
@@ -2706,8 +2717,8 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 910,
-        "y": 180,
+        "x": 930,
+        "y": 160,
         "wires": [
             [
                 "c45a75a4ea70bf3a"
@@ -2732,8 +2743,8 @@
                 "module": "suncalc"
             }
         ],
-        "x": 1030,
-        "y": 180,
+        "x": 1050,
+        "y": 160,
         "wires": [
             [
                 "a3864a0d07101185"
@@ -2754,10 +2765,11 @@
         "links": [
             "8083b56440c292c8",
             "a9a05d5f14d5310e",
-            "64fa5f1cef66ef07"
+            "64fa5f1cef66ef07",
+            "0e762777dbfcb468"
         ],
-        "x": 1235,
-        "y": 180,
+        "x": 1255,
+        "y": 160,
         "wires": []
     },
     {
@@ -2772,7 +2784,7 @@
             "2426a08e2a2b03ac"
         ],
         "x": 55,
-        "y": 440,
+        "y": 520,
         "wires": [
             [
                 "6ac690b97c6f499a"
@@ -2808,7 +2820,7 @@
         "animate": false,
         "className": "",
         "x": 420,
-        "y": 440,
+        "y": 520,
         "wires": [
             [
                 "e15932987c8aeb5e"
@@ -2828,7 +2840,7 @@
             "829d6487fc430502"
         ],
         "x": 555,
-        "y": 440,
+        "y": 520,
         "wires": []
     },
     {
@@ -2843,7 +2855,7 @@
             "f1e8d4076621b4b4"
         ],
         "x": 65,
-        "y": 500,
+        "y": 580,
         "wires": [
             [
                 "e6217093fd1deefe"
@@ -2879,7 +2891,7 @@
         "animate": false,
         "className": "",
         "x": 420,
-        "y": 500,
+        "y": 580,
         "wires": [
             [
                 "c5b9a97f9cc97bd1"
@@ -2899,7 +2911,7 @@
             "b681bcc695abf3d1"
         ],
         "x": 555,
-        "y": 500,
+        "y": 580,
         "wires": []
     },
     {
@@ -2915,8 +2927,8 @@
         "septopics": true,
         "property": "payload",
         "topi": "topic",
-        "x": 1150,
-        "y": 180,
+        "x": 1170,
+        "y": 160,
         "wires": [
             [
                 "6a14f93e5d6efc13"
@@ -2980,7 +2992,7 @@
             }
         ],
         "x": 180,
-        "y": 380,
+        "y": 460,
         "wires": [
             [
                 "ecfbd237278bdee4"
@@ -3011,7 +3023,7 @@
             }
         ],
         "x": 200,
-        "y": 440,
+        "y": 520,
         "wires": [
             [
                 "e147ba939c07a9a6"
@@ -3042,11 +3054,111 @@
             }
         ],
         "x": 200,
-        "y": 500,
+        "y": 580,
         "wires": [
             [
                 "895d1c6f5d4cf269"
             ]
+        ]
+    },
+    {
+        "id": "04693ea2f7bf465c",
+        "type": "function",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "locale strings",
+        "func": "msg.now = new Date().toLocaleString()\n\nfor (let key in msg.payload) {\n\n    const value = msg.payload[key]\n\n    if (Number.isInteger(value)) {\n\n        msg.payload[key] = new Date(value).toLocaleString()\n    }\n}\n\nmsg.payload = JSON.stringify(msg.payload, undefined, 1)\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 240,
+        "wires": [
+            [
+                "01d2c99c33167e6c"
+            ]
+        ]
+    },
+    {
+        "id": "01d2c99c33167e6c",
+        "type": "ui_template",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "group": "d45acf67bdd65c8f",
+        "name": "Daily",
+        "order": 5,
+        "width": "6",
+        "height": "4",
+        "format": "<div style=\"margin: 0;position: relative;height: 100%;\">\n    <div style=\"margin: ; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);\">\n        <p style=\"text-align: center; font-style: italic;\">{{msg.now}}</p>\n        <p style=\"text-align: center; font-weight: bold;\">{{msg.topic}}</p>\n        <pre>{{msg.payload}}</pre>\n    </div>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1090,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0e762777dbfcb468",
+        "type": "link in",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "monitor trigger",
+        "links": [
+            "6a14f93e5d6efc13"
+        ],
+        "x": 835,
+        "y": 300,
+        "wires": [
+            [
+                "92f900d768071caa"
+            ]
+        ]
+    },
+    {
+        "id": "92f900d768071caa",
+        "type": "function",
+        "z": "24510f25743eef8c",
+        "g": "ff5e6c57350b517d",
+        "name": "stringify",
+        "func": "msg.now = new Date().toLocaleString()\n\nmsg.payload = JSON.stringify(msg.payload, undefined, 1)\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 300,
+        "wires": [
+            [
+                "27d1bf0b4ab2916b"
+            ]
+        ]
+    },
+    {
+        "id": "27d1bf0b4ab2916b",
+        "type": "ui_template",
+        "z": "24510f25743eef8c",
+        "group": "d45acf67bdd65c8f",
+        "name": "Trigger",
+        "order": 6,
+        "width": "6",
+        "height": "4",
+        "format": "<div style=\"margin: 0;position: relative;height: 100%;\">\n    <div style=\"margin: ; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);\">\n        <p style=\"text-align: center; font-style: italic;\">{{msg.now}}</p>\n        <p style=\"text-align: center; font-weight: bold;\">{{msg.topic}}</p>\n        <pre>{{msg.payload}}</pre>\n    </div>\n</div>",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 1100,
+        "y": 300,
+        "wires": [
+            []
         ]
     },
     {
