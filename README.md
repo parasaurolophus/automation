@@ -41,28 +41,10 @@ system's shell).
 
 ### Settings
 
-These flows make certain assumptions regarding the contents of
-_settings.js_.
-
-#### Filesystem-backed Context Store Named `file`
-
-```
-contextStorage: {
-    default: "memoryOnly",
-    memoryOnly: { module: 'memory' },
-    file: { module: 'localfilesystem' }
-},
-```
-
-> **Note:** the default setting for `contextStorage` does not define any
-> filesystem-backed context store.
-
-#### Function Nodes Load _suncalc_
-
-The default settings for `externalModules` allow `function` nodes to
-load any module at runtime. If you have changed the `externalModules`
-options in your _settings.js_, ensure that the _suncalc_ module is
-enabled, at minimum:
+The default contents of _settings.js_ for `externalModules` allow
+`function` nodes to load any module at runtime. If you have changed
+the `externalModules` options in your _settings.js_, ensure that the
+_suncalc_ module is enabled, at minimum:
 
 ```
 externalModules: {
