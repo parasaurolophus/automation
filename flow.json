@@ -158,7 +158,7 @@
         "in": [
             {
                 "x": 40,
-                "y": 380,
+                "y": 180,
                 "wires": [
                     {
                         "id": "07d9702ee21263d3"
@@ -168,41 +168,11 @@
         ],
         "out": [
             {
-                "x": 1070,
-                "y": 160,
+                "x": 1190,
+                "y": 580,
                 "wires": [
                     {
                         "id": "d9ae737367ebed62",
-                        "port": 0
-                    }
-                ]
-            },
-            {
-                "x": 1300,
-                "y": 560,
-                "wires": [
-                    {
-                        "id": "d48dd4b5aa1368b0",
-                        "port": 1
-                    }
-                ]
-            },
-            {
-                "x": 1300,
-                "y": 620,
-                "wires": [
-                    {
-                        "id": "5d95dbf897fe7abd",
-                        "port": 0
-                    }
-                ]
-            },
-            {
-                "x": 1050,
-                "y": 240,
-                "wires": [
-                    {
-                        "id": "c9d3ee76b8c11967",
                         "port": 0
                     }
                 ]
@@ -221,6 +191,11 @@
             },
             {
                 "name": "TARGET",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "TOPIC",
                 "type": "str",
                 "value": ""
             }
@@ -243,8 +218,8 @@
         ],
         "icon": "node-red/bridge.svg",
         "status": {
-            "x": 1260,
-            "y": 680,
+            "x": 1280,
+            "y": 420,
             "wires": [
                 {
                     "id": "8cd24b2b4ab64410",
@@ -465,37 +440,10 @@
             "afd10513e80a6c06"
         ],
         "x": 74,
-        "y": 319,
+        "y": 119,
         "w": 602,
         "h": 122,
         "info": "Initialize flow context by querying a Hue bridge for the current state\nof all resources. Forward the state of `grouped_light` resources as\nan initial set of server-sent event messages to \"prime the pump\" for\ndynamically created dashboard controls."
-    },
-    {
-        "id": "061d94914ef0f0c0",
-        "type": "group",
-        "z": "d61db14468b910ab",
-        "name": "format grouped light event data for dashboard",
-        "style": {
-            "label": true,
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "eeb425059507ba39",
-            "3fe9b64e4c386d21",
-            "d9ae737367ebed62",
-            "edb141c15ed881a4",
-            "a3bfbe7bec9a2dda",
-            "b698fabef55c0f4c",
-            "c9d3ee76b8c11967"
-        ],
-        "x": 74,
-        "y": 119,
-        "w": 912,
-        "h": 147,
-        "info": "Combine the current state of all `grouped_light` resources and their\ncorresponding scenes into a data structure and matching HTML template\nthat can be displayed as controls on the dashboard using a `ui_template`\nnode."
     },
     {
         "id": "ad76998e48254ce7",
@@ -521,7 +469,7 @@
         "id": "86efe0cfe1142093",
         "type": "group",
         "z": "d61db14468b910ab",
-        "name": "store resource state changes in flow context",
+        "name": "store resource state changes in flow context and propagate event",
         "style": {
             "stroke": "none",
             "fill": "#ffffff",
@@ -530,16 +478,21 @@
             "color": "#ffffff"
         },
         "nodes": [
-            "fcb648906e6b792a",
             "339ebff143d5b535",
             "1bc6cee6558ccaf4",
             "36dd0d5dc31ca8b4",
             "980418c680804201",
-            "d29c26656d2e74ae"
+            "d29c26656d2e74ae",
+            "49f749ec3853b862",
+            "b7a82562452fd1c7",
+            "eeb425059507ba39",
+            "b698fabef55c0f4c",
+            "3fe9b64e4c386d21",
+            "d9ae737367ebed62"
         ],
-        "x": 794,
-        "y": 279,
-        "w": 422,
+        "x": 74,
+        "y": 519,
+        "w": 1032,
         "h": 162,
         "info": "Add, update or delete a resource cached in flow context."
     },
@@ -566,12 +519,15 @@
             "dc94e795cd3258f8",
             "1da7ab591b98f32c",
             "5d95dbf897fe7abd",
-            "8cd24b2b4ab64410"
+            "8cd24b2b4ab64410",
+            "deabf93d3bae00ab",
+            "8429f9197c437a40",
+            "1e8c287442df967c"
         ],
         "x": 74,
-        "y": 459,
-        "w": 1142,
-        "h": 262,
+        "y": 259,
+        "w": 1162,
+        "h": 242,
         "info": "Subscribe to event messages sent by a Hue bridge. Parse the event\nmessages and forward them as streams of individual events, one parsed\nevent message per resource."
     },
     {
@@ -617,12 +573,12 @@
             "460867bbae94da5a",
             "f4e7f3f6609ec608",
             "13a8932676232537",
-            "e178773d828de62d",
             "33da30d97725e077",
             "0696c3dfdfb89df9",
             "6b013bba424e77d0",
             "6f0668809a721b69",
-            "f87cd6036de631b7"
+            "f87cd6036de631b7",
+            "553ac57ece1e5df2"
         ],
         "env": [
             {
@@ -643,7 +599,7 @@
         ],
         "x": 14,
         "y": 119,
-        "w": 1192,
+        "w": 952,
         "h": 322,
         "info": "Group together those nodes which interface to the _Philips Hue_ bridge\nspecified by the `${GROUND_FLOOR_HUE_ADDRESS}` environment variable.\nThis group sets the following variables, shared by all the nodes it\ncontains:\n\n| Variable  | Value                           | Description                                                                     |\n|-----------|---------------------------------|---------------------------------------------------------------------------------|\n| `ADDRESS` | `${GROUND_FLOOR_HUE_ADDRESS}`   | The IP address of the _Hue_ bridge                                              |\n| `KEY`     | `${GROUND_FLOOR_HUE_KEY}`       | The client application key to pass in HTTP headers when calling the bridge API  |\n| `TARGET`  | `send ground floor hue command` | The name of the `link in` node to invoke in order to call the _Hue_ bridge API  |"
     },
@@ -858,46 +814,6 @@
         "info": "Display each `automation/+` on the dashboard as it occurs, as an aid in\ndebugging."
     },
     {
-        "id": "1de572ddbbfb75e1",
-        "type": "group",
-        "z": "dcb190a34f9985d0",
-        "name": "",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "74e55c13e48dd047"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 492,
-        "h": 82
-    },
-    {
-        "id": "1b74c1c9011f18dc",
-        "type": "group",
-        "z": "13e9081a904c6a12",
-        "name": "",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "0f32fac2e754eb6f"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 492,
-        "h": 82
-    },
-    {
         "id": "62bf741a649d768b",
         "type": "group",
         "z": "13e9081a904c6a12",
@@ -945,9 +861,9 @@
             "0236f877cea9aa1b",
             "174b7dc47587b326",
             "46486cd695774a6c",
-            "a1572f6f29d2b127",
             "10c74bd3ce62390f",
-            "11eb928fb0bb7d9a"
+            "11eb928fb0bb7d9a",
+            "a1572f6f29d2b127"
         ],
         "env": [
             {
@@ -968,89 +884,9 @@
         ],
         "x": 14,
         "y": 459,
-        "w": 1192,
+        "w": 912,
         "h": 322,
         "info": "Group together those nodes which interface to the _Philips Hue_ bridge\nspecified by the `${BASEMENT_HUE_ADDRESS}` environment variable.\nThis group sets the following variables, shared by all the nodes it\ncontains:\n\n| Variable  | Value                       | Description                                                                     |\n|-----------|-----------------------------|---------------------------------------------------------------------------------|\n| `ADDRESS` | `${BASEMENT_HUE_ADDRESS}`   | The IP address of the _Hue_ bridge                                              |\n| `KEY`     | `${BASEMENT_HUE_KEY}`       | The client application key to pass in HTTP headers when calling the bridge API  |\n| `TARGET`  | `send basement hue command` | The name of the `link in` node to invoke in order to call the _Hue_ bridge API  |"
-    },
-    {
-        "id": "e82d233db8485c75",
-        "type": "group",
-        "z": "86021a0ae2220c2b",
-        "name": "",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "b26df763264faaa4"
-        ],
-        "x": 14,
-        "y": 19,
-        "w": 432,
-        "h": 82
-    },
-    {
-        "id": "fb486e9d6688277d",
-        "type": "group",
-        "z": "13e9081a904c6a12",
-        "name": "",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "33f0226d5e55a07c"
-        ],
-        "x": 534,
-        "y": 19,
-        "w": 552,
-        "h": 82
-    },
-    {
-        "id": "3dbc74332832fc5e",
-        "type": "group",
-        "z": "dcb190a34f9985d0",
-        "name": "",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "c27aaa0ab68af1ca"
-        ],
-        "x": 534,
-        "y": 19,
-        "w": 412,
-        "h": 82
-    },
-    {
-        "id": "d23dcc2f274ca7fa",
-        "type": "group",
-        "z": "86021a0ae2220c2b",
-        "name": "",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "192295176887705c"
-        ],
-        "x": 714,
-        "y": 19,
-        "w": 492,
-        "h": 82
     },
     {
         "id": "0f5b03b5d4d2e65f",
@@ -1107,28 +943,6 @@
         ]
     },
     {
-        "id": "c9d3ee76b8c11967",
-        "type": "junction",
-        "z": "d61db14468b910ab",
-        "g": "061d94914ef0f0c0",
-        "x": 360,
-        "y": 240,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "5d95dbf897fe7abd",
-        "type": "junction",
-        "z": "d61db14468b910ab",
-        "g": "d6d68c481562616a",
-        "x": 520,
-        "y": 620,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "31328f7909c93485",
         "type": "junction",
         "z": "448b73182a92925c",
@@ -1155,6 +969,20 @@
                 "c92600f6307981f9",
                 "c015dc9dbd457ad9",
                 "e913f94a740c212f"
+            ]
+        ]
+    },
+    {
+        "id": "49f749ec3853b862",
+        "type": "junction",
+        "z": "d61db14468b910ab",
+        "g": "86efe0cfe1142093",
+        "x": 460,
+        "y": 600,
+        "wires": [
+            [
+                "b7a82562452fd1c7",
+                "eeb425059507ba39"
             ]
         ]
     },
@@ -1854,7 +1682,7 @@
         "to": "",
         "reg": false,
         "x": 180,
-        "y": 380,
+        "y": 180,
         "wires": [
             [
                 "27cbc52e000f9fd1"
@@ -1872,7 +1700,7 @@
         "linkType": "dynamic",
         "timeout": "30",
         "x": 350,
-        "y": 380,
+        "y": 180,
         "wires": [
             [
                 "8909e3d843ad752c"
@@ -1893,7 +1721,7 @@
         "finalize": "",
         "libs": [],
         "x": 520,
-        "y": 380,
+        "y": 180,
         "wires": [
             [
                 "afd10513e80a6c06"
@@ -1915,14 +1743,16 @@
         "g": "d6d68c481562616a",
         "name": "",
         "x": 410,
-        "y": 560,
+        "y": 380,
         "wires": [
             [
                 "d6f78cafaf0b00d7"
             ],
-            [],
             [
-                "5d95dbf897fe7abd"
+                "deabf93d3bae00ab"
+            ],
+            [
+                "8429f9197c437a40"
             ]
         ],
         "info": "Subscribe to server-sent events from the\n[Hue Bridge API v2](https://developers.meethue.com/develop/hue-api-v2/).\n\nSee\n<https://developers.meethue.com/develop/hue-api-v2/core-concepts/#events>\nfor more information."
@@ -1948,7 +1778,7 @@
         "to": "",
         "reg": false,
         "x": 240,
-        "y": 560,
+        "y": 380,
         "wires": [
             [
                 "d48dd4b5aa1368b0"
@@ -1976,8 +1806,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 570,
-        "y": 500,
+        "x": 590,
+        "y": 300,
         "wires": [
             [
                 "22e026e913c8a836"
@@ -1994,8 +1824,8 @@
         "property": "payload",
         "action": "obj",
         "pretty": false,
-        "x": 690,
-        "y": 500,
+        "x": 710,
+        "y": 300,
         "wires": [
             [
                 "1cd6fafb6c18354c"
@@ -2015,8 +1845,8 @@
         "arraySpltType": "len",
         "stream": false,
         "addname": "",
-        "x": 810,
-        "y": 500,
+        "x": 830,
+        "y": 300,
         "wires": [
             [
                 "f855f79c60d5581f"
@@ -2051,8 +1881,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 950,
-        "y": 500,
+        "x": 970,
+        "y": 300,
         "wires": [
             [
                 "dc94e795cd3258f8"
@@ -2072,8 +1902,8 @@
         "arraySpltType": "len",
         "stream": false,
         "addname": "",
-        "x": 1090,
-        "y": 500,
+        "x": 1110,
+        "y": 300,
         "wires": [
             [
                 "1da7ab591b98f32c"
@@ -2090,8 +1920,8 @@
         "scope": [
             "d48dd4b5aa1368b0"
         ],
-        "x": 1090,
-        "y": 680,
+        "x": 1110,
+        "y": 420,
         "wires": [
             []
         ]
@@ -2106,7 +1936,7 @@
             "fcf52eacd721a4a9"
         ],
         "x": 115,
-        "y": 560,
+        "y": 380,
         "wires": [
             [
                 "2d13eb8e173c7968"
@@ -2124,40 +1954,8 @@
             "1056f2ddf9c58227"
         ],
         "x": 635,
-        "y": 400,
-        "wires": []
-    },
-    {
-        "id": "fcb648906e6b792a",
-        "type": "link out",
-        "z": "d61db14468b910ab",
-        "g": "86efe0cfe1142093",
-        "name": "publish",
-        "mode": "link",
-        "links": [
-            "edb141c15ed881a4"
-        ],
-        "x": 1175,
-        "y": 360,
-        "wires": []
-    },
-    {
-        "id": "edb141c15ed881a4",
-        "type": "link in",
-        "z": "d61db14468b910ab",
-        "g": "061d94914ef0f0c0",
-        "name": "events",
-        "links": [
-            "fcb648906e6b792a"
-        ],
-        "x": 115,
         "y": 200,
-        "wires": [
-            [
-                "a3bfbe7bec9a2dda"
-            ]
-        ],
-        "info": "// nrlint align-to-grid:off\n"
+        "wires": []
     },
     {
         "id": "339ebff143d5b535",
@@ -2165,17 +1963,17 @@
         "z": "d61db14468b910ab",
         "g": "86efe0cfe1142093",
         "name": "update",
-        "func": "const resources = flow.get('resources')\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nflow.set('resources', resources)\n\nreturn msg",
+        "func": "const resources = flow.get('resources')\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nflow.set('resources', resources)\n\nmsg.topic = env.get('TOPIC') + '/resource/' + msg.payload.type + '/' + msg.payload.id\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1070,
-        "y": 360,
+        "x": 350,
+        "y": 600,
         "wires": [
             [
-                "fcb648906e6b792a"
+                "49f749ec3853b862"
             ]
         ],
         "info": "Update `msg.payload` in the resources and, for `grouped_light` events,\nmerged metadata cached in flow context."
@@ -2208,8 +2006,8 @@
         "checkall": "true",
         "repair": false,
         "outputs": 3,
-        "x": 930,
-        "y": 360,
+        "x": 210,
+        "y": 600,
         "wires": [
             [
                 "d29c26656d2e74ae"
@@ -2229,17 +2027,17 @@
         "z": "d61db14468b910ab",
         "g": "86efe0cfe1142093",
         "name": "delete",
-        "func": "const resources = flow.get('resources')\nconst type = resources[msg.payload.type] || {}\n\ndelete type[msg.payload.id]\nresources[msg.payload.type] = type\nflow.set('resources', resources)\n\nif (msg.payload.type == 'grouped_light') {\n\n    const oldMerged = flow.get('merged')\n    const newMerged = []\n\n    for (let entry of oldMerged) {\n\n        if (msg.payload.id != entry.grouped_light.id) {\n\n            newMerged.push(entry)\n\n        }\n    }\n\n    flow.set('merged', newMerged)\n\n}\n\nreturn msg",
+        "func": "const resources = flow.get('resources')\nconst type = resources[msg.payload.type] || {}\n\ndelete type[msg.payload.id]\nresources[msg.payload.type] = type\nflow.set('resources', resources)\n\nif (msg.payload.type == 'grouped_light') {\n\n    const oldMerged = flow.get('merged')\n    const newMerged = []\n\n    for (let entry of oldMerged) {\n\n        if (msg.payload.id != entry.grouped_light.id) {\n\n            newMerged.push(entry)\n\n        }\n    }\n\n    flow.set('merged', newMerged)\n\n}\n\nmsg.topic = env.get('TOPIC') + '/resource/' + msg.payload.type + '/' + msg.payload.id\nmsg.payload = ''\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1070,
-        "y": 400,
+        "x": 350,
+        "y": 640,
         "wires": [
             [
-                "fcb648906e6b792a"
+                "49f749ec3853b862"
             ]
         ],
         "info": "Delete `msg.payload` from the resources and, for `grouped_light` events,\nmerged metadata cached in flow context."
@@ -2248,7 +2046,7 @@
         "id": "3fe9b64e4c386d21",
         "type": "function",
         "z": "d61db14468b910ab",
-        "g": "061d94914ef0f0c0",
+        "g": "86efe0cfe1142093",
         "name": "format metadata",
         "func": "const merged = flow.get('merged') || []\nconst resources = flow.get('resources') || {}\nconst model = []\n\nfor (let entry of merged) {\n\n    const grouped_light = entry.grouped_light\n    const group = entry.group\n    const scenes = entry.scenes\n    const label = (group.metadata ? group.metadata.name : 'All Lights')\n\n    model.push({\n        label: label,\n        id: grouped_light.id,\n        state: resources.grouped_light[grouped_light.id].on.on,\n        scenes: scenes.map((scene) => {\n            return {\n                id: scene.id,\n                name: scene.metadata.name\n            }\n        }).sort((a, b) => {\n\n            return a.name.localeCompare(b.name)\n\n        })\n    })\n}\n\nmsg.payload = model.sort((a, b) => {\n\n    return a.label.localeCompare(b.label)\n\n})\n\nreturn msg",
         "outputs": 1,
@@ -2256,8 +2054,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 740,
-        "y": 160,
+        "x": 860,
+        "y": 580,
         "wires": [
             [
                 "d9ae737367ebed62"
@@ -2269,7 +2067,7 @@
         "id": "d9ae737367ebed62",
         "type": "template",
         "z": "d61db14468b910ab",
-        "g": "061d94914ef0f0c0",
+        "g": "86efe0cfe1142093",
         "name": "",
         "field": "template",
         "fieldType": "msg",
@@ -2277,8 +2075,8 @@
         "syntax": "plain",
         "template": "<div>\n    <div ng-repeat=\"model in msg.payload\" style=\"text-align:center\">\n        <div ng-if=\"$index > 0\">\n            <hr>\n        </div>\n        <md-switch style=\"margin-top:10px;margin-left:10px\" ng-value=\"model.state\" ng-model=\"model.state\"\n            ng-change=\"send({ topic: 'resource/grouped_light/' + model.id, payload: { on: { on:model.state } }, method: 'PUT' })\">\n            {{model.label}}\n        </md-switch>\n        <md-button style=\"display:inline-block;margin:1px\" ng-repeat=\"scene in model.scenes\"\n            ng-click=\"send({topic: 'resource/scene/' + scene.id, payload: {recall:{action:'dynamic_palette'}}, method: 'PUT'})\">\n            {{scene.name}}\n        </md-button>\n    </div>\n</div>",
         "output": "str",
-        "x": 900,
-        "y": 160,
+        "x": 1020,
+        "y": 580,
         "wires": [
             []
         ],
@@ -2288,7 +2086,7 @@
         "id": "eeb425059507ba39",
         "type": "switch",
         "z": "d61db14468b910ab",
-        "g": "061d94914ef0f0c0",
+        "g": "86efe0cfe1142093",
         "name": "grouped_light",
         "property": "payload.type",
         "propertyType": "msg",
@@ -2302,8 +2100,8 @@
         "checkall": "false",
         "repair": false,
         "outputs": 1,
-        "x": 440,
-        "y": 160,
+        "x": 560,
+        "y": 580,
         "wires": [
             [
                 "b698fabef55c0f4c"
@@ -2333,51 +2131,14 @@
             "980418c680804201"
         ],
         "x": 635,
-        "y": 360,
+        "y": 160,
         "wires": []
-    },
-    {
-        "id": "a3bfbe7bec9a2dda",
-        "type": "change",
-        "z": "d61db14468b910ab",
-        "g": "061d94914ef0f0c0",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "event",
-                "pt": "msg",
-                "to": "topic",
-                "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "'resource/grouped_light/' & payload.id",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 240,
-        "y": 200,
-        "wires": [
-            [
-                "eeb425059507ba39",
-                "c9d3ee76b8c11967"
-            ]
-        ],
-        "info": "Set `msg.topic` to the URI for the partiular `grouped_light` resource."
     },
     {
         "id": "b698fabef55c0f4c",
         "type": "rbe",
         "z": "d61db14468b910ab",
-        "g": "061d94914ef0f0c0",
+        "g": "86efe0cfe1142093",
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -2386,8 +2147,8 @@
         "septopics": true,
         "property": "payload",
         "topi": "topic",
-        "x": 590,
-        "y": 160,
+        "x": 710,
+        "y": 580,
         "wires": [
             [
                 "3fe9b64e4c386d21"
@@ -2405,8 +2166,8 @@
             "1da7ab591b98f32c",
             "afd10513e80a6c06"
         ],
-        "x": 835,
-        "y": 360,
+        "x": 115,
+        "y": 600,
         "wires": [
             [
                 "1bc6cee6558ccaf4"
@@ -2424,8 +2185,8 @@
         "links": [
             "980418c680804201"
         ],
-        "x": 1175,
-        "y": 500,
+        "x": 1195,
+        "y": 300,
         "wires": []
     },
     {
@@ -2434,20 +2195,114 @@
         "z": "d61db14468b910ab",
         "g": "86efe0cfe1142093",
         "name": "add",
-        "func": "const resources = flow.get('resources')\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfunction findScenes(group) {\n\n    const scenes = []\n\n    for (let id in resources.scene) {\n\n        const scene = resources.scene[id]\n\n        if (scene.group.rid == group.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes\n\n}\n\nfunction findGroup(grouped_light) {\n\n    const groups = resources[grouped_light.owner.rtype]\n\n    for (let id in groups) {\n\n        const group = groups[id]\n\n        if (id == grouped_light.owner.rid) {\n\n            return {\n                grouped_light: grouped_light,\n                group: group,\n                scenes: findScenes(group)\n            }\n        }\n    }\n\n    throw 'no group found for grouped_light ' + grouped_light.id\n\n}\n\nif (resource.type == 'grouped_light') {\n\n    const merged = flow.get('merged')\n\n    merged.push(findGroup(resource))\n    flow.set('merged', merged)\n\n}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nflow.set('resources',resources)\n\nreturn msg",
+        "func": "const resources = flow.get('resources')\nconst type = resources[msg.payload.type] || {}\nconst resource = type[msg.payload.id] || {}\n\nfunction findScenes(group) {\n\n    const scenes = []\n\n    for (let id in resources.scene) {\n\n        const scene = resources.scene[id]\n\n        if (scene.group.rid == group.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes\n\n}\n\nfunction findGroup(grouped_light) {\n\n    const groups = resources[grouped_light.owner.rtype]\n\n    for (let id in groups) {\n\n        const group = groups[id]\n\n        if (id == grouped_light.owner.rid) {\n\n            return {\n                grouped_light: grouped_light,\n                group: group,\n                scenes: findScenes(group)\n            }\n        }\n    }\n\n    throw 'no group found for grouped_light ' + grouped_light.id\n\n}\n\nif (resource.type == 'grouped_light') {\n\n    const merged = flow.get('merged')\n\n    merged.push(findGroup(resource))\n    flow.set('merged', merged)\n\n}\n\nfor (let key in msg.payload) {\n\n    resource[key] = msg.payload[key]\n\n}\n\nmsg.payload = resource\ntype[msg.payload.id] = resource\nresources[msg.payload.type] = type\nflow.set('resources',resources)\n\nmsg.topic = env.get('TOPIC') + '/resource/' + msg.payload.type + '/' + msg.payload.id\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 1070,
-        "y": 320,
+        "x": 350,
+        "y": 560,
         "wires": [
             [
-                "fcb648906e6b792a"
+                "49f749ec3853b862"
             ]
         ],
         "info": "Add `msg.payload` to the resources and, for `grouped_light` events,\nmerged metadata cached in flow context."
+    },
+    {
+        "id": "b7a82562452fd1c7",
+        "type": "mqtt out",
+        "z": "d61db14468b910ab",
+        "g": "86efe0cfe1142093",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "true",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe1c0af9d7c8c368",
+        "x": 530,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "deabf93d3bae00ab",
+        "type": "change",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "$env('TOPIC') & '/onopen'",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 380,
+        "wires": [
+            [
+                "1e8c287442df967c"
+            ]
+        ]
+    },
+    {
+        "id": "8429f9197c437a40",
+        "type": "change",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "$env('TOPIC') & '/onerror'",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 460,
+        "wires": [
+            [
+                "1e8c287442df967c"
+            ]
+        ]
+    },
+    {
+        "id": "1e8c287442df967c",
+        "type": "mqtt out",
+        "z": "d61db14468b910ab",
+        "g": "d6d68c481562616a",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "fe1c0af9d7c8c368",
+        "x": 770,
+        "y": 420,
+        "wires": []
     },
     {
         "id": "fa870f94fa1ea10b",
@@ -3062,11 +2917,10 @@
         "id": "0f32fac2e754eb6f",
         "type": "comment",
         "z": "13e9081a904c6a12",
-        "g": "1b74c1c9011f18dc",
         "name": "assumes that ${LATITUDE} and ${LONGITUDE} are defined",
         "info": "",
         "x": 260,
-        "y": 60,
+        "y": 40,
         "wires": []
     },
     {
@@ -3197,11 +3051,10 @@
         "id": "33f0226d5e55a07c",
         "type": "comment",
         "z": "13e9081a904c6a12",
-        "g": "fb486e9d6688277d",
         "name": "assumes that function nodes are permitted to load the suncalc package",
         "info": "",
-        "x": 810,
-        "y": 60,
+        "x": 290,
+        "y": 80,
         "wires": []
     },
     {
@@ -5308,11 +5161,10 @@
         "id": "74e55c13e48dd047",
         "type": "comment",
         "z": "dcb190a34f9985d0",
-        "g": "1de572ddbbfb75e1",
         "name": "https://motorisation.hde.nl/hd/powerview/general-guides/API/",
         "info": "",
         "x": 260,
-        "y": 60,
+        "y": 40,
         "wires": []
     },
     {
@@ -5343,22 +5195,20 @@
         "id": "c27aaa0ab68af1ca",
         "type": "comment",
         "z": "dcb190a34f9985d0",
-        "g": "3dbc74332832fc5e",
         "name": "assumes ${POWERVIEW_ADDRESS} is defined",
         "info": "",
-        "x": 740,
-        "y": 60,
+        "x": 220,
+        "y": 80,
         "wires": []
     },
     {
         "id": "b26df763264faaa4",
         "type": "comment",
         "z": "86021a0ae2220c2b",
-        "g": "e82d233db8485c75",
         "name": "https://developers.meethue.com/develop/hue-api-v2/",
         "info": "",
         "x": 230,
-        "y": 60,
+        "y": 40,
         "wires": []
     },
     {
@@ -5380,7 +5230,7 @@
             }
         ],
         "x": 240,
-        "y": 220,
+        "y": 260,
         "wires": [
             [
                 "acac97da53ff2812"
@@ -5398,7 +5248,7 @@
         "g": "f773f7f5615b8215",
         "name": "",
         "x": 450,
-        "y": 240,
+        "y": 280,
         "wires": [],
         "info": "Display error messages on the dashboard and in the debug pane."
     },
@@ -5422,7 +5272,7 @@
         "mode": "return",
         "links": [],
         "x": 415,
-        "y": 200,
+        "y": 240,
         "wires": []
     },
     {
@@ -5448,20 +5298,22 @@
                 "type": "env"
             },
             {
+                "name": "TOPIC",
+                "value": "hue/ground-floor",
+                "type": "str"
+            },
+            {
                 "name": "BRIDGE",
                 "value": "BRIDGE",
                 "type": "env"
             }
         ],
         "x": 310,
-        "y": 320,
+        "y": 340,
         "wires": [
             [
                 "f4e7f3f6609ec608"
-            ],
-            [],
-            [],
-            []
+            ]
         ],
         "info": "Subscribe to server-sent events from the _Ground Floor_ Hue bridge."
     },
@@ -5482,7 +5334,7 @@
         "templateScope": "local",
         "className": "",
         "x": 540,
-        "y": 320,
+        "y": 340,
         "wires": [
             [
                 "13a8932676232537"
@@ -5502,21 +5354,10 @@
         "linkType": "static",
         "timeout": "30",
         "x": 810,
-        "y": 320,
+        "y": 340,
         "wires": [
             []
         ]
-    },
-    {
-        "id": "e178773d828de62d",
-        "type": "comment",
-        "z": "86021a0ae2220c2b",
-        "g": "f773f7f5615b8215",
-        "name": "${ADDRESS}, ${KEY} and ${TARGET} are set by this group",
-        "info": "",
-        "x": 960,
-        "y": 160,
-        "wires": []
     },
     {
         "id": "33da30d97725e077",
@@ -5589,7 +5430,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 120,
-        "y": 320,
+        "y": 340,
         "wires": [
             [
                 "460867bbae94da5a"
@@ -5609,7 +5450,7 @@
             "5539f5e5fa8f4bb2"
         ],
         "x": 55,
-        "y": 220,
+        "y": 260,
         "wires": [
             [
                 "0226968bb49f22c5"
@@ -5635,7 +5476,7 @@
             }
         ],
         "x": 230,
-        "y": 560,
+        "y": 600,
         "wires": [
             [
                 "40f45c398a50b05e"
@@ -5653,7 +5494,7 @@
         "g": "595f21be09dd9396",
         "name": "",
         "x": 430,
-        "y": 580,
+        "y": 620,
         "wires": [],
         "info": "Display error messages on the dashboard and in the debug pane."
     },
@@ -5677,7 +5518,7 @@
         "mode": "return",
         "links": [],
         "x": 395,
-        "y": 540,
+        "y": 580,
         "wires": []
     },
     {
@@ -5703,20 +5544,22 @@
                 "type": "env"
             },
             {
+                "name": "TOPIC",
+                "value": "hue/basement",
+                "type": "str"
+            },
+            {
                 "name": "BRIDGE",
                 "value": "BRIDGE",
                 "type": "env"
             }
         ],
         "x": 300,
-        "y": 660,
+        "y": 680,
         "wires": [
             [
                 "e53ba9a7af486095"
-            ],
-            [],
-            [],
-            []
+            ]
         ],
         "info": "Subscribe to server-sent events from the _Basement_ Hue bridge."
     },
@@ -5737,7 +5580,7 @@
         "templateScope": "local",
         "className": "",
         "x": 510,
-        "y": 660,
+        "y": 680,
         "wires": [
             [
                 "ab59aff7c27c6728"
@@ -5757,7 +5600,7 @@
         "linkType": "static",
         "timeout": "30",
         "x": 770,
-        "y": 660,
+        "y": 680,
         "wires": [
             []
         ]
@@ -5819,17 +5662,6 @@
         "info": "Render the _Basement_ Hue bridge connection status on the dashboard."
     },
     {
-        "id": "a1572f6f29d2b127",
-        "type": "comment",
-        "z": "86021a0ae2220c2b",
-        "g": "595f21be09dd9396",
-        "name": "${ADDRESS}, ${KEY} and ${TARGET} are set by this group",
-        "info": "",
-        "x": 960,
-        "y": 500,
-        "wires": []
-    },
-    {
         "id": "10c74bd3ce62390f",
         "type": "link in",
         "z": "86021a0ae2220c2b",
@@ -5837,7 +5669,7 @@
         "name": "send basement hue command",
         "links": [],
         "x": 55,
-        "y": 560,
+        "y": 600,
         "wires": [
             [
                 "85c6aa31ab17c911"
@@ -5859,7 +5691,7 @@
         "rh": 0,
         "inputs": 0,
         "x": 120,
-        "y": 660,
+        "y": 680,
         "wires": [
             [
                 "3600df219088f5a6"
@@ -5871,11 +5703,32 @@
         "id": "192295176887705c",
         "type": "comment",
         "z": "86021a0ae2220c2b",
-        "g": "d23dcc2f274ca7fa",
         "name": "https://github.com/parasaurolophus/create-hue-application-key",
         "info": "",
-        "x": 960,
-        "y": 60,
+        "x": 260,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "a1572f6f29d2b127",
+        "type": "comment",
+        "z": "86021a0ae2220c2b",
+        "g": "595f21be09dd9396",
+        "name": "${ADDRESS}, ${KEY}, ${TARGET} and ${TOPIC} are set by this group",
+        "info": "",
+        "x": 290,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "553ac57ece1e5df2",
+        "type": "comment",
+        "z": "86021a0ae2220c2b",
+        "g": "f773f7f5615b8215",
+        "name": "${ADDRESS}, ${KEY}, ${TARGET} and ${TOPIC} are set by this group",
+        "info": "",
+        "x": 290,
+        "y": 200,
         "wires": []
     },
     {
