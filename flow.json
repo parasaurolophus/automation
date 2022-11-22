@@ -595,6 +595,11 @@
                 "name": "TARGET",
                 "value": "send ground floor hue command",
                 "type": "str"
+            },
+            {
+                "name": "TOPIC",
+                "value": "hue/ground-floor",
+                "type": "str"
             }
         ],
         "x": 14,
@@ -879,6 +884,11 @@
             {
                 "name": "TARGET",
                 "value": "send basement hue command",
+                "type": "str"
+            },
+            {
+                "name": "TOPIC",
+                "value": "hue/basement",
                 "type": "str"
             }
         ],
@@ -5299,8 +5309,8 @@
             },
             {
                 "name": "TOPIC",
-                "value": "hue/ground-floor",
-                "type": "str"
+                "value": "TOPIC",
+                "type": "env"
             },
             {
                 "name": "BRIDGE",
@@ -5545,8 +5555,8 @@
             },
             {
                 "name": "TOPIC",
-                "value": "hue/basement",
-                "type": "str"
+                "value": "TOPIC",
+                "type": "env"
             },
             {
                 "name": "BRIDGE",
