@@ -348,8 +348,6 @@
         ],
         "x": 14,
         "y": 239,
-        "w": 1192,
-        "h": 542,
         "info": "Route `automation/lighting` event messages to invoke the appropriate\ndevice control API's."
     },
     {
@@ -441,8 +439,6 @@
         ],
         "x": 74,
         "y": 119,
-        "w": 602,
-        "h": 122,
         "info": "Initialize flow context by querying a Hue bridge for the current state\nof all resources. Forward the state of `grouped_light` resources as\nan initial set of server-sent event messages to \"prime the pump\" for\ndynamically created dashboard controls."
     },
     {
@@ -461,9 +457,7 @@
             "5e8b87d6d8f0fed7"
         ],
         "x": 74,
-        "y": 19,
-        "w": 432,
-        "h": 82
+        "y": 19
     },
     {
         "id": "86efe0cfe1142093",
@@ -492,8 +486,6 @@
         ],
         "x": 74,
         "y": 519,
-        "w": 1032,
-        "h": 162,
         "info": "Add, update or delete a resource cached in flow context."
     },
     {
@@ -525,8 +517,6 @@
         ],
         "x": 74,
         "y": 259,
-        "w": 1162,
-        "h": 242,
         "info": "Subscribe to event messages sent by a Hue bridge. Parse the event\nmessages and forward them as streams of individual events, one parsed\nevent message per resource."
     },
     {
@@ -603,8 +593,6 @@
         ],
         "x": 14,
         "y": 119,
-        "w": 952,
-        "h": 322,
         "info": "Group together those nodes which interface to the _Philips Hue_ bridge\nspecified by the `${GROUND_FLOOR_HUE_ADDRESS}` environment variable.\nThis group sets the following variables, shared by all the nodes it\ncontains:\n\n| Variable  | Value                           | Description                                                                     |\n|-----------|---------------------------------|---------------------------------------------------------------------------------|\n| `ADDRESS` | `${GROUND_FLOOR_HUE_ADDRESS}`   | The IP address of the _Hue_ bridge                                              |\n| `KEY`     | `${GROUND_FLOOR_HUE_KEY}`       | The client application key to pass in HTTP headers when calling the bridge API  |\n| `TARGET`  | `send ground floor hue command` | The name of the `link in` node to invoke in order to call the _Hue_ bridge API  |"
     },
     {
@@ -636,7 +624,7 @@
         "y": 119,
         "w": 1032,
         "h": 262,
-        "info": "Send daily events:\n\n1. Once at start up\n2. Each time a user changes the value of the _Bedtime_ dashboard control\n3. Every morning at 1:01AM\n\nThe events sent periodically by this group of nodes are:\n\n| `msg.topic`        | `msg.payload`                                                                                             | Description                                                                           |\n|--------------------|-----------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|\n| `settings/bedtime` | Value selected by a user using the _Bedtime_ control on the dashboard                                     | Approximate hour at which \"night mode\" should begin each day                          |\n| `daily/theme`      | The _theme_string for the current day                                                                     | See the information for the `function` node named `theme` for more details            |\n| `daily/sunrise`    | Timestamp at which the sun rises on the current day                                                       | See the information for the `function` node named `sunrise | sunset` for more details |\n| `daily/sunset`     | Timestamp at which the sun sets on the current day                                                        | See the information for the `function` node named `sunrise | sunset` for more details |\n| `daily/bedtime`    | A timestamp that varies slightly each day, based on the value of the most recent `settings/bedtime` event | See the information for the `function` node named `bedtime` for more details          |"
+        "info": "Send daily events:\n\n1. Once at start up\n2. Each time a user changes the value of the _Bedtime_ dashboard\n   control\n3. Every morning at 1:01AM\n\nThe events sent periodically by this group of nodes are:\n\n| `msg.topic`        | `msg.payload`                                                                                             | Description                                                                           |\n|--------------------|-----------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|\n| `settings/bedtime` | Value selected by a user using the _Bedtime_ control on the dashboard                                     | Approximate hour at which \"night mode\" should begin each day                          |\n| `daily/theme`      | The _theme_string for the current day                                                                     | See the information for the `function` node named `theme` for more details            |\n| `daily/sunrise`    | Timestamp at which the sun rises on the current day                                                       | See the information for the `function` node named `sunrise | sunset` for more details |\n| `daily/sunset`     | Timestamp at which the sun sets on the current day                                                        | See the information for the `function` node named `sunrise | sunset` for more details |\n| `daily/bedtime`    | A timestamp that varies slightly each day, based on the value of the most recent `settings/bedtime` event | See the information for the `function` node named `bedtime` for more details          |\n\n**Note:** All three of the `function` nodes, `theme`, `sunrise | sunset`\nand `bedtime`, are downstream of a `join` node even though only one\nof them (`bedtime`) directly depends on both inputs to the `join`. This\nis deliberate. Blocking the `theme` and `sunrise | sunset` functions\nuntil after at least one message has been received from a `mqtt in`\nnode ensures that they will not attempt to send messages before the\nconnection to the MQTT broker is ready. This assumes that all of the\n`mqtt in` and `mqtt out` nodes on this flow use the same broker\nconfiguration node.\n\nThe alternative would be to add a `status` node for the relevant\n`mqtt out` node and another `join` node to synchronize the `function`\nnodes with the connection state."
     },
     {
         "id": "1afeb43be3175917",
@@ -787,8 +775,6 @@
         ],
         "x": 14,
         "y": 19,
-        "w": 1332,
-        "h": 202,
         "info": "Send `automation/lighting` event when:\n\n- Either a new `timer/time` or `daily/theme` event is received, and\n- Lighting automation is enabled by users"
     },
     {
@@ -893,8 +879,6 @@
         ],
         "x": 14,
         "y": 459,
-        "w": 912,
-        "h": 322,
         "info": "Group together those nodes which interface to the _Philips Hue_ bridge\nspecified by the `${BASEMENT_HUE_ADDRESS}` environment variable.\nThis group sets the following variables, shared by all the nodes it\ncontains:\n\n| Variable  | Value                       | Description                                                                     |\n|-----------|-----------------------------|---------------------------------------------------------------------------------|\n| `ADDRESS` | `${BASEMENT_HUE_ADDRESS}`   | The IP address of the _Hue_ bridge                                              |\n| `KEY`     | `${BASEMENT_HUE_KEY}`       | The client application key to pass in HTTP headers when calling the bridge API  |\n| `TARGET`  | `send basement hue command` | The name of the `link in` node to invoke in order to call the _Hue_ bridge API  |"
     },
     {
@@ -1187,6 +1171,26 @@
         "width": "6",
         "collapse": true,
         "className": ""
+    },
+    {
+        "id": "d312628d48f95a19",
+        "type": "ui_spacer",
+        "z": "dcb190a34f9985d0",
+        "name": "spacer",
+        "group": "7f388d69eb09e37c",
+        "order": 1,
+        "width": "1",
+        "height": "1"
+    },
+    {
+        "id": "f9163d5eee06bd38",
+        "type": "ui_spacer",
+        "z": "dcb190a34f9985d0",
+        "name": "spacer",
+        "group": "7f388d69eb09e37c",
+        "order": 3,
+        "width": "1",
+        "height": "1"
     },
     {
         "id": "448d1e2ff0ff4a74",
@@ -2469,7 +2473,7 @@
         "tooltip": "",
         "place": "Select option",
         "group": "7f388d69eb09e37c",
-        "order": 1,
+        "order": 4,
         "width": 0,
         "height": 0,
         "passthru": false,
@@ -3003,11 +3007,11 @@
         "g": "62bf741a649d768b",
         "name": "",
         "group": "7f388d69eb09e37c",
-        "order": 4,
-        "width": 0,
-        "height": 0,
+        "order": 2,
+        "width": "4",
+        "height": "1",
         "passthru": true,
-        "label": "Refresh",
+        "label": "Refresh Controls",
         "tooltip": "",
         "color": "",
         "bgcolor": "",
@@ -3089,7 +3093,7 @@
         "label": "Enable Shades",
         "tooltip": "",
         "group": "7f388d69eb09e37c",
-        "order": 3,
+        "order": 5,
         "width": 0,
         "height": 0,
         "passthru": false,
@@ -4199,7 +4203,7 @@
         "label": "Enable Lighting",
         "tooltip": "",
         "group": "7f388d69eb09e37c",
-        "order": 2,
+        "order": 6,
         "width": 0,
         "height": 0,
         "passthru": false,
@@ -5028,7 +5032,7 @@
         "order": 2,
         "width": "6",
         "height": "9",
-        "format": "<div style=\"text-align: center;\">\n    <div ng-repeat=\"room in msg.dashboard\">\n        <hr ng-if=\"$index > 0\">\n        <p style=\"font-style:italic\">{{room.roomName}}</p>\n        <md-button ng-repeat=\"scene in room.roomScenes\" ng-click=\"send({topic:scene.sceneName,payload:scene.sceneId})\">\n            {{scene.sceneName}}\n        </md-button>\n    </div>\n</div>",
+        "format": "<div style=\"text-align: center;\">\n    <div ng-repeat=\"room in msg.dashboard\">\n        <hr ng-if=\"$index > 0\">\n        <p style=\"font-style:italic\">{{room.roomName}}</p>\n        <md-button style=\"margin: 1px;\" ng-repeat=\"scene in room.roomScenes\"\n            ng-click=\"send({topic:scene.sceneName,payload:scene.sceneId})\">\n            {{scene.sceneName}}\n        </md-button>\n    </div>\n</div>",
         "storeOutMessages": false,
         "fwdInMessages": false,
         "resendOnRefresh": true,
@@ -5847,7 +5851,7 @@
         "g": "13f1c7a5db24ee5d",
         "group": "7f388d69eb09e37c",
         "name": "Monitor Lighting",
-        "order": 12,
+        "order": 13,
         "width": "6",
         "height": "3",
         "format": "",
@@ -5937,7 +5941,7 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "plain",
-        "template": "<div style=\"margin: 0; position: relative; width: 100%; height: 100%;\">\n    <div style=\"margin: 0; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 90%;\">\n        <p style=\"text-align: center; font-style: italic;\">{{msg.now}}</p>\n        <p style=\"text-align: center; font-weight: bold;\">{{msg.topic}}</p>\n        <pre>{{msg.payload}}</pre>\n    </div>\n</div>",
+        "template": "<div style=\"margin: 0; position: relative; width: 100%; height: 100%;\">\n    <div style=\"margin: 0; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 90%;\">\n        <hr>\n        <p style=\"text-align: center; font-style: italic;\">{{msg.now}}</p>\n        <p style=\"text-align: center; font-weight: bold;\">{{msg.topic}}</p>\n        <pre>{{msg.payload}}</pre>\n    </div>\n</div>",
         "output": "str",
         "x": 300,
         "y": 620,
@@ -6021,7 +6025,7 @@
         "g": "13f1c7a5db24ee5d",
         "group": "7f388d69eb09e37c",
         "name": "Monitor Shades",
-        "order": 11,
+        "order": 12,
         "width": "6",
         "height": "2",
         "format": "",
@@ -6062,7 +6066,7 @@
         "g": "04fca032bcc6efa3",
         "group": "7f388d69eb09e37c",
         "name": "Monitor Time",
-        "order": 10,
+        "order": 11,
         "width": "6",
         "height": "2",
         "format": "",
@@ -6103,7 +6107,7 @@
         "g": "04fca032bcc6efa3",
         "group": "7f388d69eb09e37c",
         "name": "Monitor Theme",
-        "order": 9,
+        "order": 10,
         "width": "6",
         "height": "2",
         "format": "",
@@ -6125,7 +6129,7 @@
         "g": "04fca032bcc6efa3",
         "group": "7f388d69eb09e37c",
         "name": "Monitor Bedtime",
-        "order": 8,
+        "order": 9,
         "width": "6",
         "height": "2",
         "format": "",
@@ -6147,7 +6151,7 @@
         "g": "04fca032bcc6efa3",
         "group": "7f388d69eb09e37c",
         "name": "Monitor Sunset",
-        "order": 7,
+        "order": 8,
         "width": "6",
         "height": "2",
         "format": "",
@@ -6169,7 +6173,7 @@
         "g": "04fca032bcc6efa3",
         "group": "7f388d69eb09e37c",
         "name": "Monitor Sunrise",
-        "order": 6,
+        "order": 7,
         "width": "6",
         "height": "2",
         "format": "",
