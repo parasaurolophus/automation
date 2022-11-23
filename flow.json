@@ -2082,7 +2082,7 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "plain",
-        "template": "<div>\n    <div ng-repeat=\"model in msg.payload\" style=\"text-align: center;\">\n        <div ng-if=\"$index > 0\">\n            <hr>\n        </div>\n        <div>\n            <md-switch style=\"margin-left: 1em;\" ng-value=\"model.state\" ng-model=\"model.state\"\n                ng-change=\"send({ topic: 'resource/grouped_light/' + model.id, payload: { on: { on:model.state } }, method: 'PUT' })\">\n                {{model.label}}\n            </md-switch>\n        </div>\n        <div>\n            <md-button style=\"display: inline-block; margin: 1px\" ng-repeat=\"scene in model.scenes\"\n                ng-click=\"send({topic: 'resource/scene/' + scene.id, payload: {recall:{action:'dynamic_palette'}}, method: 'PUT'})\">\n                {{scene.name}}\n            </md-button>\n        </div>\n    </div>\n</div>",
+        "template": "<div style=\"text-align: center;\">\n    <div ng-repeat=\"model in msg.payload\">\n        <div ng-if=\"$index > 0\">\n            <hr>\n        </div>\n        <md-switch style=\"margin-left: 1em;\" ng-value=\"model.state\" ng-model=\"model.state\"\n            ng-change=\"send({ topic: 'resource/grouped_light/' + model.id, payload: { on: { on:model.state } }, method: 'PUT' })\">\n            {{model.label}}\n        </md-switch>\n        <md-button style=\"display: inline-block; margin: 1px\" ng-repeat=\"scene in model.scenes\"\n            ng-click=\"send({topic: 'resource/scene/' + scene.id, payload: {recall:{action:'dynamic_palette'}}, method: 'PUT'})\">\n            {{scene.name}}\n        </md-button>\n    </div>\n</div>",
         "output": "str",
         "x": 1020,
         "y": 580,
