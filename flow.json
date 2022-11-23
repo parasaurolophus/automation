@@ -348,8 +348,6 @@
         ],
         "x": 14,
         "y": 239,
-        "w": 1192,
-        "h": 542,
         "info": "Route `automation/lighting` event messages to invoke the appropriate\ndevice control API's."
     },
     {
@@ -374,8 +372,6 @@
         ],
         "x": 14,
         "y": 119,
-        "w": 732,
-        "h": 122,
         "info": "Send API command messages to a _PowerView_ hub at a rate of no more than\none per second."
     },
     {
@@ -416,8 +412,6 @@
         ],
         "x": 14,
         "y": 259,
-        "w": 1302,
-        "h": 182,
         "info": "Dynamically create dashboard buttons corresponding to each scene\ndiscovered by querying a _PowerView_ hub."
     },
     {
@@ -441,8 +435,6 @@
         ],
         "x": 74,
         "y": 119,
-        "w": 602,
-        "h": 122,
         "info": "Initialize flow context by querying a Hue bridge for the current state\nof all resources. Forward the state of `grouped_light` resources as\nan initial set of server-sent event messages to \"prime the pump\" for\ndynamically created dashboard controls."
     },
     {
@@ -461,9 +453,7 @@
             "5e8b87d6d8f0fed7"
         ],
         "x": 74,
-        "y": 19,
-        "w": 432,
-        "h": 82
+        "y": 19
     },
     {
         "id": "86efe0cfe1142093",
@@ -492,8 +482,6 @@
         ],
         "x": 74,
         "y": 519,
-        "w": 1032,
-        "h": 162,
         "info": "Add, update or delete a resource cached in flow context."
     },
     {
@@ -525,8 +513,6 @@
         ],
         "x": 74,
         "y": 259,
-        "w": 1162,
-        "h": 242,
         "info": "Subscribe to event messages sent by a Hue bridge. Parse the event\nmessages and forward them as streams of individual events, one parsed\nevent message per resource."
     },
     {
@@ -548,8 +534,6 @@
         ],
         "x": 864,
         "y": 459,
-        "w": 442,
-        "h": 82,
         "info": "Set `msg.url` to the command that will activate the _PowerView_ scene\nwhose id is in `msg.payload`."
     },
     {
@@ -603,8 +587,6 @@
         ],
         "x": 14,
         "y": 119,
-        "w": 952,
-        "h": 322,
         "info": "Group together those nodes which interface to the _Philips Hue_ bridge\nspecified by the `${GROUND_FLOOR_HUE_ADDRESS}` environment variable.\nThis group sets the following variables, shared by all the nodes it\ncontains:\n\n| Variable  | Value                           | Description                                                                     |\n|-----------|---------------------------------|---------------------------------------------------------------------------------|\n| `ADDRESS` | `${GROUND_FLOOR_HUE_ADDRESS}`   | The IP address of the _Hue_ bridge                                              |\n| `KEY`     | `${GROUND_FLOOR_HUE_KEY}`       | The client application key to pass in HTTP headers when calling the bridge API  |\n| `TARGET`  | `send ground floor hue command` | The name of the `link in` node to invoke in order to call the _Hue_ bridge API  |"
     },
     {
@@ -699,8 +681,6 @@
         ],
         "x": 14,
         "y": 19,
-        "w": 672,
-        "h": 322,
         "info": "Display each `daily/+` and `timer/time` on the dashboard as it occurs,\nas an aid in debugging."
     },
     {
@@ -726,8 +706,6 @@
         ],
         "x": 14,
         "y": 239,
-        "w": 702,
-        "h": 202,
         "info": "Route `automation/shades` event messages to invoke the appropriate\ndevice control API's."
     },
     {
@@ -756,8 +734,6 @@
         ],
         "x": 14,
         "y": 19,
-        "w": 1232,
-        "h": 202,
         "info": "Send `automation/shades` event when:\n\n- A new `timer/time` event is received, and\n- Window shade automation is enabled by users"
     },
     {
@@ -787,8 +763,6 @@
         ],
         "x": 14,
         "y": 19,
-        "w": 1332,
-        "h": 202,
         "info": "Send `automation/lighting` event when:\n\n- Either a new `timer/time` or `daily/theme` event is received, and\n- Lighting automation is enabled by users"
     },
     {
@@ -813,8 +787,6 @@
         ],
         "x": 14,
         "y": 359,
-        "w": 552,
-        "h": 142,
         "info": "Display each `automation/+` on the dashboard as it occurs, as an aid in\ndebugging."
     },
     {
@@ -893,8 +865,6 @@
         ],
         "x": 14,
         "y": 459,
-        "w": 912,
-        "h": 322,
         "info": "Group together those nodes which interface to the _Philips Hue_ bridge\nspecified by the `${BASEMENT_HUE_ADDRESS}` environment variable.\nThis group sets the following variables, shared by all the nodes it\ncontains:\n\n| Variable  | Value                       | Description                                                                     |\n|-----------|-----------------------------|---------------------------------------------------------------------------------|\n| `ADDRESS` | `${BASEMENT_HUE_ADDRESS}`   | The IP address of the _Hue_ bridge                                              |\n| `KEY`     | `${BASEMENT_HUE_KEY}`       | The client application key to pass in HTTP headers when calling the bridge API  |\n| `TARGET`  | `send basement hue command` | The name of the `link in` node to invoke in order to call the _Hue_ bridge API  |"
     },
     {
@@ -920,8 +890,6 @@
         ],
         "x": 14,
         "y": 519,
-        "w": 422,
-        "h": 142,
         "info": "Support calling certain `function` nodes as subroutines using\n`link call` nodes."
     },
     {
@@ -1106,7 +1074,7 @@
         "type": "ui_group",
         "name": "Window Shades",
         "tab": "6e79e7537966793f",
-        "order": 4,
+        "order": 3,
         "disp": true,
         "width": "6",
         "collapse": true,
@@ -1117,7 +1085,7 @@
         "type": "ui_group",
         "name": "Ground Floor Lighting",
         "tab": "6e79e7537966793f",
-        "order": 2,
+        "order": 1,
         "disp": true,
         "width": "6",
         "collapse": true,
@@ -1128,7 +1096,7 @@
         "type": "ui_group",
         "name": "Basement Lighting",
         "tab": "6e79e7537966793f",
-        "order": 3,
+        "order": 2,
         "disp": true,
         "width": "6",
         "collapse": true,
@@ -1182,18 +1150,7 @@
         "type": "ui_group",
         "name": "Automation",
         "tab": "6e79e7537966793f",
-        "order": 1,
-        "disp": true,
-        "width": "6",
-        "collapse": true,
-        "className": ""
-    },
-    {
-        "id": "96fc183cf1c3e5c2",
-        "type": "ui_group",
-        "name": "Monitor",
-        "tab": "6e79e7537966793f",
-        "order": 5,
+        "order": 4,
         "disp": true,
         "width": "6",
         "collapse": true,
@@ -5856,9 +5813,9 @@
         "type": "ui_template",
         "z": "531b5b7886a5f8e6",
         "g": "13f1c7a5db24ee5d",
-        "group": "96fc183cf1c3e5c2",
+        "group": "7f388d69eb09e37c",
         "name": "Monitor Lighting",
-        "order": 7,
+        "order": 12,
         "width": "6",
         "height": "3",
         "format": "",
@@ -6030,9 +5987,9 @@
         "type": "ui_template",
         "z": "531b5b7886a5f8e6",
         "g": "13f1c7a5db24ee5d",
-        "group": "96fc183cf1c3e5c2",
+        "group": "7f388d69eb09e37c",
         "name": "Monitor Shades",
-        "order": 6,
+        "order": 11,
         "width": "6",
         "height": "2",
         "format": "",
@@ -6071,9 +6028,9 @@
         "type": "ui_template",
         "z": "531b5b7886a5f8e6",
         "g": "04fca032bcc6efa3",
-        "group": "96fc183cf1c3e5c2",
+        "group": "7f388d69eb09e37c",
         "name": "Monitor Time",
-        "order": 5,
+        "order": 10,
         "width": "6",
         "height": "2",
         "format": "",
@@ -6112,9 +6069,9 @@
         "type": "ui_template",
         "z": "531b5b7886a5f8e6",
         "g": "04fca032bcc6efa3",
-        "group": "96fc183cf1c3e5c2",
+        "group": "7f388d69eb09e37c",
         "name": "Monitor Theme",
-        "order": 4,
+        "order": 9,
         "width": "6",
         "height": "2",
         "format": "",
@@ -6134,9 +6091,9 @@
         "type": "ui_template",
         "z": "531b5b7886a5f8e6",
         "g": "04fca032bcc6efa3",
-        "group": "96fc183cf1c3e5c2",
+        "group": "7f388d69eb09e37c",
         "name": "Monitor Bedtime",
-        "order": 3,
+        "order": 8,
         "width": "6",
         "height": "2",
         "format": "",
@@ -6156,9 +6113,9 @@
         "type": "ui_template",
         "z": "531b5b7886a5f8e6",
         "g": "04fca032bcc6efa3",
-        "group": "96fc183cf1c3e5c2",
+        "group": "7f388d69eb09e37c",
         "name": "Monitor Sunset",
-        "order": 2,
+        "order": 7,
         "width": "6",
         "height": "2",
         "format": "",
@@ -6178,9 +6135,9 @@
         "type": "ui_template",
         "z": "531b5b7886a5f8e6",
         "g": "04fca032bcc6efa3",
-        "group": "96fc183cf1c3e5c2",
+        "group": "7f388d69eb09e37c",
         "name": "Monitor Sunrise",
-        "order": 1,
+        "order": 6,
         "width": "6",
         "height": "2",
         "format": "",
