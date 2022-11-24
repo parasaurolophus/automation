@@ -203,7 +203,7 @@
         "meta": {
             "module": "@parasaurolophus/node-red-hue-api-v2",
             "type": "hue-api-v2",
-            "version": "1.0.1",
+            "version": "2.0.0",
             "author": "parasaurolophus <apps@rader.us>",
             "desc": "Wrap the API (V2) exposed by a Philips Hue Bridge",
             "keywords": "node-red,philips-hue,hue",
@@ -211,10 +211,7 @@
         },
         "color": "#D8BFD8",
         "outputLabels": [
-            "dashboard",
-            "onopen",
-            "onerror",
-            "events"
+            "dashboard"
         ],
         "icon": "node-red/bridge.svg",
         "status": {
@@ -288,7 +285,7 @@
             "keywords": "node-red,philips-hue,hue",
             "license": "MIT"
         },
-        "color": "#D8BFD8",
+        "color": "#D7D7A0",
         "inputLabels": [
             "command"
         ],
@@ -372,8 +369,6 @@
         ],
         "x": 14,
         "y": 119,
-        "w": 732,
-        "h": 122,
         "info": "Send API command messages to a _PowerView_ hub at a rate of no more than\none per second."
     },
     {
@@ -414,8 +409,6 @@
         ],
         "x": 14,
         "y": 259,
-        "w": 1302,
-        "h": 182,
         "info": "Dynamically create dashboard buttons corresponding to each scene\ndiscovered by querying a _PowerView_ hub."
     },
     {
@@ -538,8 +531,6 @@
         ],
         "x": 864,
         "y": 459,
-        "w": 442,
-        "h": 82,
         "info": "Set `msg.url` to the command that will activate the _PowerView_ scene\nwhose id is in `msg.payload`."
     },
     {
@@ -687,8 +678,6 @@
         ],
         "x": 14,
         "y": 19,
-        "w": 672,
-        "h": 322,
         "info": "Display each `daily/+` and `timer/time` on the dashboard as it occurs,\nas an aid in debugging."
     },
     {
@@ -714,8 +703,6 @@
         ],
         "x": 14,
         "y": 239,
-        "w": 702,
-        "h": 202,
         "info": "Route `automation/shades` event messages to invoke the appropriate\ndevice control API's."
     },
     {
@@ -733,19 +720,17 @@
         "nodes": [
             "cf057fb563602af9",
             "ba8aefaef362e646",
-            "3358ef6c85b6df35",
             "d02ca2c4ab46c97c",
             "9022d5c9a6f5198c",
             "9f3235aa3de2fd5f",
             "2ee072159afbe3bf",
             "6c7be01156028ce2",
             "ced848a163c0d081",
-            "a76da85781b20782"
+            "a76da85781b20782",
+            "e3e880c15a3db2ea"
         ],
         "x": 14,
         "y": 19,
-        "w": 1232,
-        "h": 202,
         "info": "Send `automation/shades` event when:\n\n- A new `timer/time` event is received, and\n- Window shade automation is enabled by users"
     },
     {
@@ -764,13 +749,13 @@
             "1c66374732c2db12",
             "d5f8ba86d3d33717",
             "74600007c532fc76",
-            "591be4f2e810669d",
-            "286c4389ae9eb388",
-            "e4620749ca5eb56b",
-            "cae972d0d4110a67",
-            "fc87a75f0b3bdf1c",
             "819f2ca9cc921d88",
             "b6aad9b8ca77d2b0",
+            "591be4f2e810669d",
+            "286c4389ae9eb388",
+            "fc87a75f0b3bdf1c",
+            "cae972d0d4110a67",
+            "b55a33d145130e88",
             "ed34c221bd829fa5"
         ],
         "x": 14,
@@ -799,8 +784,6 @@
         ],
         "x": 14,
         "y": 359,
-        "w": 552,
-        "h": 142,
         "info": "Display each `automation/+` on the dashboard as it occurs, as an aid in\ndebugging."
     },
     {
@@ -824,7 +807,7 @@
         ],
         "x": 14,
         "y": 539,
-        "w": 1032,
+        "w": 1092,
         "h": 82,
         "info": "Send an event to initialize dynamically created dashboard controls each\ntime:\n\n1. this client successfully connects to the MQTT broker\n2. a user presses the _Refresh_ button on the dashboard\n\nSee the documentation for the _Refresh_ dashboard button for more\ninformation."
     },
@@ -904,8 +887,6 @@
         ],
         "x": 14,
         "y": 519,
-        "w": 422,
-        "h": 142,
         "info": "Support calling certain `function` nodes as subroutines using\n`link call` nodes."
     },
     {
@@ -2597,7 +2578,7 @@
         "z": "13e9081a904c6a12",
         "g": "1858ee0bbe9b4418",
         "name": "theme",
-        "func": "const date = new Date(msg.payload.daily)\nconst month = date.getMonth()\nconst day = date.getDate()\n\nif ((month == 7) && (day <= 4)) {\n\n    msg.payload = 'tribal'\n\n} else if (month == 10) {\n\n    msg.payload = 'spooky'\n\n} else if (month == 12) {\n\n    msg.payload = 'jolly'\n\n} else {\n\n    msg.payload = 'standard'\n\n}\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nmsg.topic = 'daily/theme'\nreturn msg",
+        "func": "const date = new Date(msg.payload.daily)\nconst month = date.getMonth() + 1\nconst day = date.getDate()\n\nif ((month == 7) && (day <= 4)) {\n\n    msg.payload = 'tribal'\n\n} else if (month == 10) {\n\n    msg.payload = 'spooky'\n\n} else if (month == 12) {\n\n    msg.payload = 'jolly'\n\n} else {\n\n    msg.payload = 'standard'\n\n}\n\nnode.status({\n    text: msg.payload,\n    shape: 'dot',\n    fill: 'blue'\n})\n\nmsg.topic = 'daily/theme'\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
@@ -3021,7 +3002,7 @@
         "payloadType": "date",
         "topic": "controls/refresh",
         "topicType": "str",
-        "x": 780,
+        "x": 810,
         "y": 580,
         "wires": [
             [
@@ -3045,7 +3026,7 @@
         "correl": "",
         "expiry": "",
         "broker": "fe1c0af9d7c8c368",
-        "x": 940,
+        "x": 1000,
         "y": 580,
         "wires": [],
         "info": "Send the timestamp in `msg.payload` as an MQTT message with topic\n`controls/refresh`.\n\nThe intent is that flows receiving such messages will (re-)initialize\ndynamically created dashboard controls."
@@ -3368,32 +3349,10 @@
         "y": 140,
         "wires": [
             [
-                "3358ef6c85b6df35"
-            ]
-        ],
-        "info": "Synchronize received `settings/shades` and `timer/time` messages."
-    },
-    {
-        "id": "3358ef6c85b6df35",
-        "type": "rbe",
-        "z": "6913f223fa29d4d2",
-        "g": "0a9025328509689d",
-        "name": "",
-        "func": "rbe",
-        "gap": "",
-        "start": "",
-        "inout": "out",
-        "septopics": false,
-        "property": "payload",
-        "topi": "topic",
-        "x": 530,
-        "y": 140,
-        "wires": [
-            [
                 "d02ca2c4ab46c97c"
             ]
         ],
-        "info": "Block messages unless `msg.payload` changes, without regard to\n`msg.topic`."
+        "info": "Synchronize received `settings/shades` and `timer/time` messages."
     },
     {
         "id": "d02ca2c4ab46c97c",
@@ -3411,7 +3370,7 @@
         "checkall": "true",
         "repair": false,
         "outputs": 1,
-        "x": 680,
+        "x": 560,
         "y": 140,
         "wires": [
             [
@@ -3440,11 +3399,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 900,
+        "x": 780,
         "y": 140,
         "wires": [
             [
-                "a76da85781b20782"
+                "e3e880c15a3db2ea"
             ]
         ],
         "info": "Move `msg.payload.timer/time` to `msg.payload`."
@@ -3514,6 +3473,27 @@
             ]
         ],
         "info": "Subscribe to `automation/shades` event messages."
+    },
+    {
+        "id": "e3e880c15a3db2ea",
+        "type": "rbe",
+        "z": "6913f223fa29d4d2",
+        "g": "0a9025328509689d",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload",
+        "topi": "topic",
+        "x": 970,
+        "y": 140,
+        "wires": [
+            [
+                "a76da85781b20782"
+            ]
+        ]
     },
     {
         "id": "aae17e5a30471de5",
@@ -4251,132 +4231,6 @@
         "info": "Send user interaction as an event message using MQTT."
     },
     {
-        "id": "591be4f2e810669d",
-        "type": "rbe",
-        "z": "448b73182a92925c",
-        "g": "4ec1d58b5d01e809",
-        "name": "",
-        "func": "rbe",
-        "gap": "",
-        "start": "",
-        "inout": "out",
-        "septopics": true,
-        "property": "payload",
-        "topi": "topic",
-        "x": 350,
-        "y": 180,
-        "wires": [
-            [
-                "286c4389ae9eb388"
-            ]
-        ],
-        "info": "Block messages unless `msg.payload` changes, treating each `msg.topic`\nindependently."
-    },
-    {
-        "id": "286c4389ae9eb388",
-        "type": "join",
-        "z": "448b73182a92925c",
-        "g": "4ec1d58b5d01e809",
-        "name": "",
-        "mode": "custom",
-        "build": "object",
-        "property": "payload",
-        "propertyType": "msg",
-        "key": "topic",
-        "joiner": "\\n",
-        "joinerType": "str",
-        "accumulate": true,
-        "timeout": "",
-        "count": "3",
-        "reduceRight": false,
-        "reduceExp": "",
-        "reduceInit": "",
-        "reduceInitType": "",
-        "reduceFixup": "",
-        "x": 470,
-        "y": 180,
-        "wires": [
-            [
-                "e4620749ca5eb56b"
-            ]
-        ],
-        "info": "Synchronize `settings/lighting`, `daily/theme` and `timer/time` messages\nreceived using MQTT."
-    },
-    {
-        "id": "e4620749ca5eb56b",
-        "type": "rbe",
-        "z": "448b73182a92925c",
-        "g": "4ec1d58b5d01e809",
-        "name": "",
-        "func": "rbe",
-        "gap": "",
-        "start": "",
-        "inout": "out",
-        "septopics": false,
-        "property": "payload",
-        "topi": "topic",
-        "x": 590,
-        "y": 180,
-        "wires": [
-            [
-                "fc87a75f0b3bdf1c"
-            ]
-        ],
-        "info": "Block messages unless `msg.payload` changes, without regard to\n`msg.topic`."
-    },
-    {
-        "id": "cae972d0d4110a67",
-        "type": "change",
-        "z": "448b73182a92925c",
-        "g": "4ec1d58b5d01e809",
-        "name": "",
-        "rules": [
-            {
-                "t": "delete",
-                "p": "payload.settings/lighting",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 980,
-        "y": 180,
-        "wires": [
-            [
-                "ed34c221bd829fa5"
-            ]
-        ],
-        "info": "Delet the `settings/lighting` property from `msg.payload`."
-    },
-    {
-        "id": "fc87a75f0b3bdf1c",
-        "type": "switch",
-        "z": "448b73182a92925c",
-        "g": "4ec1d58b5d01e809",
-        "name": "settings/lighting",
-        "property": "payload.settings/lighting",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "true"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 740,
-        "y": 180,
-        "wires": [
-            [
-                "cae972d0d4110a67"
-            ]
-        ],
-        "info": "Block unless lighting automation is enabled by a user."
-    },
-    {
         "id": "819f2ca9cc921d88",
         "type": "mqtt in",
         "z": "448b73182a92925c",
@@ -4444,6 +4298,131 @@
             ]
         ],
         "info": "Subscribe to `automation/lighting` event messages."
+    },
+    {
+        "id": "591be4f2e810669d",
+        "type": "rbe",
+        "z": "448b73182a92925c",
+        "g": "4ec1d58b5d01e809",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 350,
+        "y": 180,
+        "wires": [
+            [
+                "286c4389ae9eb388"
+            ]
+        ],
+        "info": "Block messages unless `msg.payload` changes, treating each `msg.topic`\nindependently."
+    },
+    {
+        "id": "286c4389ae9eb388",
+        "type": "join",
+        "z": "448b73182a92925c",
+        "g": "4ec1d58b5d01e809",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 470,
+        "y": 180,
+        "wires": [
+            [
+                "fc87a75f0b3bdf1c"
+            ]
+        ],
+        "info": "Synchronize `settings/lighting`, `daily/theme` and `timer/time` messages\nreceived using MQTT."
+    },
+    {
+        "id": "fc87a75f0b3bdf1c",
+        "type": "switch",
+        "z": "448b73182a92925c",
+        "g": "4ec1d58b5d01e809",
+        "name": "settings/lighting",
+        "property": "payload.settings/lighting",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 620,
+        "y": 180,
+        "wires": [
+            [
+                "cae972d0d4110a67"
+            ]
+        ],
+        "info": "Block unless lighting automation is enabled by a user."
+    },
+    {
+        "id": "cae972d0d4110a67",
+        "type": "change",
+        "z": "448b73182a92925c",
+        "g": "4ec1d58b5d01e809",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "payload.settings/lighting",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 180,
+        "wires": [
+            [
+                "b55a33d145130e88"
+            ]
+        ],
+        "info": "Delet the `settings/lighting` property from `msg.payload`."
+    },
+    {
+        "id": "b55a33d145130e88",
+        "type": "rbe",
+        "z": "448b73182a92925c",
+        "g": "4ec1d58b5d01e809",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": false,
+        "property": "payload",
+        "topi": "topic",
+        "x": 1070,
+        "y": 180,
+        "wires": [
+            [
+                "ed34c221bd829fa5"
+            ]
+        ]
     },
     {
         "id": "ed34c221bd829fa5",
@@ -5941,7 +5920,7 @@
         "fieldType": "msg",
         "format": "html",
         "syntax": "plain",
-        "template": "<div style=\"margin: 0; position: relative; width: 100%; height: 100%;\">\n    <div style=\"margin: 0; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 90%;\">\n        <hr>\n        <p style=\"text-align: center; font-style: italic;\">{{msg.now}}</p>\n        <p style=\"text-align: center; font-weight: bold;\">{{msg.topic}}</p>\n        <pre>{{msg.payload}}</pre>\n    </div>\n</div>",
+        "template": "<div style=\"margin: 0; position: relative; width: 100%; height: 100%;\">\n    <div style=\"margin: 0; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 95%;\">\n        <hr>\n        <p style=\"text-align: center; font-style: italic;\">{{msg.now}}</p>\n        <p style=\"text-align: center; font-weight: bold;\">{{msg.topic}}</p>\n        <pre>{{msg.payload}}</pre>\n    </div>\n</div>",
         "output": "str",
         "x": 300,
         "y": 620,
