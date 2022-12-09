@@ -11,14 +11,11 @@ window shades using Node-RED.
 
 These flows implement more sophisticated time-based automation than is
 supported directly by popular home automation platforms or the native
-apps supplied by Philips and Hunter-Douglas.
-
-For example, these flows activate different holiday-themed scenes
-automatically based on the date. They also drive window shade
-automation based on the sun's position over the course of a day.
-
-> See the documentation within the Node-RED editor for the various flow
-> tabs, subflows and node groups for more detailed information.
+apps supplied by Philips and Hunter-Douglas. For example, they activate
+different seasonal-themed lighting scenes automatically based on the
+date. They also drive window shade automation based on the sun's
+position over the course of a day based on the geographic location
+of the home and the day of the year.
 
 ## Dependencies
 
@@ -30,7 +27,15 @@ flows into your environment:
 
 In addition, some `function` nodes in these flows load the
 [suncalc](https://www.npmjs.com/package/suncalc) package dynamically,
-which must be enabled in _settings.js_ (true by default, but see below).
+which must be enabled in _settings.js_ (true by default).
+
+> **Note:** The Hue and PowerView API's are accessed directly using
+> `http request` nodes rather than through specialized node packages
+> from the Node-RED library. Similarly, _suncalc_ is accessed directly
+> from JavaScript code in `function` nodes rather than through a
+> wrapper node. The only non-standard node used,
+> _@parasaurolophus/node-red-eventsource_, is developed and maintained
+> by the same author for the specific needs of these flows.
 
 ## Configuration
 
@@ -44,17 +49,7 @@ system's shell).
 The default contents of _settings.js_ for `externalModules` allow
 `function` nodes to load any module at runtime. If you have changed
 the `externalModules` options in your _settings.js_, ensure that the
-_suncalc_ module is enabled, at minimum:
-
-```
-externalModules: {
-    modules: {
-        allowInstall: true,
-        allowList: [suncalc],
-        denyList: []
-    }
-},
-```
+_suncalc_ module is enabled, at minimum.
 
 > **Note:** you only need to change the `externalModules` settings if
 > they have been altered from the default in a way that would prevent
@@ -78,9 +73,76 @@ environment variables, e.g. by adding them to
 
 > **Note:** these flows assume that the `LATITUDE` and `LONGITUDE`
 > environment variables are set to a location consistent with the time
-> zone configuration of the host operating system running Node-RED.
+> zone configuration of the host operating system running Node-RED
+> and that time zone is correct for the location of the home. In
+> particular, the _Timer_ flow makes extensive use of built-in
+> JavaScript functions such as `Date().getHour()` and the like.
+> These flows assume that the values returned by those functions are
+> appropriate to drive lighting and window covering automation which
+> is only true of the host OS is configured correctly for the local
+> time zone.
 
 There are two configuraton properties per Hue bridge: its address and
 access token for use by Node-RED. See
 <https://github.com/parasaurolophus/create-hue-application-key> for
 a Node-RED flow that can be used to create such access tokens.
+
+## Features
+
+- Local control of Philips Hue lighting and Hunter-Douglas (PowerView)
+  window coverings using the API's published by their respective
+  hubs
+
+- Dynamically created dashboard controls for individual device groups
+  and scenes created by querying the Hue and PowerView hubs
+
+- Home automation driven by date, time and the position of the sun
+  over the course of each day of the year
+
+- Support multiple Hue hubs concurrently
+
+The implementation of these  features provides practical demonstrations
+of a number of basic software-engineering concents such as event-driven
+programming and data-driven user interfaces. It also serves as a
+repository of examples of a number of techniques specific to Node-RED as
+a home automation platform and how it interoperates with underlying
+technologies such as MQTT, HTTP based API's, AngularJS and NPM-based
+JavaScript packages.
+
+## Requirements
+
+There were two primary goals for these flows.
+
+1. More sophisticated automation rules than supported directly by
+   the native apps and off-the-shelf "smart home" platforms supplied
+   by companies like Philips, Hunter-Douglas, Apple, Google, Amazon,
+   Samsung etc.
+
+2. Support a consolidated user interface easily accessible by anyone
+   in the home, including guests, without having to own a specific
+   make of mobile device, install specific apps, be granted explicit
+   network access or create accounts with any so-called "cloud services"
+
+3. Eliminate the use of third-party "clouds" to the greatest degree
+   possible due to performance, reliability, security and privacy
+   concerns
+
+The home in question has a number of "smart" devices from multiple
+manufacturers, none of which come with any ability to interoperate
+directly. Home automation platforms from companies like Apple, Google
+and Amazon are woefully inadequate in many respects, and each requires
+anyone attempting to do things as simple as turning on and off lights to
+have a specific app, with a properly configured account, with that
+account given pretty much _carte blanche_ authority to do anything it
+likes to every aspect of the "smart" home, mediated by third-parties
+with their own agendas that trump any consideration of their customers'
+seucirty or privacy.
+
+Using Node-RED allows for a fairly intuitive user interface that can be
+accessed with no more specialized an app than a web browser. Further,
+Node-RED can be programmed to do anything that can be accomplished in a
+general-purpose programming language, JavaScript, rather than being
+constrained by the features made available at the whim of companies
+more interested in extending their surveillance and control over their
+"walled gardens" to your home than in providing useful products and
+services.
