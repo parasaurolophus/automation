@@ -23,6 +23,7 @@ The following node packages must be installed before loading these
 flows into your environment:
 
 - [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
+- [node-red-contrib-web-worldmap](https://flows.nodered.org/node/node-red-contrib-web-worldmap)
 - [@parasaurolophus/node-red-eventsource](https://flows.nodered.org/node/@parasaurolophus/node-red-eventsource)
 
 In addition, some `function` nodes in these flows load the
