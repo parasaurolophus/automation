@@ -62,17 +62,17 @@ These flows rely on some sensitive configuration data provided via
 environment variables, e.g. by adding them to
 `~/.node-red/environment`:
 
-| Environment Variable     | Description                                                              |
-|--------------------------|--------------------------------------------------------------------------|
-| LATITUDE                 | Coordinate for use with [suncalc](https://www.npmjs.com/package/suncalc) |
-| LONGITUDE                | Coordinate for use with [suncalc](https://www.npmjs.com/package/suncalc) |
-| GROUND_FLOOR_HUE_ADDRESS | IP address of the Hue Bridge controlling devices on the ground floor     |
-| GROUND_FLOOR_HUE_KEY     | API access token for the ground floor Hue Bridge                         |
-| BASEMENT_HUE_ADDRESS     | IP address of the Hue Bridge controlling devices in the basement         |
-| BASEMENT_HUE_KEY         | API access token for the basement Hue Bridge                             |
-| POWERVIEW_ADDRESS        | IP address of the PowerView hub                                          |
+| Environment Variable       | Description                                                              |
+|----------------------------|--------------------------------------------------------------------------|
+| `LATITUDE`                 | Coordinate for use with [suncalc](https://www.npmjs.com/package/suncalc) |
+| `LONGITUDE`                | Coordinate for use with [suncalc](https://www.npmjs.com/package/suncalc) |
+| `GROUND_FLOOR_HUE_ADDRESS` | IP address of the Hue Bridge controlling devices on the ground floor     |
+| `GROUND_FLOOR_HUE_KEY`     | API access token for the ground floor Hue Bridge                         |
+| `BASEMENT_HUE_ADDRESS`     | IP address of the Hue Bridge controlling devices in the basement         |
+| `BASEMENT_HUE_KEY`         | API access token for the basement Hue Bridge                             |
+| `POWERVIEW_ADDRESS`        | IP address of the PowerView hub                                          |
 
-> **Note:** these flows assume that the `LATITUDE` and `LONGITUDE`
+> **Note:** These flows assume that the `LATITUDE` and `LONGITUDE`
 > environment variables are set to a location consistent with the time
 > zone configuration of the host operating system running Node-RED
 > and that time zone is correct for the location of the home. In
@@ -147,3 +147,15 @@ constrained by the features made available at the whim of companies
 more interested in extending their surveillance and control over their
 "walled gardens" to your home than in providing useful products and
 services.
+
+# Geolocation and Presence Detection
+
+The current version of these flows include support for MQTT messages
+in the format sent by the [Owntracks](https://owntracks.org/) mobile
+app. The dependency on
+[node-red-contrib-web-worldmap](https://flows.nodered.org/node/node-red-contrib-web-worldmap)
+allows the locations of properly configured mobile devices to be
+displayed on a map. In addition, the payloads of MQTT messages that
+trigger automation will include an indication of whether or not the
+home is currently occupied. All of these location and presence
+detection are in an experimental phase.
