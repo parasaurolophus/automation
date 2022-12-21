@@ -23,7 +23,6 @@ The following node packages must be installed before loading these
 flows into your environment:
 
 - [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
-- [node-red-contrib-web-worldmap](https://flows.nodered.org/node/node-red-contrib-web-worldmap)
 - [@parasaurolophus/node-red-eventsource](https://flows.nodered.org/node/@parasaurolophus/node-red-eventsource)
 
 In addition, some `function` nodes in these flows load the
@@ -36,7 +35,8 @@ which must be enabled in _settings.js_ (true by default).
 > from JavaScript code in `function` nodes rather than through a
 > wrapper node. The only non-standard node used,
 > _@parasaurolophus/node-red-eventsource_, is developed and maintained
-> by the same author for the specific needs of these flows.
+> by the same author as these flows for their specific needs when
+> interoperating with Hue bridges.
 
 ## Configuration
 
@@ -102,8 +102,10 @@ a Node-RED flow that can be used to create such access tokens.
 
 - Support multiple Hue hubs concurrently
 
+- Presence detection using [Owntracks](https://owntracks.org/)
+
 The implementation of these  features provides practical demonstrations
-of a number of basic software-engineering concents such as event-driven
+of a number of basic software-engineering concepts such as event-driven
 programming and data-driven user interfaces. It also serves as a
 repository of examples of a number of techniques specific to Node-RED as
 a home automation platform and how it interoperates with underlying
@@ -112,7 +114,7 @@ JavaScript packages.
 
 ## Requirements
 
-There were two primary goals for these flows.
+The goals for these flows include:
 
 1. More sophisticated automation rules than supported directly by
    the native apps and off-the-shelf "smart home" platforms supplied
@@ -135,9 +137,9 @@ and Amazon are woefully inadequate in many respects, and each requires
 anyone attempting to do things as simple as turning on and off lights to
 have a specific app, with a properly configured account, with that
 account given pretty much _carte blanche_ authority to do anything it
-likes to every aspect of the "smart" home, mediated by third-parties
-with their own agendas that trump any consideration of their customers'
-seucirty or privacy.
+likes to every aspect of the "smart" home, mediated by "cloud services"
+owned and operated by third-parties with their own agendas that trump
+any consideration of their customers' seucirty or privacy.
 
 Using Node-RED allows for a fairly intuitive user interface that can be
 accessed with no more specialized an app than a web browser. Further,
@@ -145,17 +147,30 @@ Node-RED can be programmed to do anything that can be accomplished in a
 general-purpose programming language, JavaScript, rather than being
 constrained by the features made available at the whim of companies
 more interested in extending their surveillance and control over their
-"walled gardens" to your home than in providing useful products and
-services.
+"walled gardens" than in providing useful products and services.
 
-# Geolocation and Presence Detection
+## User interface
+
+A few of the dashboard controls are "hard coded" using specific
+`ui_switch`, `ui_button` and `ui_dropdown` nodes from
+[node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard).
+These represent settings not associated with particular devices.
+
+Most of the controls are implemented using `ui_template` nodes that
+render data retrieved by querying various device API's or received
+as asynchronous events. The HTML sent to these `ui_template` nodes
+includes AngularJS `md-switch` and `md-button` elements that correspond
+to lighting devices, window coverings and scenes that are discovered
+while these flows are running.
+
+The result is that these flows display a consolidated user interface
+for controlling diverse devices from multiple vendows without having
+to be changed whenever those devices' configuration is changed in
+their respective apps.
+
+## Geolocation and Presence Detection
 
 The current version of these flows include support for MQTT messages
 in the format sent by the [Owntracks](https://owntracks.org/) mobile
-app. The dependency on
-[node-red-contrib-web-worldmap](https://flows.nodered.org/node/node-red-contrib-web-worldmap)
-allows the locations of properly configured mobile devices to be
-displayed on a map. In addition, the payloads of MQTT messages that
-trigger automation will include an indication of whether or not the
-home is currently occupied. All of these location and presence
-detection are in an experimental phase.
+app. All of the location and presence detection features are in an
+experimental phase at the time of this writing.
