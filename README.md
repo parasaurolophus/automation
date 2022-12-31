@@ -102,8 +102,6 @@ a Node-RED flow that can be used to create such access tokens.
 
 - Support multiple Hue hubs concurrently
 
-- Presence detection using [Owntracks](https://owntracks.org/)
-
 The implementation of these  features provides practical demonstrations
 of a number of basic software-engineering concepts such as event-driven
 programming and data-driven user interfaces. It also serves as a
@@ -167,10 +165,3 @@ The result is that these flows display a consolidated user interface
 for controlling diverse devices from multiple vendows without having
 to be changed whenever those devices' configuration is changed in
 their respective apps.
-
-## Geolocation and Presence Detection
-
-The current version of these flows include support for MQTT messages
-in the format sent by the [Owntracks](https://owntracks.org/) mobile
-app. All of the location and presence detection features are in an
-experimental phase at the time of this writing.
