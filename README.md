@@ -22,7 +22,7 @@ of the home and the day of the year.
 The following node packages must be installed before loading these
 flows into your environment:
 
-- [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
+- [@flexdash/node-red-fd-corewidgets](https://flows.nodered.org/node/@flexdash/node-red-fd-corewidgets)
 - [@parasaurolophus/node-red-eventsource](https://flows.nodered.org/node/@parasaurolophus/node-red-eventsource)
 
 In addition, some `function` nodes in these flows load the
@@ -33,10 +33,13 @@ which must be enabled in _settings.js_ (true by default).
 > `http request` nodes rather than through specialized node packages
 > from the Node-RED library. Similarly, _suncalc_ is accessed directly
 > from JavaScript code in `function` nodes rather than through a
-> wrapper node. The only non-standard node used,
-> _@parasaurolophus/node-red-eventsource_, is developed and maintained
-> by the same author as these flows for their specific needs when
-> interoperating with Hue bridges.
+> wrapper node. The non-standard node, _@parasaurolophus/node-red-eventsource_,
+> is developed and maintained by the same author as these flows for the
+> specific needs of interoperating with Hue bridges. The _FlexDash_
+> package is used in preference to the much better integrated
+> _node-red-dashboard_ nodes since the core Node-RED developers have chosen
+> to stop supporting them instead of updating them to a supported version
+> of _Angular_.
 
 ## Configuration
 
@@ -150,18 +153,19 @@ more interested in extending their surveillance and control over their
 ## User interface
 
 A few of the dashboard controls are "hard coded" using specific
-`ui_switch`, `ui_button` and `ui_dropdown` nodes from
-[node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard).
+`fd-toggle`, `fd-push-button` and similar nodes from
+[@flexdash/node-red-fd-corewidgets](https://flows.nodered.org/node/@flexdash/node-red-fd-corewidgets).
 These represent settings not associated with particular devices.
 
-Most of the controls are implemented using `ui_template` nodes that
+Most of the controls are implemented using `FD custom` nodes that
 render data retrieved by querying various device API's or received
-as asynchronous events. The HTML sent to these `ui_template` nodes
-includes AngularJS `md-switch` and `md-button` elements that correspond
+as asynchronous events. The HTML in these `FD custom` nodes
+includes Vuetify `v-switch` and `v-btn` elements that correspond
 to lighting devices, window coverings and scenes that are discovered
-while these flows are running.
+while these flows are running using the API's provided by the
+device vendors.
 
 The result is that these flows display a consolidated user interface
-for controlling diverse devices from multiple vendows without having
+for controlling diverse devices from multiple vendors without having
 to be changed whenever those devices' configuration is changed in
 their respective apps.
