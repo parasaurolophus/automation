@@ -367,9 +367,7 @@
             }
         ],
         "x": 34,
-        "y": 79,
-        "w": 732,
-        "h": 122
+        "y": 79
     },
     {
         "id": "8002cb7f995536e6",
@@ -412,9 +410,7 @@
             }
         ],
         "x": 34,
-        "y": 219,
-        "w": 652,
-        "h": 122
+        "y": 219
     },
     {
         "id": "c2e3e9d2c97df2d0",
@@ -447,9 +443,7 @@
             "71fc2fa7674de915"
         ],
         "x": 14,
-        "y": 299,
-        "w": 1292,
-        "h": 362
+        "y": 299
     },
     {
         "id": "8326ae1a15518f8f",
@@ -479,9 +473,7 @@
             "bae913eb3593854f"
         ],
         "x": 14,
-        "y": 19,
-        "w": 1332,
-        "h": 262
+        "y": 19
     },
     {
         "id": "1afeb43be3175917",
@@ -506,8 +498,6 @@
         ],
         "x": 14,
         "y": 339,
-        "w": 872,
-        "h": 162,
         "info": "Send timer events over the course of each day:\n\n1. Once at start up\n2. At the start of each time of day as calculated by the `function` node\n   named `time`\n\nEach such message will have `msg.topic` set to `timer/time` and\n`msg.payload` set to one of the _time_ values:\n\n- `morning`\n- `midday`\n- `afternoon`\n- `evening`\n- `night`\n\nAgain, see the documentation for the `function` node named `time` for\nmore details."
     },
     {
@@ -534,8 +524,6 @@
         ],
         "x": 14,
         "y": 119,
-        "w": 892,
-        "h": 202,
         "info": "Send daily events:\n\n1. Once at start up\n2. Each time a user changes the value of the _Bedtime_ dashboard\n   control\n3. Every morning at 1:01AM\n\nThe events sent periodically by this group of nodes are:\n\n| `msg.topic`        | `msg.payload`                                                                                             | Description                                                                           |\n|--------------------|-----------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|\n| `settings/bedtime` | Value selected by a user using the _Bedtime_ control on the dashboard                                     | Approximate hour at which \"night mode\" should begin each day                          |\n| `daily/theme`      | The _theme_string for the current day                                                                     | See the information for the `function` node named `theme` for more details            |\n| `daily/sunrise`    | Timestamp at which the sun rises on the current day                                                       | See the information for the `function` node named `sunrise | sunset` for more details |\n| `daily/sunset`     | Timestamp at which the sun sets on the current day                                                        | See the information for the `function` node named `sunrise | sunset` for more details |\n| `daily/bedtime`    | A timestamp that varies slightly each day, based on the value of the most recent `settings/bedtime` event | See the information for the `function` node named `bedtime` for more details          |\n\n**Note:** All three of the `function` nodes, `theme`, `sunrise | sunset`\nand `bedtime`, are downstream of a `join` node even though only one\nof them (`bedtime`) directly depends on both inputs to the `join`. This\nis deliberate. Blocking the `theme` and `sunrise | sunset` functions\nuntil after at least one message has been received from a `mqtt in`\nnode ensures that they will not attempt to send messages before the\nconnection to the MQTT broker is ready. This assumes that all of the\n`mqtt in` and `mqtt out` nodes on this flow use the same broker\nconfiguration node.\n\nThe alternative would be to add a `status` node for the relevant\n`mqtt out` node and another `join` node to synchronize the `function`\nnodes with the connection state."
     },
     {
@@ -650,9 +638,7 @@
             "6da2a4ce93760596"
         ],
         "x": 14,
-        "y": 359,
-        "w": 1252,
-        "h": 122
+        "y": 359
     },
     {
         "id": "9cf0457b813ca743",
@@ -674,8 +660,6 @@
         ],
         "x": 14,
         "y": 259,
-        "w": 852,
-        "h": 82,
         "info": "Dynamically create dashboard buttons corresponding to each scene\ndiscovered by querying a _PowerView_ hub."
     },
     {
@@ -699,9 +683,7 @@
             "4bf13bba7e95e190"
         ],
         "x": 14,
-        "y": 119,
-        "w": 872,
-        "h": 122
+        "y": 119
     },
     {
         "id": "2434336f78a2f3e2",
@@ -854,9 +836,7 @@
             "951c2a51ed6be94c"
         ],
         "x": 34,
-        "y": 359,
-        "w": 672,
-        "h": 122
+        "y": 359
     },
     {
         "id": "aa4b11da55ec8165",
@@ -879,9 +859,7 @@
             "e5f2d38d9320e4d2"
         ],
         "x": 34,
-        "y": 499,
-        "w": 1032,
-        "h": 82
+        "y": 499
     },
     {
         "id": "23bf1f9635c44cc8",
@@ -906,9 +884,7 @@
             "3dbe561bfaf5bbf1"
         ],
         "x": 34,
-        "y": 599,
-        "w": 1072,
-        "h": 162
+        "y": 599
     },
     {
         "id": "18c77db84320513b",
@@ -5277,7 +5253,7 @@
         "to": "",
         "reg": false,
         "x": 310,
-        "y": 720,
+        "y": 680,
         "wires": [
             [
                 "0ed14c935a7933e8"
@@ -5303,7 +5279,7 @@
         "senderr": false,
         "headers": [],
         "x": 470,
-        "y": 720,
+        "y": 680,
         "wires": [
             [
                 "f74128d99635d540"
@@ -5336,7 +5312,7 @@
             "e5f2d38d9320e4d2"
         ],
         "x": 140,
-        "y": 720,
+        "y": 680,
         "wires": [
             [
                 "4edaa94ac96845e1"
@@ -5364,7 +5340,7 @@
         "wrap": false,
         "autoscroll": true,
         "x": 970,
-        "y": 720,
+        "y": 680,
         "wires": [
             []
         ]
@@ -5379,7 +5355,7 @@
         "action": "str",
         "pretty": true,
         "x": 790,
-        "y": 720,
+        "y": 680,
         "wires": [
             [
                 "ef28c8779729e38a"
@@ -5399,7 +5375,7 @@
         "finalize": "",
         "libs": [],
         "x": 640,
-        "y": 720,
+        "y": 680,
         "wires": [
             [
                 "47127182921210f4"
@@ -5413,7 +5389,7 @@
         "g": "23bf1f9635c44cc8",
         "name": "assumes ${HUE_USERNAME} is defined",
         "info": "",
-        "x": 220,
+        "x": 720,
         "y": 640,
         "wires": []
     },
@@ -5425,7 +5401,7 @@
         "name": "https://developers.meethue.com/develop/hue-api-v2/getting-started/",
         "info": "",
         "x": 300,
-        "y": 680,
+        "y": 640,
         "wires": []
     }
 ]
