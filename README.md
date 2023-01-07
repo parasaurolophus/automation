@@ -24,6 +24,7 @@ flows into your environment:
 
 - [@flexdash/node-red-fd-corewidgets](https://flows.nodered.org/node/@flexdash/node-red-fd-corewidgets)
 - [@parasaurolophus/node-red-eventsource](https://flows.nodered.org/node/@parasaurolophus/node-red-eventsource)
+- [node-red-node-discovery](https://flows.nodered.org/node/node-red-node-discovery)
 
 In addition, some `function` nodes in these flows load the
 [suncalc](https://www.npmjs.com/package/suncalc) package dynamically,

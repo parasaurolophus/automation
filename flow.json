@@ -44,11 +44,11 @@
         "type": "subflow",
         "name": "Hue API V2",
         "info": "",
-        "category": "",
+        "category": "hue",
         "in": [
             {
-                "x": 180,
-                "y": 180,
+                "x": 40,
+                "y": 100,
                 "wires": [
                     {
                         "id": "07d61ea24d59a251"
@@ -58,8 +58,8 @@
         ],
         "out": [
             {
-                "x": 910,
-                "y": 220,
+                "x": 1210,
+                "y": 140,
                 "wires": [
                     {
                         "id": "a1a4ef6fbcea1cd4",
@@ -126,7 +126,15 @@
                 }
             }
         ],
-        "meta": {},
+        "meta": {
+            "module": "@parasaurolophus/node-red-hue-api-v2",
+            "type": "hue-api-v2",
+            "version": "5.0.0",
+            "author": "parasaurolophus <apps@rader.us>",
+            "desc": "Encapsulate logic to interoperate with a Philips Hue Bridge and present a FlexDash dashboard for it",
+            "keywords": "node-red,hue,hue-api,hue-api-v2,flexdash",
+            "license": "MIT"
+        },
         "color": "#D8BFD8",
         "inputLabels": [
             "command"
@@ -136,8 +144,8 @@
         ],
         "icon": "font-awesome/fa-lightbulb-o",
         "status": {
-            "x": 280,
-            "y": 640,
+            "x": 940,
+            "y": 700,
             "wires": [
                 {
                     "id": "02be9eee8ee84874",
@@ -151,11 +159,11 @@
         "type": "subflow",
         "name": "Get PowerView Metadata",
         "info": "",
-        "category": "",
+        "category": "powerview",
         "in": [
             {
                 "x": 40,
-                "y": 60,
+                "y": 100,
                 "wires": [
                     {
                         "id": "02eb116aa3a7efad"
@@ -166,7 +174,7 @@
         "out": [
             {
                 "x": 1300,
-                "y": 60,
+                "y": 100,
                 "wires": [
                     {
                         "id": "ca455aa5752d94d8",
@@ -267,11 +275,11 @@
         "type": "subflow",
         "name": "Hue Automation",
         "info": "Send a series of commands to the\n[Hue Bridge API V2](https://developers.meethue.com/develop/hue-api-v2/).\nThe commands are created from the value of the `${COMMANDS}` subflow\nconfiguration variable.\n\nIn particular, each element of `${COMMANDS}` must contain `topic`,\n`payload`, `method` and `target` members. For example, if an instance\nof this subflow is configured with `${COMMANDS}` set to:\n\n```\n[\n    {\n        \"topic\": \"resource/grouped_light/bad8480b-b404-42d1-a9e7-a4a69f400971\",\n        \"payload\": {\n            \"on\": {\n                \"on\": false\n            }\n        },\n        \"method\": \"PUT\",\n        \"target\": \"send to ground floor hue\"\n    },\n    {\n        \"topic\": \"resource/scene/5d507fb6-89f6-459a-b327-0fffd0c6dc48\",\n        \"payload\": {\n            \"recall\": {\n                \"action\": \"active\"\n            }\n        },\n        \"method\": \"PUT\",\n        \"target\": \"send to ground floor hue\"\n    },\n    {\n        \"topic\": \"resource/scene/48c39b9f-1599-4a5c-b7f6-bad6cad4029a\",\n        \"payload\": {\n            \"recall\": {\n                \"action\": \"active\"\n            }\n        },\n        \"method\": \"PUT\",\n        \"target\": \"send to ground floor hue\"\n    }\n]\n```\n\nthat instance will send messages to turn off the Hue `grouped_light`\nresource whose id is `bad8480b-b404-42d1-a9e7-a4a69f400971` and\nactivate the scenes whose id's are `5d507fb6-89f6-459a-b327-0fffd0c6dc48`\nand `48c39b9f-1599-4a5c-b7f6-bad6cad4029a`. It does so by invoking a\n`link call` node with `msg.target` set to `\"send to ground floor hue\"`.\n\n**Note:** This subflow is theoretically unnecessary since one could,\nin principle, define any desired lighting state as an individual scene\nbelonging to a particular room or zone using the Hue mobile app. In that\ncase, each instance of this subflow would correspond to a single command\nto activate a particular such scene. This subflow exists, in part, as a\nwork-around for well-known limitations in the Hue bridge in regards to\nthe number of devices per room or zone. In addition, this subflow\nallows for setting the state of combinations of lighting devices without\ncluttering up the view presented to users of the Hue app with lots of\nzones and scenes which would exist solely for the purposes of these\nNode-RED flows but which would rarely, if ever, make sense to activate\nmanually. Finally, it also provides a bit of future-proofing for\nchanges in the Hue API since Philips sometimes exposes new features in\nthe bridge API before they can be accessed directly in the mobile app.",
-        "category": "",
+        "category": "hue",
         "in": [
             {
-                "x": 60,
-                "y": 60,
+                "x": 40,
+                "y": 100,
                 "wires": [
                     {
                         "id": "3aead3d3f53c86d6"
@@ -301,15 +309,15 @@
             "type": "hue-lighting",
             "version": "1.0.0",
             "author": "parasaurolophus <apps@rader.us>",
-            "desc": "Send messages implementing a particular combination of Hue lighting groups and scenes",
+            "desc": "Send messages controlling a particular combination of Hue lighting groups and scenes",
             "keywords": "node-red,philips-hue,hue,hue-api,hue-api-v2",
             "license": "MIT"
         },
         "color": "#D8BFD8",
         "icon": "font-awesome/fa-cogs",
         "status": {
-            "x": 740,
-            "y": 60,
+            "x": 720,
+            "y": 100,
             "wires": [
                 {
                     "id": "1fed66fe72fa7562",
@@ -322,7 +330,7 @@
         "id": "2556ad75d549c17f",
         "type": "group",
         "z": "2191f395ad362596",
-        "name": "ground floor hue",
+        "name": "monitor and control ground floor hue bridge",
         "style": {
             "stroke": "none",
             "fill": "#ffffff",
@@ -358,8 +366,8 @@
                 "type": "str"
             }
         ],
-        "x": 14,
-        "y": 159,
+        "x": 34,
+        "y": 79,
         "w": 732,
         "h": 122
     },
@@ -367,7 +375,7 @@
         "id": "8002cb7f995536e6",
         "type": "group",
         "z": "2191f395ad362596",
-        "name": "basement hue",
+        "name": "monitor and control basement hue bridge",
         "style": {
             "stroke": "none",
             "fill": "#ffffff",
@@ -403,83 +411,10 @@
                 "type": "str"
             }
         ],
-        "x": 14,
-        "y": 299,
+        "x": 34,
+        "y": 219,
         "w": 652,
         "h": 122
-    },
-    {
-        "id": "f61f788a11efec04",
-        "type": "group",
-        "z": "d17c63f280964e0b",
-        "name": "powerview dashboard controls",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "07a492e2d29b5dd3",
-            "57c39b659f421513",
-            "eb7123132bce19c7",
-            "02eec7feccc1567d",
-            "de8273a5bd63e29f",
-            "273346c13d4b93a6",
-            "20fcd070f0572dc0",
-            "e85b0e2a6e90da31",
-            "0e632e274bbeb040",
-            "6da2a4ce93760596",
-            "19a4eaa5a3b6953b"
-        ],
-        "x": 14,
-        "y": 359
-    },
-    {
-        "id": "cb106476337f4d38",
-        "type": "group",
-        "z": "d17c63f280964e0b",
-        "name": "send commands to the powerview hub specified by ${POWERVIEW_ADDRESS} at a rate of no more than 1 per second",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "a250d71416af8250",
-            "70e42b6637f4c865",
-            "413305fe8cf8bc16",
-            "3b9aea255e25c86d",
-            "450c11f088a3f9ee",
-            "4bf13bba7e95e190"
-        ],
-        "x": 14,
-        "y": 119
-    },
-    {
-        "id": "9cf0457b813ca743",
-        "type": "group",
-        "z": "d17c63f280964e0b",
-        "name": "activate the powerview scene whose id is specified by msg.payload",
-        "style": {
-            "stroke": "none",
-            "fill": "#ffffff",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "aed6009fd524f819",
-            "34eaa776ddc24669",
-            "2bf099ec37e84bbc",
-            "9b5a655543db6ec5"
-        ],
-        "x": 14,
-        "y": 259,
-        "info": "Dynamically create dashboard buttons corresponding to each scene\ndiscovered by querying a _PowerView_ hub."
     },
     {
         "id": "c2e3e9d2c97df2d0",
@@ -512,7 +447,9 @@
             "71fc2fa7674de915"
         ],
         "x": 14,
-        "y": 299
+        "y": 299,
+        "w": 1252,
+        "h": 262
     },
     {
         "id": "8326ae1a15518f8f",
@@ -542,7 +479,9 @@
             "bae913eb3593854f"
         ],
         "x": 14,
-        "y": 19
+        "y": 19,
+        "w": 1332,
+        "h": 262
     },
     {
         "id": "1afeb43be3175917",
@@ -620,15 +559,10 @@
             "f143492f43470c78",
             "1570464315ea7815",
             "8c71c829aa0ec0ed",
-            "e88e19eda77e6f5b",
-            "8346de5b8a4aac74",
-            "749b3deee816e422",
-            "efa17be91723abcb"
+            "e88e19eda77e6f5b"
         ],
         "x": 854,
-        "y": 19,
-        "w": 492,
-        "h": 382
+        "y": 19
     },
     {
         "id": "ee96bb221d02295e",
@@ -654,9 +588,7 @@
             "8c8a22c79a66a856"
         ],
         "x": 14,
-        "y": 159,
-        "w": 692,
-        "h": 202
+        "y": 159
     },
     {
         "id": "06bdd60cce319536",
@@ -673,13 +605,10 @@
         "nodes": [
             "a7cf1643a9332de2",
             "3bf82acf8b05bc31",
-            "1af506ce07ba6b16",
-            "7ec5f98cec6774c7"
+            "1af506ce07ba6b16"
         ],
         "x": 14,
-        "y": 379,
-        "w": 512,
-        "h": 142
+        "y": 379
     },
     {
         "id": "cb32c24aeeeec965",
@@ -701,9 +630,292 @@
             "c34c16cc16eab87c"
         ],
         "x": 14,
+        "y": 19
+    },
+    {
+        "id": "f61f788a11efec04",
+        "type": "group",
+        "z": "d17c63f280964e0b",
+        "name": "powerview dashboard controls",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "07a492e2d29b5dd3",
+            "57c39b659f421513",
+            "eb7123132bce19c7",
+            "02eec7feccc1567d",
+            "de8273a5bd63e29f",
+            "273346c13d4b93a6",
+            "20fcd070f0572dc0",
+            "e85b0e2a6e90da31",
+            "0e632e274bbeb040",
+            "6da2a4ce93760596"
+        ],
+        "x": 14,
+        "y": 359,
+        "w": 1252,
+        "h": 122
+    },
+    {
+        "id": "9cf0457b813ca743",
+        "type": "group",
+        "z": "d17c63f280964e0b",
+        "name": "activate the powerview scene whose id is specified by msg.payload",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "aed6009fd524f819",
+            "34eaa776ddc24669",
+            "2bf099ec37e84bbc",
+            "9b5a655543db6ec5"
+        ],
+        "x": 14,
+        "y": 259,
+        "w": 852,
+        "h": 82,
+        "info": "Dynamically create dashboard buttons corresponding to each scene\ndiscovered by querying a _PowerView_ hub."
+    },
+    {
+        "id": "cb106476337f4d38",
+        "type": "group",
+        "z": "d17c63f280964e0b",
+        "name": "send commands to the powerview hub specified by ${POWERVIEW_ADDRESS} at a rate of no more than 1 per second",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "a250d71416af8250",
+            "70e42b6637f4c865",
+            "413305fe8cf8bc16",
+            "3b9aea255e25c86d",
+            "450c11f088a3f9ee",
+            "4bf13bba7e95e190"
+        ],
+        "x": 14,
+        "y": 119,
+        "w": 872,
+        "h": 122
+    },
+    {
+        "id": "2434336f78a2f3e2",
+        "type": "group",
+        "z": "d37f5cd9edab358d",
+        "name": "error reporting",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "8346de5b8a4aac74",
+            "749b3deee816e422",
+            "efa17be91723abcb"
+        ],
+        "x": 854,
+        "y": 359
+    },
+    {
+        "id": "0fb8e43c903b3506",
+        "type": "group",
+        "z": "85ed27d795e6e866",
+        "name": "send messages at a rate of no more than 1 per second to the Hue Bridge at ${ADDRESS} using ${KEY} as the client application key",
+        "style": {
+            "label": true,
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "07d61ea24d59a251",
+            "7a4ba2d58e8e1f70",
+            "437ca2e5667c0391",
+            "ccb8f8c4fd3333af",
+            "a1a4ef6fbcea1cd4",
+            "2dd6e02f993c8f04",
+            "3b556984858fe751",
+            "3635f7d1709b0fa7",
+            "1a1956aaf2b915c7"
+        ],
+        "x": 74,
         "y": 19,
+        "w": 1072,
+        "h": 162
+    },
+    {
+        "id": "96971e50c13ead01",
+        "type": "group",
+        "z": "85ed27d795e6e866",
+        "name": "subscribe to server-sent events from the Hue Bridge at ${ADDRESS} using ${KEY} as the client application key",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "label": true,
+            "color": "#ffffff",
+            "fill-opacity": "0.1"
+        },
+        "nodes": [
+            "5a1b87c5d08fa5d4",
+            "12f058cdadbb39ce",
+            "80bbf467c351320f",
+            "d3e5044fe363855b",
+            "5e338d73bb5c33fb",
+            "153449edfaf38a67",
+            "964ed66cfe05da8b",
+            "7e0cf896d463421a",
+            "5ed6402bdc19dd70",
+            "4ab229c77e4ce0fe",
+            "5e36497f30cb3265",
+            "bbf1e13fabc2641b",
+            "6ce6327771b66664",
+            "7e48f675042d8b93",
+            "f564e0e7691828da",
+            "368e25b0f6f27139",
+            "3221def52c06d766",
+            "3c4dc36276340285"
+        ],
+        "x": 74,
+        "y": 199,
+        "w": 1252,
+        "h": 242
+    },
+    {
+        "id": "63b8c849bdb4c8f3",
+        "type": "group",
+        "z": "85ed27d795e6e866",
+        "name": "dynamically create dashboard controls",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "f7841898977deb1b",
+            "14183f3dd2381282",
+            "47c110cf31929730",
+            "0632d0568ac3c7f7",
+            "ababe72bf0305c42",
+            "558b67d0475e7440",
+            "909bdb017a8b4918"
+        ],
+        "x": 74,
+        "y": 459,
         "w": 812,
         "h": 122
+    },
+    {
+        "id": "b550cd7d040d0256",
+        "type": "group",
+        "z": "85ed27d795e6e866",
+        "name": "display eventsource readystate on dashboard",
+        "style": {
+            "label": true,
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "02be9eee8ee84874",
+            "f7f6f7ad28d5faba",
+            "971b60c46976e238",
+            "9ce112db970eaa70"
+        ],
+        "x": 74,
+        "y": 599,
+        "w": 832,
+        "h": 122
+    },
+    {
+        "id": "4d34d7515d2d5eb7",
+        "type": "group",
+        "z": "2191f395ad362596",
+        "name": "use mdns to discover hue bridges on the lan",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "05224ffb74b3f646",
+            "3fd817749715b4c8",
+            "0ac450bd2cb71c4b",
+            "dde39b996d199227",
+            "951c2a51ed6be94c"
+        ],
+        "x": 34,
+        "y": 359,
+        "w": 672,
+        "h": 122
+    },
+    {
+        "id": "aa4b11da55ec8165",
+        "type": "group",
+        "z": "2191f395ad362596",
+        "name": "display Hue Bridges on dashboard",
+        "style": {
+            "label": true,
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "9a4d24d3dd15f6f3",
+            "db20507d47d41df9",
+            "58f9b91f469c2298",
+            "a16f51b7e78155b0",
+            "388512dfed2f201e",
+            "e5f2d38d9320e4d2"
+        ],
+        "x": 34,
+        "y": 499,
+        "w": 1132,
+        "h": 82
+    },
+    {
+        "id": "23bf1f9635c44cc8",
+        "type": "group",
+        "z": "2191f395ad362596",
+        "name": " initiate the client application key creation process",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "4edaa94ac96845e1",
+            "0ed14c935a7933e8",
+            "32957b8846e57f76",
+            "ef28c8779729e38a",
+            "47127182921210f4"
+        ],
+        "x": 34,
+        "y": 599,
+        "w": 892,
+        "h": 82
     },
     {
         "id": "d43897d45226a6e5",
@@ -759,7 +971,7 @@
         "devServer": false,
         "devInstall": false,
         "name": "Automation",
-        "fd_children": ",8ab715e0738f32fd"
+        "fd_children": ",8ab715e0738f32fd,7d769240720a89f6"
     },
     {
         "id": "8ab715e0738f32fd",
@@ -775,7 +987,7 @@
         "type": "flexdash container",
         "name": "controls grid",
         "kind": "StdGrid",
-        "fd_children": ",5b9dbfb36097f407,b1e7a12608de7a06,afe43437400cbd95,d3686879543e1951",
+        "fd_children": ",5b9dbfb36097f407,b1e7a12608de7a06,afe43437400cbd95,d3686879543e1951,efe428ce929d2eb3,d25331d49825beb1",
         "title": "",
         "tab": "8ab715e0738f32fd",
         "min_cols": "1",
@@ -791,16 +1003,16 @@
         "type": "flexdash container",
         "name": "settings panel",
         "kind": "Panel",
-        "fd_children": ",7ec5f98cec6774c7,c34c16cc16eab87c,c4918657ee3c8205,6c53863e9ee9d907,a3aea892e9c6ef6f,8b5f3d43ab04f15f,f143492f43470c78,1570464315ea7815,8c71c829aa0ec0ed,e88e19eda77e6f5b,7fd58ccd357887b3,80c3792cf898b831,efa17be91723abcb",
-        "title": "",
+        "fd_children": ",c4918657ee3c8205,6c53863e9ee9d907,a3aea892e9c6ef6f,c34c16cc16eab87c",
+        "title": "Settings",
         "tab": "",
         "min_cols": "1",
         "max_cols": "20",
         "unicast": "ignore",
         "parent": "3f52c6a91a658ce1",
-        "solid": false,
+        "solid": true,
         "cols": "3",
-        "rows": "15"
+        "rows": "2"
     },
     {
         "id": "fa8112538a948337",
@@ -808,14 +1020,14 @@
         "z": "85ed27d795e6e866",
         "name": "hue api v2 panel",
         "kind": "SubflowPanel",
-        "fd_children": ",9ce112db970eaa70,909bdb017a8b4918,14183f3dd2381282",
-        "title": "",
+        "fd_children": ",909bdb017a8b4918,9ce112db970eaa70,14183f3dd2381282",
+        "title": "${TITLE}",
         "tab": "8ab715e0738f32fd",
         "min_cols": "1",
         "max_cols": "20",
         "unicast": "ignore",
         "parent": "",
-        "solid": false,
+        "solid": true,
         "cols": "3",
         "rows": "20"
     },
@@ -824,21 +1036,110 @@
         "type": "flexdash container",
         "name": "powerview panel",
         "kind": "Panel",
-        "fd_children": ",19a4eaa5a3b6953b,6da2a4ce93760596,20fcd070f0572dc0",
+        "fd_children": ",6da2a4ce93760596,20fcd070f0572dc0",
+        "title": "Window Shades",
+        "tab": "8ab715e0738f32fd",
+        "min_cols": "1",
+        "max_cols": "20",
+        "unicast": "ignore",
+        "parent": "3f52c6a91a658ce1",
+        "solid": true,
+        "cols": "3",
+        "rows": "20"
+    },
+    {
+        "id": "efe428ce929d2eb3",
+        "type": "flexdash container",
+        "name": "monitoring panel",
+        "kind": "Panel",
+        "fd_children": ",8b5f3d43ab04f15f,f143492f43470c78,8c71c829aa0ec0ed,e88e19eda77e6f5b,1570464315ea7815,7fd58ccd357887b3,80c3792cf898b831",
+        "title": "Monitor",
+        "tab": "8ab715e0738f32fd",
+        "min_cols": "1",
+        "max_cols": "20",
+        "unicast": "ignore",
+        "parent": "3f52c6a91a658ce1",
+        "solid": true,
+        "cols": "3",
+        "rows": "9"
+    },
+    {
+        "id": "d25331d49825beb1",
+        "type": "flexdash container",
+        "name": "error panel",
+        "kind": "Panel",
+        "fd_children": ",efa17be91723abcb",
         "title": "",
         "tab": "8ab715e0738f32fd",
         "min_cols": "1",
         "max_cols": "20",
         "unicast": "ignore",
         "parent": "3f52c6a91a658ce1",
-        "solid": false,
+        "solid": true,
         "cols": "3",
-        "rows": "20"
+        "rows": "9"
+    },
+    {
+        "id": "7d769240720a89f6",
+        "type": "flexdash tab",
+        "name": "admin tab",
+        "icon": "mdi-shield-crown-outline",
+        "title": "Administration",
+        "fd_children": ",e76c9e3d275d234f",
+        "fd": "f8cd52f55a498825"
+    },
+    {
+        "id": "e76c9e3d275d234f",
+        "type": "flexdash container",
+        "name": "admin grid",
+        "kind": "StdGrid",
+        "fd_children": ",0206e4e57203648e",
+        "title": "",
+        "tab": "7d769240720a89f6",
+        "min_cols": "1",
+        "max_cols": "20",
+        "unicast": "ignore",
+        "parent": "",
+        "solid": false,
+        "cols": "1",
+        "rows": "1"
+    },
+    {
+        "id": "06c952f588cb12f4",
+        "type": "tls-config",
+        "z": "2191f395ad362596",
+        "name": "ignore server certificate",
+        "cert": "",
+        "key": "",
+        "ca": "",
+        "certname": "",
+        "keyname": "",
+        "caname": "",
+        "servername": "",
+        "verifyservercert": false,
+        "alpnprotocol": ""
+    },
+    {
+        "id": "0206e4e57203648e",
+        "type": "flexdash container",
+        "name": "hue admin panel",
+        "kind": "Panel",
+        "fd_children": ",9a4d24d3dd15f6f3,ef28c8779729e38a",
+        "title": "",
+        "tab": "7d769240720a89f6",
+        "min_cols": "1",
+        "max_cols": "20",
+        "unicast": "ignore",
+        "parent": "e76c9e3d275d234f",
+        "solid": true,
+        "cols": "5",
+        "rows": "6"
     },
     {
         "id": "07d61ea24d59a251",
         "type": "delay",
         "z": "85ed27d795e6e866",
+        "g": "0fb8e43c903b3506",
         "name": "",
         "pauseType": "rate",
         "timeout": "5",
@@ -852,8 +1153,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 290,
-        "y": 200,
+        "x": 330,
+        "y": 120,
         "wires": [
             [
                 "437ca2e5667c0391"
@@ -864,10 +1165,11 @@
         "id": "7a4ba2d58e8e1f70",
         "type": "link in",
         "z": "85ed27d795e6e866",
+        "g": "0fb8e43c903b3506",
         "name": "send to bridge",
         "links": [],
-        "x": 130,
-        "y": 220,
+        "x": 170,
+        "y": 140,
         "wires": [
             [
                 "07d61ea24d59a251"
@@ -879,6 +1181,7 @@
         "id": "437ca2e5667c0391",
         "type": "change",
         "z": "85ed27d795e6e866",
+        "g": "0fb8e43c903b3506",
         "name": "",
         "rules": [
             {
@@ -901,8 +1204,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 460,
-        "y": 200,
+        "x": 500,
+        "y": 120,
         "wires": [
             [
                 "ccb8f8c4fd3333af"
@@ -913,6 +1216,7 @@
         "id": "ccb8f8c4fd3333af",
         "type": "http request",
         "z": "85ed27d795e6e866",
+        "g": "0fb8e43c903b3506",
         "name": "",
         "method": "use",
         "ret": "obj",
@@ -925,8 +1229,8 @@
         "authType": "",
         "senderr": false,
         "headers": [],
-        "x": 630,
-        "y": 200,
+        "x": 670,
+        "y": 120,
         "wires": [
             [
                 "a1a4ef6fbcea1cd4",
@@ -938,6 +1242,7 @@
         "id": "a1a4ef6fbcea1cd4",
         "type": "function",
         "z": "85ed27d795e6e866",
+        "g": "0fb8e43c903b3506",
         "name": "validate",
         "func": "if (!Number.isInteger(msg.statusCode)) {\n\n    return msg\n\n}\n\nif (msg.statusCode != 200) {\n\n    return msg\n\n}\n\nif (!Object.prototype.hasOwnProperty.call(msg.payload, 'data')) {\n\n    return msg\n\n}\n\nif (msg.payload.errors.length > 0) {\n\n    return msg\n\n}\n\nreturn null",
         "outputs": 1,
@@ -945,8 +1250,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 780,
-        "y": 220,
+        "x": 820,
+        "y": 140,
         "wires": [
             []
         ]
@@ -955,6 +1260,7 @@
         "id": "2dd6e02f993c8f04",
         "type": "change",
         "z": "85ed27d795e6e866",
+        "g": "0fb8e43c903b3506",
         "name": "",
         "rules": [
             {
@@ -970,8 +1276,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 830,
-        "y": 180,
+        "x": 870,
+        "y": 100,
         "wires": [
             [
                 "3b556984858fe751"
@@ -982,11 +1288,12 @@
         "id": "3b556984858fe751",
         "type": "link out",
         "z": "85ed27d795e6e866",
+        "g": "0fb8e43c903b3506",
         "name": "response",
         "mode": "return",
         "links": [],
-        "x": 1020,
-        "y": 180,
+        "x": 1060,
+        "y": 100,
         "wires": [],
         "l": true
     },
@@ -994,6 +1301,7 @@
         "id": "5a1b87c5d08fa5d4",
         "type": "delay",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "",
         "pauseType": "delay",
         "timeout": "1",
@@ -1007,8 +1315,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 240,
-        "y": 280,
+        "x": 280,
+        "y": 240,
         "wires": [
             [
                 "12f058cdadbb39ce"
@@ -1019,6 +1327,7 @@
         "id": "12f058cdadbb39ce",
         "type": "change",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "request",
         "rules": [
             {
@@ -1048,8 +1357,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 380,
-        "y": 280,
+        "x": 420,
+        "y": 240,
         "wires": [
             [
                 "80bbf467c351320f"
@@ -1060,14 +1369,15 @@
         "id": "80bbf467c351320f",
         "type": "link call",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "",
         "links": [
             "7a4ba2d58e8e1f70"
         ],
         "linkType": "static",
         "timeout": "30",
-        "x": 540,
-        "y": 280,
+        "x": 580,
+        "y": 240,
         "wires": [
             [
                 "d3e5044fe363855b"
@@ -1078,6 +1388,7 @@
         "id": "d3e5044fe363855b",
         "type": "function",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "format event",
         "func": "// clear out cached resources\nflow.set('resources', {})\n\nconst updates = [{ type: 'update', data: msg.payload }]\nconst event = { type: 'message', data: JSON.stringify(updates) }\n\nmsg.payload = event\nmsg.topic = 'message'\n\nreturn msg",
         "outputs": 1,
@@ -1085,8 +1396,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 710,
-        "y": 280,
+        "x": 750,
+        "y": 240,
         "wires": [
             [
                 "5e338d73bb5c33fb"
@@ -1100,6 +1411,7 @@
         "id": "5e338d73bb5c33fb",
         "type": "function",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "persist data",
         "func": "const TOPIC = env.get('TOPIC') || 'hue'\nconst resources = flow.get('resources')\nconst data = JSON.parse(msg.payload.data)\n\nconst messages = []\n\nfor (let datum of data) {\n\n    for (let value of datum.data) {\n\n        const message = RED.util.cloneMessage(msg)\n        const category = resources[value.type] || {}\n        let resource = category[value.id] || {}\n\n        switch (datum.type) {\n\n            case 'add':\n            case 'update':\n\n                for (let property in value) {\n\n                    resource[property] = value[property]\n                }\n\n                category[value.id] = message.payload = resource\n                break\n\n            case 'delete':\n\n                delete category[value.id]\n                message.payload = ''\n                break\n\n            default:\n\n                node.warn(JSON.stringify(datum, undefined, 1))\n                break\n\n        }\n\n        resources[value.type] = category\n        message.topic = TOPIC + '/resource/' + value.type + '/' + value.id\n        message.retain = true\n        messages.push(message)\n\n    }\n}\n\nflow.set('resources', resources)\nmsg.payload = resources\nreturn [msg, messages]",
         "outputs": 2,
@@ -1107,8 +1419,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 910,
-        "y": 320,
+        "x": 950,
+        "y": 280,
         "wires": [
             [
                 "3221def52c06d766"
@@ -1126,9 +1438,10 @@
         "id": "153449edfaf38a67",
         "type": "EventSource",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "",
-        "x": 710,
-        "y": 380,
+        "x": 750,
+        "y": 340,
         "wires": [
             [
                 "5e338d73bb5c33fb"
@@ -1145,6 +1458,7 @@
         "id": "964ed66cfe05da8b",
         "type": "rbe",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -1153,8 +1467,8 @@
         "septopics": true,
         "property": "payload",
         "topi": "topic",
-        "x": 1090,
-        "y": 380,
+        "x": 1130,
+        "y": 340,
         "wires": [
             [
                 "bbf1e13fabc2641b"
@@ -1165,6 +1479,7 @@
         "id": "7e0cf896d463421a",
         "type": "change",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "open",
         "rules": [
             {
@@ -1180,8 +1495,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 570,
-        "y": 360,
+        "x": 610,
+        "y": 320,
         "wires": [
             [
                 "153449edfaf38a67"
@@ -1192,6 +1507,7 @@
         "id": "5ed6402bdc19dd70",
         "type": "change",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "close",
         "rules": [
             {
@@ -1207,8 +1523,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 570,
-        "y": 400,
+        "x": 610,
+        "y": 360,
         "wires": [
             [
                 "153449edfaf38a67"
@@ -1219,6 +1535,7 @@
         "id": "4ab229c77e4ce0fe",
         "type": "change",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "",
         "rules": [
             {
@@ -1241,8 +1558,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 900,
-        "y": 380,
+        "x": 940,
+        "y": 340,
         "wires": [
             [
                 "964ed66cfe05da8b"
@@ -1253,6 +1570,7 @@
         "id": "5e36497f30cb3265",
         "type": "change",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "",
         "rules": [
             {
@@ -1275,8 +1593,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 900,
-        "y": 440,
+        "x": 940,
+        "y": 400,
         "wires": [
             [
                 "964ed66cfe05da8b"
@@ -1287,6 +1605,7 @@
         "id": "bbf1e13fabc2641b",
         "type": "mqtt out",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "",
         "topic": "",
         "qos": "2",
@@ -1297,21 +1616,22 @@
         "correl": "",
         "expiry": "",
         "broker": "d43897d45226a6e5",
-        "x": 1210,
-        "y": 380,
+        "x": 1250,
+        "y": 340,
         "wires": []
     },
     {
         "id": "6ce6327771b66664",
         "type": "complete",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "format event",
         "scope": [
             "d3e5044fe363855b"
         ],
         "uncaught": false,
-        "x": 430,
-        "y": 360,
+        "x": 470,
+        "y": 320,
         "wires": [
             [
                 "7e0cf896d463421a"
@@ -1322,6 +1642,7 @@
         "id": "7e48f675042d8b93",
         "type": "mqtt in",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "",
         "topic": "controls/refresh",
         "qos": "2",
@@ -1331,8 +1652,8 @@
         "rap": true,
         "rh": 0,
         "inputs": 0,
-        "x": 420,
-        "y": 400,
+        "x": 460,
+        "y": 360,
         "wires": [
             [
                 "5ed6402bdc19dd70"
@@ -1343,12 +1664,13 @@
         "id": "02be9eee8ee84874",
         "type": "status",
         "z": "85ed27d795e6e866",
+        "g": "b550cd7d040d0256",
         "name": "status: eventsource",
         "scope": [
             "153449edfaf38a67"
         ],
-        "x": 150,
-        "y": 620,
+        "x": 190,
+        "y": 680,
         "wires": [
             [
                 "f7f6f7ad28d5faba"
@@ -1359,13 +1681,14 @@
         "id": "f564e0e7691828da",
         "type": "complete",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "close",
         "scope": [
             "5ed6402bdc19dd70"
         ],
         "uncaught": false,
-        "x": 110,
-        "y": 280,
+        "x": 150,
+        "y": 240,
         "wires": [
             [
                 "5a1b87c5d08fa5d4"
@@ -1376,14 +1699,15 @@
         "id": "f7841898977deb1b",
         "type": "function",
         "z": "85ed27d795e6e866",
+        "g": "63b8c849bdb4c8f3",
         "name": "ui model",
-        "func": "const model = []\n\nfunction findOwner(grouped_light) {\n\n    const groups = msg.payload[grouped_light.owner.rtype]\n\n    if (Object.prototype.hasOwnProperty.call(groups, grouped_light.owner.rid)) {\n\n        return groups[grouped_light.owner.rid]\n\n    }\n\n    throw 'no container found for grouped_light ' + grouped_light.id\n\n}\n\nfunction findScenes(owner) {\n\n    const scenes = []\n\n    for (let sceneId in msg.payload.scene) {\n\n        const scene = msg.payload.scene[sceneId]\n\n        if (scene.group.rid == owner.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes.sort((a, b) => {\n        return a.metadata.name.localeCompare(b.metadata.name)\n    })\n\n}\n\nfor (let grouped_light_id in msg.payload.grouped_light) {\n\n    const grouped_light = msg.payload.grouped_light[grouped_light_id]\n    const owner = findOwner(grouped_light)\n    const scenes = findScenes(owner)\n\n    model.push({\n        grouped_light: grouped_light,\n        owner: owner,\n        scenes: scenes,\n        name: (owner.metadata ? owner.metadata.name : 'All Lights')\n    })\n\n}\n\nmsg.payload = model.sort((a, b) => {\n    return a.name.localeCompare(b.name)\n})\n\nmsg.title = env.get('TITLE') || 'Lighting'\n\nreturn msg",
+        "func": "const model = []\n\nfunction findOwner(grouped_light) {\n\n    const groups = msg.payload[grouped_light.owner.rtype]\n\n    if (Object.prototype.hasOwnProperty.call(groups, grouped_light.owner.rid)) {\n\n        return groups[grouped_light.owner.rid]\n\n    }\n\n    throw 'no container found for grouped_light ' + grouped_light.id\n\n}\n\nfunction findScenes(owner) {\n\n    const scenes = []\n\n    for (let sceneId in msg.payload.scene) {\n\n        const scene = msg.payload.scene[sceneId]\n\n        if (scene.group.rid == owner.id) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes.sort((a, b) => {\n        return a.metadata.name.localeCompare(b.metadata.name)\n    })\n\n}\n\nfor (let grouped_light_id in msg.payload.grouped_light) {\n\n    const grouped_light = msg.payload.grouped_light[grouped_light_id]\n    const owner = findOwner(grouped_light)\n    const scenes = findScenes(owner)\n\n    model.push({\n        grouped_light: grouped_light,\n        owner: owner,\n        scenes: scenes,\n        name: (owner.metadata ? owner.metadata.name : 'All Lights')\n    })\n\n}\n\nmsg.payload = model.sort((a, b) => {\n    return a.name.localeCompare(b.name)\n})\n\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 240,
+        "x": 280,
         "y": 520,
         "wires": [
             [
@@ -1396,36 +1720,40 @@
         "id": "3c4dc36276340285",
         "type": "comment",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "https://www.npmjs.com/package/@parasaurolophus/node-red-eventsource",
         "info": "",
-        "x": 300,
-        "y": 120,
+        "x": 560,
+        "y": 400,
         "wires": []
     },
     {
         "id": "1a1956aaf2b915c7",
         "type": "comment",
         "z": "85ed27d795e6e866",
+        "g": "0fb8e43c903b3506",
         "name": "https://github.com/parasaurolophus/create-hue-application-key",
         "info": "",
-        "x": 260,
-        "y": 80,
+        "x": 720,
+        "y": 60,
         "wires": []
     },
     {
         "id": "3635f7d1709b0fa7",
         "type": "comment",
         "z": "85ed27d795e6e866",
+        "g": "0fb8e43c903b3506",
         "name": "https://developers.meethue.com/develop/hue-api-v2/",
         "info": "",
-        "x": 230,
-        "y": 40,
+        "x": 290,
+        "y": 60,
         "wires": []
     },
     {
         "id": "14183f3dd2381282",
         "type": "flexdash custom",
         "z": "85ed27d795e6e866",
+        "g": "63b8c849bdb4c8f3",
         "fd_container": "fa8112538a948337",
         "fd_cols": "6",
         "fd_rows": "20",
@@ -1437,7 +1765,7 @@
         "title": "",
         "sfc_source": "<template>\n\n  <div style=\"height: 100%; vertical-align: top;\">\n\n    <!-- for each element in the array in msg.payload... -->\n    <div style=\"padding: 1em;\"\n        v-for=\"(model, index) in payload\"\n        :key=\"model.grouped_light.id\">\n\n      <!-- add a separator between elements -->\n      <hr v-if=\"index > 0\">\n\n      <!-- add a toggle switch for the element's light group -->\n      <v-switch inset @change=\"changed(model)\"\n          v-model=\"model.grouped_light.on.on\" :label=\"model.name\" />\n\n      <!-- add a button for each of the element's lighting scenes -->\n      <v-btn @click=\"clicked(scene)\"\n          v-for=\"scene in model.scenes\" :key=\"scene.id\">\n        {{ scene.metadata.name }}\n      </v-btn>\n\n    </div>\n\n  </div>\n\n</template>\n\n<script scoped>\n\nexport default {\n\n  props: {\n    payload: { type: Array, default: [] }\n  },\n\n  emits: ['send'],\n\n  methods: {\n\n    clicked(scene) {\n      this.$emit('send', {\n        payload: { recall: { action: 'dynamic_palette' }},\n        topic: 'resource/scene/' + scene.id,\n        method: 'PUT'\n      })\n    },\n\n    changed(model) {\n      this.$emit('send', {\n        payload: { on: { on: model.grouped_light.on.on }},\n        topic: 'resource/grouped_light/' + model.grouped_light.id,\n        method: 'PUT'\n      })\n    }\n  }\n}\n\n</script>",
         "import_map": {},
-        "x": 390,
+        "x": 430,
         "y": 500,
         "wires": [
             [
@@ -1449,6 +1777,7 @@
         "id": "47c110cf31929730",
         "type": "change",
         "z": "85ed27d795e6e866",
+        "g": "63b8c849bdb4c8f3",
         "name": "",
         "rules": [
             {
@@ -1478,7 +1807,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 560,
+        "x": 600,
         "y": 500,
         "wires": [
             [
@@ -1490,13 +1819,14 @@
         "id": "0632d0568ac3c7f7",
         "type": "link call",
         "z": "85ed27d795e6e866",
+        "g": "63b8c849bdb4c8f3",
         "name": "",
         "links": [
             "7a4ba2d58e8e1f70"
         ],
         "linkType": "static",
         "timeout": "30",
-        "x": 740,
+        "x": 780,
         "y": 500,
         "wires": [
             []
@@ -1506,13 +1836,14 @@
         "id": "368e25b0f6f27139",
         "type": "link out",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "controls",
         "mode": "link",
         "links": [
             "ababe72bf0305c42"
         ],
-        "x": 1180,
-        "y": 300,
+        "x": 1220,
+        "y": 260,
         "wires": [],
         "l": true
     },
@@ -1520,11 +1851,12 @@
         "id": "ababe72bf0305c42",
         "type": "link in",
         "z": "85ed27d795e6e866",
+        "g": "63b8c849bdb4c8f3",
         "name": "controls",
         "links": [
             "368e25b0f6f27139"
         ],
-        "x": 110,
+        "x": 150,
         "y": 520,
         "wires": [
             [
@@ -1537,6 +1869,7 @@
         "id": "3221def52c06d766",
         "type": "rbe",
         "z": "85ed27d795e6e866",
+        "g": "96971e50c13ead01",
         "name": "",
         "func": "rbe",
         "gap": "",
@@ -1545,8 +1878,8 @@
         "septopics": false,
         "property": "payload",
         "topi": "topic",
-        "x": 1050,
-        "y": 300,
+        "x": 1090,
+        "y": 260,
         "wires": [
             [
                 "368e25b0f6f27139"
@@ -1557,6 +1890,7 @@
         "id": "f7f6f7ad28d5faba",
         "type": "change",
         "z": "85ed27d795e6e866",
+        "g": "b550cd7d040d0256",
         "name": "",
         "rules": [
             {
@@ -1579,8 +1913,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 340,
-        "y": 600,
+        "x": 400,
+        "y": 640,
         "wires": [
             [
                 "971b60c46976e238"
@@ -1591,6 +1925,7 @@
         "id": "971b60c46976e238",
         "type": "delay",
         "z": "85ed27d795e6e866",
+        "g": "b550cd7d040d0256",
         "name": "",
         "pauseType": "rate",
         "timeout": "5",
@@ -1604,8 +1939,8 @@
         "drop": false,
         "allowrate": false,
         "outputs": 1,
-        "x": 510,
-        "y": 600,
+        "x": 570,
+        "y": 640,
         "wires": [
             [
                 "9ce112db970eaa70"
@@ -1616,14 +1951,15 @@
         "id": "558b67d0475e7440",
         "type": "function",
         "z": "85ed27d795e6e866",
-        "name": "markdown model",
-        "func": "let markdown = ''\n\nfor (let entry of msg.payload) {\n\n    markdown += '# ' + entry.name + '\\n\\n'\n    markdown += '`' + entry.grouped_light.id + '`\\n\\n'\n    markdown += (entry.grouped_light.on.on ? 'on' : 'off') + '\\n\\n'\n\n    if (entry.scenes.length > 0) {\n\n        markdown += '## Scenes\\n\\n'\n\n        for (let scene of entry.scenes) {\n\n            markdown += '| _' +\n                scene.metadata.name +\n                '_ |  `' +\n                scene.id +\n                '` |\\n'\n\n        }\n\n        markdown += '\\n'\n\n    }\n}\n\nmarkdown += '---\\n'\nmsg.payload = markdown\ndelete msg.title\nreturn msg",
+        "g": "63b8c849bdb4c8f3",
+        "name": "markdown",
+        "func": "let markdown = ''\n\nfor (let entry of msg.payload) {\n\n    const state = entry.grouped_light.on.on ?\n        'on' :\n        'off'\n\n    markdown += '# ' +\n        entry.name +\n        ' ' +\n        entry.grouped_light.id +\n        ' ' +\n        state +\n        '\\n\\n'\n\n    if (entry.scenes.length > 0) {\n\n        for (let scene of entry.scenes) {\n\n            markdown += '| ' +\n                scene.metadata.name +\n                ' |  ' +\n                scene.id +\n                ' |\\n'\n\n        }\n\n        markdown += '\\n'\n\n    }\n}\n\nmarkdown += '---\\n'\nmsg.payload = markdown\ndelete msg.title\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 410,
+        "x": 430,
         "y": 540,
         "wires": [
             [
@@ -1635,19 +1971,20 @@
         "id": "909bdb017a8b4918",
         "type": "fd-popup-button",
         "z": "85ed27d795e6e866",
+        "g": "63b8c849bdb4c8f3",
         "fd_container": "fa8112538a948337",
-        "fd_cols": "6",
+        "fd_cols": "3",
         "fd_rows": 1,
         "fd_array": false,
         "fd_array_max": 10,
-        "name": "metadata pop-up",
-        "title": "Metadata",
+        "name": "model pop-up",
+        "title": "Model",
         "popup_info": "",
         "enabled": true,
         "color": "",
         "text": "",
         "icon": null,
-        "x": 610,
+        "x": 600,
         "y": 540,
         "wires": []
     },
@@ -1655,8 +1992,9 @@
         "id": "9ce112db970eaa70",
         "type": "fd-text-field",
         "z": "85ed27d795e6e866",
+        "g": "b550cd7d040d0256",
         "fd_container": "fa8112538a948337",
-        "fd_cols": "6",
+        "fd_cols": "3",
         "fd_rows": 1,
         "fd_array": false,
         "fd_array_max": 10,
@@ -1669,8 +2007,8 @@
         "color": "transparent",
         "text": "",
         "align": "center",
-        "x": 710,
-        "y": 600,
+        "x": 770,
+        "y": 640,
         "wires": [
             []
         ]
@@ -1702,7 +2040,7 @@
         "to": "",
         "reg": false,
         "x": 200,
-        "y": 60,
+        "y": 100,
         "wires": [
             [
                 "a2ce2f10f0cbc3b4"
@@ -1719,7 +2057,7 @@
         "linkType": "dynamic",
         "timeout": "30",
         "x": 430,
-        "y": 60,
+        "y": 100,
         "wires": [
             [
                 "4597056c8e33d1d2"
@@ -1746,7 +2084,7 @@
         "to": "",
         "reg": false,
         "x": 590,
-        "y": 60,
+        "y": 100,
         "wires": [
             [
                 "a4b2cb7314b93cec"
@@ -1766,7 +2104,7 @@
         "stream": false,
         "addname": "",
         "x": 710,
-        "y": 60,
+        "y": 100,
         "wires": [
             [
                 "e89d138990a2c571"
@@ -1794,7 +2132,7 @@
         "to": "",
         "reg": false,
         "x": 860,
-        "y": 60,
+        "y": 100,
         "wires": [
             [
                 "09ed6328f31946db"
@@ -1823,7 +2161,7 @@
         "reduceInitType": "",
         "reduceFixup": "",
         "x": 1010,
-        "y": 60,
+        "y": 100,
         "wires": [
             [
                 "ca455aa5752d94d8"
@@ -1852,11 +2190,21 @@
         "to": "",
         "reg": false,
         "x": 1150,
-        "y": 60,
+        "y": 100,
         "wires": [
             []
         ],
         "info": "Set `msg.topic` to `scenes`."
+    },
+    {
+        "id": "6363f7176ee29fbb",
+        "type": "comment",
+        "z": "699fdca4e881f8ec",
+        "name": "retrieve and parse metadata for a specified type of resource from a given PowerView hub",
+        "info": "",
+        "x": 330,
+        "y": 40,
+        "wires": []
     },
     {
         "id": "3aead3d3f53c86d6",
@@ -1869,8 +2217,8 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 170,
-        "y": 60,
+        "x": 150,
+        "y": 100,
         "wires": [
             [
                 "2cc17430425dda9f"
@@ -1885,8 +2233,8 @@
         "links": [],
         "linkType": "dynamic",
         "timeout": "30",
-        "x": 330,
-        "y": 60,
+        "x": 310,
+        "y": 100,
         "wires": [
             [
                 "ce6b2ab301f750ee"
@@ -1913,8 +2261,8 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 470,
-        "y": 60,
+        "x": 450,
+        "y": 100,
         "wires": [
             [
                 "1fed66fe72fa7562"
@@ -1940,8 +2288,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 620,
-        "y": 60,
+        "x": 600,
+        "y": 100,
         "wires": [
             []
         ]
@@ -1952,8 +2300,8 @@
         "z": "450f4de3c4f73b40",
         "name": "interoperate with \"Hue API V2\" subflow",
         "info": "",
-        "x": 190,
-        "y": 120,
+        "x": 170,
+        "y": 40,
         "wires": []
     },
     {
@@ -2395,15 +2743,15 @@
         "id": "8346de5b8a4aac74",
         "type": "link in",
         "z": "d37f5cd9edab358d",
-        "g": "943477037c4d5918",
-        "name": "display error",
+        "g": "2434336f78a2f3e2",
+        "name": "error",
         "links": [
             "4bf13bba7e95e190",
             "ab92ee0148a0fed7",
             "b0e90a9025c2015c"
         ],
-        "x": 950,
-        "y": 360,
+        "x": 930,
+        "y": 400,
         "wires": [
             [
                 "749b3deee816e422"
@@ -2415,7 +2763,7 @@
         "id": "749b3deee816e422",
         "type": "function",
         "z": "d37f5cd9edab358d",
-        "g": "943477037c4d5918",
+        "g": "2434336f78a2f3e2",
         "name": "stringify",
         "func": "msg.time = new Date().toLocaleString()\nmsg.payload = JSON.stringify(msg, undefined, 1)\nreturn msg",
         "outputs": 1,
@@ -2424,7 +2772,7 @@
         "finalize": "",
         "libs": [],
         "x": 1100,
-        "y": 360,
+        "y": 400,
         "wires": [
             [
                 "efa17be91723abcb"
@@ -2496,29 +2844,11 @@
         ]
     },
     {
-        "id": "7ec5f98cec6774c7",
-        "type": "fd-markdown",
-        "z": "d37f5cd9edab358d",
-        "g": "06bdd60cce319536",
-        "fd_container": "5b9dbfb36097f407",
-        "fd_cols": "6",
-        "fd_rows": 1,
-        "fd_array": false,
-        "fd_array_max": 10,
-        "name": "spacer",
-        "title": "",
-        "popup_info": "",
-        "text": "",
-        "x": 450,
-        "y": 480,
-        "wires": []
-    },
-    {
         "id": "8b5f3d43ab04f15f",
         "type": "fd-text-field",
         "z": "d37f5cd9edab358d",
         "g": "943477037c4d5918",
-        "fd_container": "5b9dbfb36097f407",
+        "fd_container": "efe428ce929d2eb3",
         "fd_cols": "3",
         "fd_rows": 1,
         "fd_array": false,
@@ -2543,7 +2873,7 @@
         "type": "fd-text-field",
         "z": "d37f5cd9edab358d",
         "g": "943477037c4d5918",
-        "fd_container": "5b9dbfb36097f407",
+        "fd_container": "efe428ce929d2eb3",
         "fd_cols": "3",
         "fd_rows": 1,
         "fd_array": false,
@@ -2568,7 +2898,7 @@
         "type": "fd-text-field",
         "z": "d37f5cd9edab358d",
         "g": "943477037c4d5918",
-        "fd_container": "5b9dbfb36097f407",
+        "fd_container": "efe428ce929d2eb3",
         "fd_cols": "6",
         "fd_rows": 1,
         "fd_array": false,
@@ -2593,7 +2923,7 @@
         "type": "fd-text-field",
         "z": "d37f5cd9edab358d",
         "g": "943477037c4d5918",
-        "fd_container": "5b9dbfb36097f407",
+        "fd_container": "efe428ce929d2eb3",
         "fd_cols": "6",
         "fd_rows": 1,
         "fd_array": false,
@@ -2618,7 +2948,7 @@
         "type": "fd-text-field",
         "z": "d37f5cd9edab358d",
         "g": "943477037c4d5918",
-        "fd_container": "5b9dbfb36097f407",
+        "fd_container": "efe428ce929d2eb3",
         "fd_cols": "6",
         "fd_rows": 1,
         "fd_array": false,
@@ -2642,8 +2972,8 @@
         "id": "efa17be91723abcb",
         "type": "fd-text-view",
         "z": "d37f5cd9edab358d",
-        "g": "943477037c4d5918",
-        "fd_container": "5b9dbfb36097f407",
+        "g": "2434336f78a2f3e2",
+        "fd_container": "d25331d49825beb1",
         "fd_cols": "6",
         "fd_rows": "6",
         "fd_array": false,
@@ -2658,7 +2988,7 @@
         "wrap": false,
         "autoscroll": true,
         "x": 1230,
-        "y": 360,
+        "y": 400,
         "wires": [
             []
         ]
@@ -3897,7 +4227,7 @@
         "type": "fd-text-view",
         "z": "bfdb5183ea783e85",
         "g": "8326ae1a15518f8f",
-        "fd_container": "5b9dbfb36097f407",
+        "fd_container": "efe428ce929d2eb3",
         "fd_cols": "6",
         "fd_rows": "2",
         "fd_array": false,
@@ -3922,7 +4252,7 @@
         "type": "fd-text-view",
         "z": "bfdb5183ea783e85",
         "g": "c2e3e9d2c97df2d0",
-        "fd_container": "5b9dbfb36097f407",
+        "fd_container": "efe428ce929d2eb3",
         "fd_cols": "6",
         "fd_rows": "2",
         "fd_array": false,
@@ -3961,6 +4291,38 @@
         "x": 260,
         "y": 80,
         "wires": []
+    },
+    {
+        "id": "aed6009fd524f819",
+        "type": "link in",
+        "z": "d17c63f280964e0b",
+        "g": "9cf0457b813ca743",
+        "name": "activate powerview scene",
+        "links": [],
+        "x": 150,
+        "y": 300,
+        "wires": [
+            [
+                "34eaa776ddc24669"
+            ]
+        ],
+        "l": true,
+        "info": "// nrlint align-to-grid:off\n"
+    },
+    {
+        "id": "4bf13bba7e95e190",
+        "type": "link out",
+        "z": "d17c63f280964e0b",
+        "g": "cb106476337f4d38",
+        "name": "powerview error",
+        "mode": "link",
+        "links": [
+            "8346de5b8a4aac74"
+        ],
+        "x": 780,
+        "y": 200,
+        "wires": [],
+        "l": true
     },
     {
         "id": "a250d71416af8250",
@@ -4068,23 +4430,6 @@
         "y": 160,
         "wires": [],
         "l": true
-    },
-    {
-        "id": "aed6009fd524f819",
-        "type": "link in",
-        "z": "d17c63f280964e0b",
-        "g": "9cf0457b813ca743",
-        "name": "activate powerview scene",
-        "links": [],
-        "x": 150,
-        "y": 300,
-        "wires": [
-            [
-                "34eaa776ddc24669"
-            ]
-        ],
-        "l": true,
-        "info": "// nrlint align-to-grid:off\n"
     },
     {
         "id": "34eaa776ddc24669",
@@ -4388,33 +4733,18 @@
         ]
     },
     {
-        "id": "4bf13bba7e95e190",
-        "type": "link out",
-        "z": "d17c63f280964e0b",
-        "g": "cb106476337f4d38",
-        "name": "display error",
-        "mode": "link",
-        "links": [
-            "8346de5b8a4aac74"
-        ],
-        "x": 770,
-        "y": 200,
-        "wires": [],
-        "l": true
-    },
-    {
         "id": "0e632e274bbeb040",
         "type": "function",
         "z": "d17c63f280964e0b",
         "g": "f61f788a11efec04",
-        "name": "markdown model",
-        "func": "let markdown = ''\n\nfunction findScenes(room) {\n\n    const scenes = []\n\n    for (let scene of msg.payload.scenes) {\n\n        if (room.id == scene.roomId) {\n\n            scenes.push(scene)\n\n        }\n    }\n\n    return scenes.sort((a, b) => {\n\n        return a.name.localeCompare(b.name)\n\n    })\n}\n\nfor (let room of msg.payload.rooms) {\n\n    const scenes = findScenes(room)\n\n    if (scenes.length > 0) {\n\n        markdown += '# ' + room.name + '\\n\\n'\n        markdown += '`' + room.id + '`\\n\\n'\n        markdown += '## Scenes\\n\\n'\n\n        for (let scene of scenes) {\n\n            markdown += '| _' +\n                scene.name +\n                '_ |  `' +\n                scene.id +\n                '` |\\n'\n\n        }\n\n        markdown += '\\n'\n\n    }\n}\n\nmarkdown += '---\\n'\nmsg.payload = markdown\ndelete msg.title\nreturn msg",
+        "name": "markdown",
+        "func": "function sortByName(array) {\n\n    return array.sort((a, b) => {\n\n        return a.name.localeCompare(b.name)\n\n    })\n}\n\nfunction findScenes(room, scenes) {\n\n    const roomScenes = []\n\n    for (let scene of scenes) {\n\n        if (room.id == scene.roomId) {\n\n            roomScenes.push(scene)\n\n        }\n    }\n\n    return roomScenes\n\n}\n\nconst allScenes = sortByName(msg.payload.scenes)\nconst allRooms = sortByName(msg.payload.rooms)\nlet markdown = ''\n\nfor (let room of allRooms) {\n\n    const roomScenes = findScenes(room, allScenes)\n\n    if (roomScenes.length > 0) {\n\n        markdown += '# ' +\n            room.name +\n            ' ' +\n            room.id +\n            '\\n\\n'\n\n        for (let scene of roomScenes) {\n\n            markdown += '| ' +\n                scene.name +\n                ' |  ' +\n                scene.id +\n                ' |\\n'\n\n        }\n\n        markdown += '\\n'\n\n    }\n}\n\nmarkdown += '---\\n'\nmsg.payload = markdown\ndelete msg.title\nreturn msg",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 910,
+        "x": 890,
         "y": 440,
         "wires": [
             [
@@ -4423,41 +4753,23 @@
         ]
     },
     {
-        "id": "19a4eaa5a3b6953b",
-        "type": "fd-markdown",
-        "z": "d17c63f280964e0b",
-        "g": "f61f788a11efec04",
-        "fd_container": "b1e7a12608de7a06",
-        "fd_cols": "6",
-        "fd_rows": 1,
-        "fd_array": false,
-        "fd_array_max": 10,
-        "name": "spacer",
-        "title": "",
-        "popup_info": "",
-        "text": "",
-        "x": 750,
-        "y": 460,
-        "wires": []
-    },
-    {
         "id": "6da2a4ce93760596",
         "type": "fd-popup-button",
         "z": "d17c63f280964e0b",
         "g": "f61f788a11efec04",
         "fd_container": "b1e7a12608de7a06",
-        "fd_cols": "6",
+        "fd_cols": "3",
         "fd_rows": 1,
         "fd_array": false,
         "fd_array_max": 10,
-        "name": "metadata pop-up",
-        "title": "Metadata",
+        "name": "model pop-up",
+        "title": "Model",
         "popup_info": "",
         "enabled": true,
         "color": "",
         "text": "",
         "icon": null,
-        "x": 1110,
+        "x": 1060,
         "y": 440,
         "wires": []
     },
@@ -4495,8 +4807,8 @@
             }
         ],
         "flexdash_grid": "3f52c6a91a658ce1",
-        "x": 330,
-        "y": 380,
+        "x": 350,
+        "y": 300,
         "wires": [
             [
                 "b0e90a9025c2015c"
@@ -4510,8 +4822,8 @@
         "g": "8002cb7f995536e6",
         "name": "send to basement hue",
         "links": [],
-        "x": 140,
-        "y": 380,
+        "x": 160,
+        "y": 300,
         "wires": [
             [
                 "d3686879543e1951"
@@ -4553,8 +4865,8 @@
             }
         ],
         "flexdash_grid": "3f52c6a91a658ce1",
-        "x": 350,
-        "y": 240,
+        "x": 370,
+        "y": 160,
         "wires": [
             [
                 "ab92ee0148a0fed7"
@@ -4568,8 +4880,8 @@
         "g": "2556ad75d549c17f",
         "name": "send to ground floor hue",
         "links": [],
-        "x": 150,
-        "y": 240,
+        "x": 170,
+        "y": 160,
         "wires": [
             [
                 "afe43437400cbd95"
@@ -4588,34 +4900,14 @@
         "wires": []
     },
     {
-        "id": "429c5d451e73036e",
-        "type": "comment",
-        "z": "2191f395ad362596",
-        "name": "https://github.com/parasaurolophus/create-hue-application-key",
-        "info": "",
-        "x": 260,
-        "y": 80,
-        "wires": []
-    },
-    {
-        "id": "5a5dcfc92a3d649f",
-        "type": "comment",
-        "z": "2191f395ad362596",
-        "name": "https://www.npmjs.com/package/@parasaurolophus/node-red-eventsource",
-        "info": "",
-        "x": 300,
-        "y": 120,
-        "wires": []
-    },
-    {
         "id": "a6c65b71fb515b1e",
         "type": "comment",
         "z": "2191f395ad362596",
         "g": "2556ad75d549c17f",
         "name": "assumes ${GROUND_FLOOR_HUE_ADDRESS} and ${GROUND_FLOOR_HUE_KEY} are defined",
         "info": "",
-        "x": 380,
-        "y": 200,
+        "x": 400,
+        "y": 120,
         "wires": []
     },
     {
@@ -4625,8 +4917,8 @@
         "g": "8002cb7f995536e6",
         "name": "assumes ${BASEMENT_HUE_ADDRESS} and ${BASEMENT_HUE_KEY} are defined",
         "info": "",
-        "x": 340,
-        "y": 340,
+        "x": 360,
+        "y": 260,
         "wires": []
     },
     {
@@ -4634,13 +4926,13 @@
         "type": "link out",
         "z": "2191f395ad362596",
         "g": "2556ad75d549c17f",
-        "name": "display error",
+        "name": "ground floor hue error",
         "mode": "link",
         "links": [
             "8346de5b8a4aac74"
         ],
-        "x": 510,
-        "y": 240,
+        "x": 560,
+        "y": 160,
         "wires": [],
         "l": true
     },
@@ -4649,14 +4941,380 @@
         "type": "link out",
         "z": "2191f395ad362596",
         "g": "8002cb7f995536e6",
-        "name": "display error",
+        "name": "basement hue error",
         "mode": "link",
         "links": [
             "8346de5b8a4aac74"
         ],
-        "x": 490,
-        "y": 380,
+        "x": 530,
+        "y": 300,
         "wires": [],
         "l": true
+    },
+    {
+        "id": "05224ffb74b3f646",
+        "type": "comment",
+        "z": "2191f395ad362596",
+        "g": "4d34d7515d2d5eb7",
+        "name": "https://developers.meethue.com/develop/application-design-guidance/hue-bridge-discovery/",
+        "info": "",
+        "x": 370,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "3fd817749715b4c8",
+        "type": "discovery",
+        "z": "2191f395ad362596",
+        "g": "4d34d7515d2d5eb7",
+        "name": "_hue._tcp",
+        "topic": "",
+        "service": "_hue._tcp",
+        "x": 120,
+        "y": 440,
+        "wires": [
+            [
+                "dde39b996d199227"
+            ]
+        ]
+    },
+    {
+        "id": "0ac450bd2cb71c4b",
+        "type": "rbe",
+        "z": "2191f395ad362596",
+        "g": "4d34d7515d2d5eb7",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "topi": "topic",
+        "x": 430,
+        "y": 440,
+        "wires": [
+            [
+                "951c2a51ed6be94c"
+            ]
+        ]
+    },
+    {
+        "id": "dde39b996d199227",
+        "type": "function",
+        "z": "2191f395ad362596",
+        "g": "4d34d7515d2d5eb7",
+        "name": "split by address",
+        "func": "const messages = []\n\nfor (let address of msg.payload.addresses) {\n\n    const message = RED.util.cloneMessage(msg)\n\n    message.payload = {\n        id: msg.payload.txtRecord.bridgeid,\n        model: msg.payload.txtRecord.modelid,\n        name: msg.payload.name,\n        host: msg.payload.host,\n        address: address,\n        port: msg.payload.port\n    }\n\n    message.topic = 'hue/bridge/' + message.payload.id\n    messages.push(message)\n\n}\n\nreturn [messages]",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 440,
+        "wires": [
+            [
+                "0ac450bd2cb71c4b"
+            ]
+        ]
+    },
+    {
+        "id": "9a4d24d3dd15f6f3",
+        "type": "fd-simple-table",
+        "z": "2191f395ad362596",
+        "g": "aa4b11da55ec8165",
+        "fd_container": "0206e4e57203648e",
+        "fd_cols": "10",
+        "fd_rows": "3",
+        "fd_array": false,
+        "fd_array_max": 10,
+        "fd_output_topic": "address",
+        "fd_loopback": false,
+        "name": "hue bridges table",
+        "title": "Hue Bridges",
+        "popup_info": "click on a row within 30 seconds of pressing the \"link\" button on the corresponding bridge",
+        "data": null,
+        "columns": [
+            "id",
+            "model",
+            "name",
+            "host",
+            "address",
+            "port"
+        ],
+        "labels": [
+            "Id",
+            "Model",
+            "Name",
+            "Host",
+            "Address",
+            "Port"
+        ],
+        "align": null,
+        "click": true,
+        "sort": false,
+        "x": 570,
+        "y": 540,
+        "wires": [
+            [
+                "a16f51b7e78155b0"
+            ]
+        ]
+    },
+    {
+        "id": "db20507d47d41df9",
+        "type": "join",
+        "z": "2191f395ad362596",
+        "g": "aa4b11da55ec8165",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": true,
+        "timeout": "",
+        "count": "1",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 270,
+        "y": 540,
+        "wires": [
+            [
+                "58f9b91f469c2298"
+            ]
+        ]
+    },
+    {
+        "id": "58f9b91f469c2298",
+        "type": "function",
+        "z": "2191f395ad362596",
+        "g": "aa4b11da55ec8165",
+        "name": "to array",
+        "func": "const array = []\n\nfor (let topic in msg.payload) {\n\n    array.push(msg.payload[topic])\n\n}\n\nmsg.payload = array\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 540,
+        "wires": [
+            [
+                "9a4d24d3dd15f6f3"
+            ]
+        ]
+    },
+    {
+        "id": "a16f51b7e78155b0",
+        "type": "change",
+        "z": "2191f395ad362596",
+        "g": "aa4b11da55ec8165",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "payload.data.address",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 810,
+        "y": 540,
+        "wires": [
+            [
+                "e5f2d38d9320e4d2"
+            ]
+        ]
+    },
+    {
+        "id": "951c2a51ed6be94c",
+        "type": "mqtt out",
+        "z": "2191f395ad362596",
+        "g": "4d34d7515d2d5eb7",
+        "name": "",
+        "topic": "",
+        "qos": "2",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "d43897d45226a6e5",
+        "x": 550,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "388512dfed2f201e",
+        "type": "mqtt in",
+        "z": "2191f395ad362596",
+        "g": "aa4b11da55ec8165",
+        "name": "",
+        "topic": "hue/bridge/+",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "d43897d45226a6e5",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 130,
+        "y": 540,
+        "wires": [
+            [
+                "db20507d47d41df9"
+            ]
+        ]
+    },
+    {
+        "id": "4edaa94ac96845e1",
+        "type": "change",
+        "z": "2191f395ad362596",
+        "g": "23bf1f9635c44cc8",
+        "name": "request key",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "'https://' & payload & '/api'",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\"devicetype\":\"nodered@cheznous\",\"generateclientkey\":true}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 310,
+        "y": 640,
+        "wires": [
+            [
+                "0ed14c935a7933e8"
+            ]
+        ],
+        "info": "Set `msg.url` and `msg.payload` to use as the parameters in a command to\nregister a user name with a Hue Bridge.\n\nSee\n<https://developers.meethue.com/develop/hue-api-v2/getting-started/>\nfor more information."
+    },
+    {
+        "id": "0ed14c935a7933e8",
+        "type": "http request",
+        "z": "2191f395ad362596",
+        "g": "23bf1f9635c44cc8",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "06c952f588cb12f4",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 470,
+        "y": 640,
+        "wires": [
+            [
+                "47127182921210f4"
+            ]
+        ],
+        "info": "Send a HTTP `POST` request using TLS but without certificate validation\ndue to defects in the Hue Bridge API."
+    },
+    {
+        "id": "e5f2d38d9320e4d2",
+        "type": "link out",
+        "z": "2191f395ad362596",
+        "g": "aa4b11da55ec8165",
+        "name": "hue bridge address",
+        "mode": "link",
+        "links": [
+            "32957b8846e57f76"
+        ],
+        "x": 1050,
+        "y": 540,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "32957b8846e57f76",
+        "type": "link in",
+        "z": "2191f395ad362596",
+        "g": "23bf1f9635c44cc8",
+        "name": "create hue key",
+        "links": [
+            "e5f2d38d9320e4d2"
+        ],
+        "x": 140,
+        "y": 640,
+        "wires": [
+            [
+                "4edaa94ac96845e1"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "ef28c8779729e38a",
+        "type": "fd-text-view",
+        "z": "2191f395ad362596",
+        "g": "23bf1f9635c44cc8",
+        "fd_container": "0206e4e57203648e",
+        "fd_cols": "10",
+        "fd_rows": "3",
+        "fd_array": false,
+        "fd_array_max": 10,
+        "fd_output_topic": "",
+        "fd_loopback": false,
+        "name": "hue client application key",
+        "title": "Client Application Key",
+        "popup_info": "if successful, the newly created client key will appear here as \"username\"",
+        "text": "",
+        "editable": false,
+        "wrap": false,
+        "autoscroll": true,
+        "x": 790,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "47127182921210f4",
+        "type": "json",
+        "z": "2191f395ad362596",
+        "g": "23bf1f9635c44cc8",
+        "name": "",
+        "property": "payload",
+        "action": "str",
+        "pretty": true,
+        "x": 610,
+        "y": 640,
+        "wires": [
+            [
+                "ef28c8779729e38a"
+            ]
+        ]
     }
 ]
