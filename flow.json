@@ -638,7 +638,9 @@
             "6da2a4ce93760596"
         ],
         "x": 14,
-        "y": 359
+        "y": 359,
+        "w": 1252,
+        "h": 122
     },
     {
         "id": "9cf0457b813ca743",
@@ -660,6 +662,8 @@
         ],
         "x": 14,
         "y": 259,
+        "w": 852,
+        "h": 82,
         "info": "Dynamically create dashboard buttons corresponding to each scene\ndiscovered by querying a _PowerView_ hub."
     },
     {
@@ -683,7 +687,9 @@
             "4bf13bba7e95e190"
         ],
         "x": 14,
-        "y": 119
+        "y": 119,
+        "w": 872,
+        "h": 122
     },
     {
         "id": "2434336f78a2f3e2",
@@ -733,7 +739,9 @@
             "18c77db84320513b"
         ],
         "x": 74,
-        "y": 19
+        "y": 19,
+        "w": 1072,
+        "h": 162
     },
     {
         "id": "96971e50c13ead01",
@@ -768,7 +776,9 @@
             "3c4dc36276340285"
         ],
         "x": 74,
-        "y": 199
+        "y": 199,
+        "w": 1252,
+        "h": 242
     },
     {
         "id": "63b8c849bdb4c8f3",
@@ -792,7 +802,9 @@
             "909bdb017a8b4918"
         ],
         "x": 74,
-        "y": 459
+        "y": 459,
+        "w": 812,
+        "h": 122
     },
     {
         "id": "b550cd7d040d0256",
@@ -814,7 +826,9 @@
             "6a4e95234f50527b"
         ],
         "x": 74,
-        "y": 599
+        "y": 599,
+        "w": 812,
+        "h": 107
     },
     {
         "id": "4d34d7515d2d5eb7",
@@ -1775,7 +1789,7 @@
         "g": "63b8c849bdb4c8f3",
         "fd_container": "fa8112538a948337",
         "fd_cols": "6",
-        "fd_rows": "19",
+        "fd_rows": "18",
         "fd_array": false,
         "fd_array_max": 10,
         "fd_output_topic": "",
@@ -4714,7 +4728,7 @@
         "g": "f61f788a11efec04",
         "fd_container": "b1e7a12608de7a06",
         "fd_cols": "6",
-        "fd_rows": "19",
+        "fd_rows": "18",
         "fd_array": false,
         "fd_array_max": 10,
         "fd_output_topic": "",
