@@ -404,9 +404,7 @@
             }
         ],
         "x": 14,
-        "y": 79,
-        "w": 932,
-        "h": 262
+        "y": 79
     },
     {
         "id": "8002cb7f995536e6",
@@ -456,9 +454,7 @@
             }
         ],
         "x": 14,
-        "y": 359,
-        "w": 872,
-        "h": 242
+        "y": 359
     },
     {
         "id": "c2e3e9d2c97df2d0",
@@ -491,9 +487,7 @@
             "9cf9b99be27df212"
         ],
         "x": 14,
-        "y": 299,
-        "w": 1292,
-        "h": 362
+        "y": 299
     },
     {
         "id": "8326ae1a15518f8f",
@@ -523,9 +517,7 @@
             "5f6c2c18a580f7e7"
         ],
         "x": 14,
-        "y": 19,
-        "w": 1332,
-        "h": 262
+        "y": 19
     },
     {
         "id": "1afeb43be3175917",
@@ -550,8 +542,6 @@
         ],
         "x": 14,
         "y": 339,
-        "w": 872,
-        "h": 162,
         "info": "Send timer events over the course of each day:\n\n1. Once at start up\n2. At the start of each time of day as calculated by the `function` node\n   named `time`\n\nEach such message will have `msg.topic` set to `timer/time` and\n`msg.payload` set to one of the _time_ values:\n\n- `morning`\n- `midday`\n- `afternoon`\n- `evening`\n- `night`\n\nAgain, see the documentation for the `function` node named `time` for\nmore details."
     },
     {
@@ -578,8 +568,6 @@
         ],
         "x": 14,
         "y": 119,
-        "w": 892,
-        "h": 202,
         "info": "Send daily events:\n\n1. Once at start up\n2. Each time a user changes the value of the _Bedtime_ dashboard\n   control\n3. Every morning at 1:01AM\n\nThe events sent periodically by this group of nodes are:\n\n| `msg.topic`        | `msg.payload`                                                                                             | Description                                                                           |\n|--------------------|-----------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------|\n| `settings/bedtime` | Value selected by a user using the _Bedtime_ control on the dashboard                                     | Approximate hour at which \"night mode\" should begin each day                          |\n| `daily/theme`      | The _theme_string for the current day                                                                     | See the information for the `function` node named `theme` for more details            |\n| `daily/sunrise`    | Timestamp at which the sun rises on the current day                                                       | See the information for the `function` node named `sunrise | sunset` for more details |\n| `daily/sunset`     | Timestamp at which the sun sets on the current day                                                        | See the information for the `function` node named `sunrise | sunset` for more details |\n| `daily/bedtime`    | A timestamp that varies slightly each day, based on the value of the most recent `settings/bedtime` event | See the information for the `function` node named `bedtime` for more details          |\n\n**Note:** All three of the `function` nodes, `theme`, `sunrise | sunset`\nand `bedtime`, are downstream of a `join` node even though only one\nof them (`bedtime`) directly depends on both inputs to the `join`. This\nis deliberate. Blocking the `theme` and `sunrise | sunset` functions\nuntil after at least one message has been received from a `mqtt in`\nnode ensures that they will not attempt to send messages before the\nconnection to the MQTT broker is ready. This assumes that all of the\n`mqtt in` and `mqtt out` nodes on this flow use the same broker\nconfiguration node.\n\nThe alternative would be to add a `status` node for the relevant\n`mqtt out` node and another `join` node to synchronize the `function`\nnodes with the connection state."
     },
     {
@@ -691,9 +679,7 @@
             "9a281ec1725aa2dd"
         ],
         "x": 14,
-        "y": 359,
-        "w": 1092,
-        "h": 122
+        "y": 359
     },
     {
         "id": "9cf0457b813ca743",
@@ -715,8 +701,6 @@
         ],
         "x": 14,
         "y": 259,
-        "w": 852,
-        "h": 82,
         "info": "Dynamically create dashboard buttons corresponding to each scene\ndiscovered by querying a _PowerView_ hub."
     },
     {
@@ -740,9 +724,7 @@
             "4bf13bba7e95e190"
         ],
         "x": 14,
-        "y": 119,
-        "w": 872,
-        "h": 122
+        "y": 119
     },
     {
         "id": "2434336f78a2f3e2",
@@ -792,9 +774,7 @@
             "18c77db84320513b"
         ],
         "x": 74,
-        "y": 19,
-        "w": 1072,
-        "h": 162
+        "y": 19
     },
     {
         "id": "96971e50c13ead01",
@@ -829,9 +809,7 @@
             "3c4dc36276340285"
         ],
         "x": 74,
-        "y": 199,
-        "w": 1252,
-        "h": 242
+        "y": 199
     },
     {
         "id": "63b8c849bdb4c8f3",
@@ -853,9 +831,7 @@
             "623cb2d99cbc3630"
         ],
         "x": 74,
-        "y": 459,
-        "w": 572,
-        "h": 147
+        "y": 459
     },
     {
         "id": "4d34d7515d2d5eb7",
@@ -879,9 +855,7 @@
             "f841fe9a2e666d3c"
         ],
         "x": 34,
-        "y": 19,
-        "w": 992,
-        "h": 122
+        "y": 19
     },
     {
         "id": "23bf1f9635c44cc8",
@@ -906,9 +880,52 @@
             "9b7e95a2da929308"
         ],
         "x": 34,
-        "y": 159,
-        "w": 932,
-        "h": 170
+        "y": 159
+    },
+    {
+        "id": "350f810e3d5e7a40",
+        "type": "group",
+        "z": "d37f5cd9edab358d",
+        "name": "publish / subscribe message broker",
+        "style": {
+            "stroke": "none",
+            "fill": "#ff0000",
+            "fill-opacity": "0.09",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "76781c82c150c92a",
+            "0ecc5602b08b8c5f",
+            "3a39efcd7fc07dad"
+        ],
+        "x": 14,
+        "y": 379,
+        "w": 572,
+        "h": 82
+    },
+    {
+        "id": "4b7445d7b8b321e5",
+        "type": "group",
+        "z": "d37f5cd9edab358d",
+        "name": "publish / subscribe message client",
+        "style": {
+            "stroke": "none",
+            "fill": "#ff0000",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "caf72cb42e0009d9",
+            "c48a2d04949161ff",
+            "93835128d0c6d2e5",
+            "cbb99030871c8165"
+        ],
+        "x": 14,
+        "y": 479,
+        "w": 512,
+        "h": 142
     },
     {
         "id": "18c77db84320513b",
@@ -1169,6 +1186,21 @@
         "width": "6",
         "collapse": true,
         "className": ""
+    },
+    {
+        "id": "9e89e17d24ba152b",
+        "type": "websocket-listener",
+        "path": "/broker",
+        "wholemsg": "true"
+    },
+    {
+        "id": "943656a844c85a87",
+        "type": "websocket-client",
+        "path": "ws://localhost:1880/broker",
+        "tls": "",
+        "wholemsg": "true",
+        "hb": "5",
+        "subprotocol": ""
     },
     {
         "id": "07d61ea24d59a251",
@@ -2914,6 +2946,135 @@
         "className": "",
         "x": 1260,
         "y": 300,
+        "wires": []
+    },
+    {
+        "id": "76781c82c150c92a",
+        "type": "websocket in",
+        "z": "d37f5cd9edab358d",
+        "g": "350f810e3d5e7a40",
+        "name": "",
+        "server": "9e89e17d24ba152b",
+        "client": "",
+        "x": 110,
+        "y": 420,
+        "wires": [
+            [
+                "3a39efcd7fc07dad"
+            ]
+        ]
+    },
+    {
+        "id": "0ecc5602b08b8c5f",
+        "type": "websocket out",
+        "z": "d37f5cd9edab358d",
+        "g": "350f810e3d5e7a40",
+        "name": "",
+        "server": "9e89e17d24ba152b",
+        "client": "",
+        "x": 490,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "caf72cb42e0009d9",
+        "type": "websocket in",
+        "z": "d37f5cd9edab358d",
+        "g": "4b7445d7b8b321e5",
+        "name": "",
+        "server": "",
+        "client": "943656a844c85a87",
+        "x": 170,
+        "y": 580,
+        "wires": [
+            [
+                "c48a2d04949161ff"
+            ]
+        ]
+    },
+    {
+        "id": "3a39efcd7fc07dad",
+        "type": "change",
+        "z": "d37f5cd9edab358d",
+        "g": "350f810e3d5e7a40",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "_session",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 420,
+        "wires": [
+            [
+                "0ecc5602b08b8c5f"
+            ]
+        ]
+    },
+    {
+        "id": "c48a2d04949161ff",
+        "type": "debug",
+        "z": "d37f5cd9edab358d",
+        "g": "4b7445d7b8b321e5",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "93835128d0c6d2e5",
+        "type": "inject",
+        "z": "d37f5cd9edab358d",
+        "g": "4b7445d7b8b321e5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "test",
+        "payload": "",
+        "payloadType": "date",
+        "x": 140,
+        "y": 520,
+        "wires": [
+            [
+                "cbb99030871c8165"
+            ]
+        ]
+    },
+    {
+        "id": "cbb99030871c8165",
+        "type": "websocket out",
+        "z": "d37f5cd9edab358d",
+        "g": "4b7445d7b8b321e5",
+        "name": "",
+        "server": "",
+        "client": "943656a844c85a87",
+        "x": 370,
+        "y": 520,
         "wires": []
     },
     {
