@@ -66,21 +66,21 @@
         ],
         "out": [
             {
-                "x": 720,
+                "x": 820,
                 "y": 500,
                 "wires": [
                     {
-                        "id": "70b7d1b7be7b60f8",
+                        "id": "c6606e7c7c64fae7",
                         "port": 0
                     }
                 ]
             },
             {
-                "x": 710,
-                "y": 580,
+                "x": 850,
+                "y": 620,
                 "wires": [
                     {
-                        "id": "0294a93ea6941dc2",
+                        "id": "8c459e9bca83bec4",
                         "port": 0
                     }
                 ]
@@ -169,16 +169,16 @@
         ],
         "outputLabels": [
             "controls",
-            "model",
+            "status",
             "error"
         ],
         "icon": "font-awesome/fa-lightbulb-o",
         "status": {
-            "x": 1080,
-            "y": 500,
+            "x": 820,
+            "y": 700,
             "wires": [
                 {
-                    "id": "02be9eee8ee84874",
+                    "id": "8bdbad14124f8cd5",
                     "port": 0
                 }
             ]
@@ -373,13 +373,13 @@
             "e492a91b947bc715",
             "a6c65b71fb515b1e",
             "ab92ee0148a0fed7",
-            "9943140bdf2c279d",
             "5b0b6a46e0196e4f",
             "14f6bb2932d935af",
-            "9682f0256669ac92",
-            "f2b4629b6dcaebc9",
-            "f1b87751c88e242a",
-            "a8615305fce9a7e6"
+            "72b59a19d9d7a565",
+            "812d664b7d2c375b",
+            "d190bdd7a1fcc731",
+            "7e985a4daaf0e701",
+            "2f1accbeffd2e2e8"
         ],
         "env": [
             {
@@ -404,7 +404,9 @@
             }
         ],
         "x": 14,
-        "y": 79
+        "y": 79,
+        "w": 1192,
+        "h": 322
     },
     {
         "id": "8002cb7f995536e6",
@@ -424,12 +426,12 @@
             "603def2442931ab8",
             "b0e90a9025c2015c",
             "69a73c283e9728cd",
-            "44146a7d26151092",
             "ccd3fdee6424982c",
-            "8488c1dedae19590",
-            "2f4a2c8cf9b43133",
-            "e157631145022819",
-            "bbc760079956be49"
+            "2b3846e4906ae7a4",
+            "0ab224cf293ce29e",
+            "11b6479584ba0c35",
+            "412e1ebd07192d0e",
+            "313b6908106f5b4a"
         ],
         "env": [
             {
@@ -454,7 +456,9 @@
             }
         ],
         "x": 14,
-        "y": 359
+        "y": 479,
+        "w": 1132,
+        "h": 322
     },
     {
         "id": "c2e3e9d2c97df2d0",
@@ -774,7 +778,9 @@
             "18c77db84320513b"
         ],
         "x": 74,
-        "y": 19
+        "y": 19,
+        "w": 1072,
+        "h": 162
     },
     {
         "id": "96971e50c13ead01",
@@ -809,7 +815,9 @@
             "3c4dc36276340285"
         ],
         "x": 74,
-        "y": 199
+        "y": 199,
+        "w": 1252,
+        "h": 242
     },
     {
         "id": "63b8c849bdb4c8f3",
@@ -828,10 +836,13 @@
             "ababe72bf0305c42",
             "70b7d1b7be7b60f8",
             "0294a93ea6941dc2",
-            "623cb2d99cbc3630"
+            "623cb2d99cbc3630",
+            "c6606e7c7c64fae7"
         ],
         "x": 74,
-        "y": 459
+        "y": 459,
+        "w": 672,
+        "h": 107
     },
     {
         "id": "4d34d7515d2d5eb7",
@@ -928,6 +939,30 @@
         "h": 142
     },
     {
+        "id": "4893dd6a2321040d",
+        "type": "group",
+        "z": "85ed27d795e6e866",
+        "name": "status",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "02be9eee8ee84874",
+            "4b9c1c4c1a78af55",
+            "bb67f60b30d522e8",
+            "8bdbad14124f8cd5",
+            "8c459e9bca83bec4"
+        ],
+        "x": 74,
+        "y": 579,
+        "w": 712,
+        "h": 147
+    },
+    {
         "id": "18c77db84320513b",
         "type": "junction",
         "z": "85ed27d795e6e866",
@@ -941,12 +976,40 @@
         ]
     },
     {
-        "id": "0294a93ea6941dc2",
+        "id": "d190bdd7a1fcc731",
+        "type": "junction",
+        "z": "2191f395ad362596",
+        "g": "2556ad75d549c17f",
+        "x": 500,
+        "y": 200,
+        "wires": [
+            [
+                "72b59a19d9d7a565",
+                "812d664b7d2c375b"
+            ]
+        ]
+    },
+    {
+        "id": "11b6479584ba0c35",
+        "type": "junction",
+        "z": "2191f395ad362596",
+        "g": "8002cb7f995536e6",
+        "x": 480,
+        "y": 600,
+        "wires": [
+            [
+                "2b3846e4906ae7a4",
+                "0ab224cf293ce29e"
+            ]
+        ]
+    },
+    {
+        "id": "8bdbad14124f8cd5",
         "type": "junction",
         "z": "85ed27d795e6e866",
-        "g": "63b8c849bdb4c8f3",
-        "x": 500,
-        "y": 580,
+        "g": "4893dd6a2321040d",
+        "x": 320,
+        "y": 700,
         "wires": [
             []
         ]
@@ -1201,6 +1264,36 @@
         "wholemsg": "true",
         "hb": "5",
         "subprotocol": ""
+    },
+    {
+        "id": "de26b0b10f3c327b",
+        "type": "ui_tab",
+        "name": "Metadata",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "022f6cf3824c68f0",
+        "type": "ui_group",
+        "name": "Ground Floor Hue",
+        "tab": "de26b0b10f3c327b",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": true,
+        "className": ""
+    },
+    {
+        "id": "e316edc60da98f39",
+        "type": "ui_group",
+        "name": "Basement Hue",
+        "tab": "de26b0b10f3c327b",
+        "order": 2,
+        "disp": true,
+        "width": "12",
+        "collapse": true,
+        "className": ""
     },
     {
         "id": "07d61ea24d59a251",
@@ -1731,14 +1824,18 @@
         "id": "02be9eee8ee84874",
         "type": "status",
         "z": "85ed27d795e6e866",
+        "g": "4893dd6a2321040d",
         "name": "status: eventsource",
         "scope": [
             "153449edfaf38a67"
         ],
-        "x": 950,
-        "y": 500,
+        "x": 190,
+        "y": 660,
         "wires": [
-            []
+            [
+                "4b9c1c4c1a78af55",
+                "8bdbad14124f8cd5"
+            ]
         ]
     },
     {
@@ -1772,7 +1869,7 @@
         "finalize": "",
         "libs": [],
         "x": 280,
-        "y": 540,
+        "y": 500,
         "wires": [
             [
                 "623cb2d99cbc3630"
@@ -1837,7 +1934,7 @@
             "368e25b0f6f27139"
         ],
         "x": 150,
-        "y": 540,
+        "y": 500,
         "wires": [
             [
                 "f7841898977deb1b"
@@ -1872,16 +1969,18 @@
         "z": "85ed27d795e6e866",
         "g": "63b8c849bdb4c8f3",
         "name": "controls",
-        "field": "template",
+        "field": "controls",
         "fieldType": "msg",
         "format": "html",
         "syntax": "plain",
         "template": "<div>\n    <div ng-repeat=\"model in msg.payload\" style=\"text-align:center\">\n        <div ng-if=\"$index > 0\">\n            <hr>\n        </div>\n        <md-switch style=\"margin-top:10px;margin-left:10px\" ng-value=\"model.grouped_light.on.on\"\n            ng-model=\"model.grouped_light.on.on\"\n            ng-change=\"send({ topic: 'resource/grouped_light/' + model.grouped_light.id, payload: { on: { on: model.grouped_light.on.on } }, method: 'PUT' })\">\n            {{model.name}}\n        </md-switch>\n        <md-button style=\"display:inline-block;margin:1px\" ng-repeat=\"scene in model.scenes\"\n            ng-click=\"send({topic: 'resource/scene/' + scene.id, payload: { recall: { action: 'dynamic_palette' } }, method: 'PUT'})\">\n            {{scene.metadata.name}}\n        </md-button>\n    </div>\n</div>",
         "output": "str",
-        "x": 560,
+        "x": 540,
         "y": 500,
         "wires": [
-            []
+            [
+                "c6606e7c7c64fae7"
+            ]
         ]
     },
     {
@@ -1898,12 +1997,108 @@
         "property": "payload",
         "topi": "topic",
         "x": 410,
-        "y": 540,
+        "y": 500,
         "wires": [
             [
-                "0294a93ea6941dc2",
                 "70b7d1b7be7b60f8"
             ]
+        ]
+    },
+    {
+        "id": "c6606e7c7c64fae7",
+        "type": "template",
+        "z": "85ed27d795e6e866",
+        "g": "63b8c849bdb4c8f3",
+        "name": "model",
+        "field": "model",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "plain",
+        "template": "<div>\n    <ul>\n        <li ng-repeat=\"model in msg.payload\">\n            <span style=\"font-weight: bold;\">{{model.name}}</span>\n            <span style=\"font-style: italic;\">{{model.grouped_light.id}}</span>\n            {{model.grouped_light.on.on ? 'on' : 'off'}}\n            <ul>\n                <li ng-repeat=\"scene in model.scenes\">\n                    <span style=\"font-weight: bold;\">{{scene.metadata.name}}</span>\n                    <span style=\"font-style: italic;\">{{scene.id}}</span>\n                </li>\n            </ul>\n        </li>\n    </ul>\n</div>",
+        "output": "str",
+        "x": 670,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4b9c1c4c1a78af55",
+        "type": "change",
+        "z": "85ed27d795e6e866",
+        "g": "4893dd6a2321040d",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "color",
+                "pt": "msg",
+                "to": "status.text = '-1' ? 'grey' : status.text = '0' ? 'yellow' : status.text = '1' ? 'lightgreen' : 'red'",
+                "tot": "jsonata"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "status.text = '-1' ? 'uninitialized' : status.text = '0' ? 'connecting' : status.text = '1' ? 'connected' : status.text = '2' ? 'failed' : status.text",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 620,
+        "wires": [
+            [
+                "bb67f60b30d522e8"
+            ]
+        ]
+    },
+    {
+        "id": "bb67f60b30d522e8",
+        "type": "template",
+        "z": "85ed27d795e6e866",
+        "g": "4893dd6a2321040d",
+        "name": "status",
+        "field": "template",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "plain",
+        "template": "<div style=\"position: relative; margin: 0; padding: 0; width: 100%; height: 100%;\">\n    <div style=\"position: absolute; margin: 0; padding: 0; top: 50%; left: 50%; transform: translate(-50%, -50%); color: {{msg.color}};\">\n        {{msg.payload}}\n    </div>\n</div>",
+        "output": "str",
+        "x": 550,
+        "y": 620,
+        "wires": [
+            [
+                "8c459e9bca83bec4"
+            ]
+        ]
+    },
+    {
+        "id": "8c459e9bca83bec4",
+        "type": "delay",
+        "z": "85ed27d795e6e866",
+        "g": "4893dd6a2321040d",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "allowrate": false,
+        "outputs": 1,
+        "x": 690,
+        "y": 620,
+        "wires": [
+            []
         ]
     },
     {
@@ -4765,13 +4960,13 @@
             }
         ],
         "x": 330,
-        "y": 480,
+        "y": 680,
         "wires": [
             [
-                "69a73c283e9728cd"
+                "11b6479584ba0c35"
             ],
             [
-                "44146a7d26151092"
+                "313b6908106f5b4a"
             ],
             [
                 "b0e90a9025c2015c"
@@ -4786,7 +4981,7 @@
         "name": "send to basement hue",
         "links": [],
         "x": 140,
-        "y": 480,
+        "y": 680,
         "wires": [
             [
                 "d3686879543e1951"
@@ -4828,13 +5023,13 @@
             }
         ],
         "x": 350,
-        "y": 200,
+        "y": 280,
         "wires": [
             [
-                "5b0b6a46e0196e4f"
+                "d190bdd7a1fcc731"
             ],
             [
-                "9943140bdf2c279d"
+                "2f1accbeffd2e2e8"
             ],
             [
                 "ab92ee0148a0fed7"
@@ -4849,7 +5044,7 @@
         "name": "send to ground floor hue",
         "links": [],
         "x": 150,
-        "y": 200,
+        "y": 280,
         "wires": [
             [
                 "afe43437400cbd95"
@@ -4886,7 +5081,7 @@
         "name": "assumes ${BASEMENT_HUE_ADDRESS} and ${BASEMENT_HUE_KEY} are defined",
         "info": "",
         "x": 340,
-        "y": 400,
+        "y": 520,
         "wires": []
     },
     {
@@ -4899,8 +5094,8 @@
         "links": [
             "8346de5b8a4aac74"
         ],
-        "x": 560,
-        "y": 240,
+        "x": 600,
+        "y": 360,
         "wires": [],
         "l": true
     },
@@ -4914,27 +5109,10 @@
         "links": [
             "8346de5b8a4aac74"
         ],
-        "x": 530,
-        "y": 520,
+        "x": 570,
+        "y": 760,
         "wires": [],
         "l": true
-    },
-    {
-        "id": "9943140bdf2c279d",
-        "type": "debug",
-        "z": "2191f395ad362596",
-        "g": "2556ad75d549c17f",
-        "name": "debug 1",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 520,
-        "y": 200,
-        "wires": []
     },
     {
         "id": "5b0b6a46e0196e4f",
@@ -4943,7 +5121,7 @@
         "g": "2556ad75d549c17f",
         "group": "fc940f8e55a0aab3",
         "name": "ground floor hue controls",
-        "order": 2,
+        "order": 3,
         "width": "6",
         "height": "25",
         "format": "",
@@ -4952,8 +5130,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 570,
-        "y": 160,
+        "x": 830,
+        "y": 180,
         "wires": [
             [
                 "14f6bb2932d935af"
@@ -4971,28 +5149,11 @@
         ],
         "linkType": "static",
         "timeout": "30",
-        "x": 810,
-        "y": 160,
+        "x": 1070,
+        "y": 180,
         "wires": [
             []
         ]
-    },
-    {
-        "id": "44146a7d26151092",
-        "type": "debug",
-        "z": "2191f395ad362596",
-        "g": "8002cb7f995536e6",
-        "name": "debug 2",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 500,
-        "y": 480,
-        "wires": []
     },
     {
         "id": "69a73c283e9728cd",
@@ -5010,8 +5171,8 @@
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 540,
-        "y": 440,
+        "x": 800,
+        "y": 580,
         "wires": [
             [
                 "ccd3fdee6424982c"
@@ -5029,42 +5190,25 @@
         ],
         "linkType": "static",
         "timeout": "30",
-        "x": 760,
-        "y": 440,
+        "x": 1020,
+        "y": 580,
         "wires": [
             []
         ]
     },
     {
-        "id": "9682f0256669ac92",
-        "type": "status",
-        "z": "2191f395ad362596",
-        "g": "2556ad75d549c17f",
-        "name": "status: hue api v2",
-        "scope": [
-            "afe43437400cbd95"
-        ],
-        "x": 120,
-        "y": 300,
-        "wires": [
-            [
-                "f2b4629b6dcaebc9"
-            ]
-        ]
-    },
-    {
-        "id": "f2b4629b6dcaebc9",
+        "id": "2b3846e4906ae7a4",
         "type": "change",
         "z": "2191f395ad362596",
-        "g": "2556ad75d549c17f",
+        "g": "8002cb7f995536e6",
         "name": "",
         "rules": [
             {
-                "t": "set",
-                "p": "payload",
+                "t": "move",
+                "p": "controls",
                 "pt": "msg",
-                "to": "$number(status.text)",
-                "tot": "jsonata"
+                "to": "template",
+                "tot": "msg"
             }
         ],
         "action": "",
@@ -5072,145 +5216,184 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 300,
-        "y": 300,
+        "x": 590,
+        "y": 580,
         "wires": [
             [
-                "a8615305fce9a7e6"
+                "69a73c283e9728cd"
             ]
         ]
     },
     {
-        "id": "f1b87751c88e242a",
-        "type": "ui_text",
+        "id": "72b59a19d9d7a565",
+        "type": "change",
+        "z": "2191f395ad362596",
+        "g": "2556ad75d549c17f",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "controls",
+                "pt": "msg",
+                "to": "template",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 180,
+        "wires": [
+            [
+                "5b0b6a46e0196e4f"
+            ]
+        ]
+    },
+    {
+        "id": "812d664b7d2c375b",
+        "type": "change",
+        "z": "2191f395ad362596",
+        "g": "2556ad75d549c17f",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "model",
+                "pt": "msg",
+                "to": "template",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 610,
+        "y": 220,
+        "wires": [
+            [
+                "7e985a4daaf0e701"
+            ]
+        ]
+    },
+    {
+        "id": "0ab224cf293ce29e",
+        "type": "change",
+        "z": "2191f395ad362596",
+        "g": "8002cb7f995536e6",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "model",
+                "pt": "msg",
+                "to": "template",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 590,
+        "y": 620,
+        "wires": [
+            [
+                "412e1ebd07192d0e"
+            ]
+        ]
+    },
+    {
+        "id": "7e985a4daaf0e701",
+        "type": "ui_template",
+        "z": "2191f395ad362596",
+        "g": "2556ad75d549c17f",
+        "group": "022f6cf3824c68f0",
+        "name": "ground floor hue model",
+        "order": 0,
+        "width": "12",
+        "height": "20",
+        "format": "",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 830,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "412e1ebd07192d0e",
+        "type": "ui_template",
+        "z": "2191f395ad362596",
+        "g": "8002cb7f995536e6",
+        "group": "e316edc60da98f39",
+        "name": "basement hue model",
+        "order": 0,
+        "width": "12",
+        "height": "20",
+        "format": "",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
+        "className": "",
+        "x": 800,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f1accbeffd2e2e8",
+        "type": "ui_template",
         "z": "2191f395ad362596",
         "g": "2556ad75d549c17f",
         "group": "fc940f8e55a0aab3",
+        "name": "ground floor status",
         "order": 1,
-        "width": 0,
-        "height": 0,
-        "name": "ground floor hue status",
-        "label": "",
-        "format": "{{msg.payload}}",
-        "layout": "col-center",
+        "width": "6",
+        "height": "1",
+        "format": "",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
         "className": "",
-        "x": 660,
-        "y": 300,
-        "wires": []
-    },
-    {
-        "id": "8488c1dedae19590",
-        "type": "status",
-        "z": "2191f395ad362596",
-        "g": "8002cb7f995536e6",
-        "name": "status: hue api v2",
-        "scope": [
-            "afe43437400cbd95"
-        ],
-        "x": 120,
-        "y": 560,
+        "x": 590,
+        "y": 280,
         "wires": [
-            [
-                "2f4a2c8cf9b43133"
-            ]
+            []
         ]
     },
     {
-        "id": "2f4a2c8cf9b43133",
-        "type": "change",
-        "z": "2191f395ad362596",
-        "g": "8002cb7f995536e6",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$number(status.text)",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
-        "y": 560,
-        "wires": [
-            [
-                "bbc760079956be49"
-            ]
-        ]
-    },
-    {
-        "id": "e157631145022819",
-        "type": "ui_text",
+        "id": "313b6908106f5b4a",
+        "type": "ui_template",
         "z": "2191f395ad362596",
         "g": "8002cb7f995536e6",
         "group": "0974e427e996ac5d",
+        "name": "basement status",
         "order": 1,
-        "width": 0,
-        "height": 0,
-        "name": "basement hue status",
-        "label": "",
-        "format": "{{msg.payload}}",
-        "layout": "col-center",
+        "width": "6",
+        "height": "1",
+        "format": "",
+        "storeOutMessages": false,
+        "fwdInMessages": false,
+        "resendOnRefresh": true,
+        "templateScope": "local",
         "className": "",
-        "x": 660,
-        "y": 560,
-        "wires": []
-    },
-    {
-        "id": "a8615305fce9a7e6",
-        "type": "delay",
-        "z": "2191f395ad362596",
-        "g": "2556ad75d549c17f",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 470,
-        "y": 300,
+        "x": 560,
+        "y": 680,
         "wires": [
-            [
-                "f1b87751c88e242a"
-            ]
-        ]
-    },
-    {
-        "id": "bbc760079956be49",
-        "type": "delay",
-        "z": "2191f395ad362596",
-        "g": "8002cb7f995536e6",
-        "name": "",
-        "pauseType": "rate",
-        "timeout": "5",
-        "timeoutUnits": "seconds",
-        "rate": "1",
-        "nbRateUnits": "1",
-        "rateUnits": "second",
-        "randomFirst": "1",
-        "randomLast": "5",
-        "randomUnits": "seconds",
-        "drop": false,
-        "allowrate": false,
-        "outputs": 1,
-        "x": 470,
-        "y": 560,
-        "wires": [
-            [
-                "e157631145022819"
-            ]
+            []
         ]
     },
     {
