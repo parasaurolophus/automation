@@ -367,7 +367,9 @@
             }
         ],
         "x": 34,
-        "y": 79
+        "y": 79,
+        "w": 732,
+        "h": 122
     },
     {
         "id": "8002cb7f995536e6",
@@ -410,7 +412,9 @@
             }
         ],
         "x": 34,
-        "y": 219
+        "y": 219,
+        "w": 652,
+        "h": 122
     },
     {
         "id": "c2e3e9d2c97df2d0",
@@ -638,9 +642,7 @@
             "6da2a4ce93760596"
         ],
         "x": 14,
-        "y": 359,
-        "w": 1252,
-        "h": 122
+        "y": 359
     },
     {
         "id": "9cf0457b813ca743",
@@ -662,8 +664,6 @@
         ],
         "x": 14,
         "y": 259,
-        "w": 852,
-        "h": 82,
         "info": "Dynamically create dashboard buttons corresponding to each scene\ndiscovered by querying a _PowerView_ hub."
     },
     {
@@ -687,9 +687,7 @@
             "4bf13bba7e95e190"
         ],
         "x": 14,
-        "y": 119,
-        "w": 872,
-        "h": 122
+        "y": 119
     },
     {
         "id": "2434336f78a2f3e2",
@@ -850,7 +848,9 @@
             "951c2a51ed6be94c"
         ],
         "x": 34,
-        "y": 359
+        "y": 359,
+        "w": 672,
+        "h": 122
     },
     {
         "id": "aa4b11da55ec8165",
@@ -873,7 +873,9 @@
             "e5f2d38d9320e4d2"
         ],
         "x": 34,
-        "y": 499
+        "y": 499,
+        "w": 1032,
+        "h": 82
     },
     {
         "id": "23bf1f9635c44cc8",
@@ -898,7 +900,9 @@
             "3dbe561bfaf5bbf1"
         ],
         "x": 34,
-        "y": 599
+        "y": 599,
+        "w": 1072,
+        "h": 122
     },
     {
         "id": "18c77db84320513b",
@@ -1276,7 +1280,7 @@
         "z": "85ed27d795e6e866",
         "g": "0fb8e43c903b3506",
         "name": "validate",
-        "func": "if (!Number.isInteger(msg.statusCode)) {\n\n    return msg\n\n}\n\nif (msg.statusCode != 200) {\n\n    return msg\n\n}\n\nif (!Object.prototype.hasOwnProperty.call(msg.payload, 'data')) {\n\n    return msg\n\n}\n\nif (msg.payload.errors.length > 0) {\n\n    return msg\n\n}\n\nreturn null",
+        "func": "if (!Number.isInteger(msg.statusCode)) {\n\n    return msg\n\n}\n\n// ignore 207 due to frequent, spurious use by the Philips developers\nif ((msg.statusCode != 200) && (msg.statusCode != 207)) {\n\n    return msg\n\n}\n\nif (!Object.prototype.hasOwnProperty.call(msg.payload, 'data')) {\n\n    return msg\n\n}\n\nif (!Object.prototype.hasOwnProperty.call(msg.payload, 'errors')) {\n\n    return msg\n\n}\n\nif ((msg.statusCode != 207) && (msg.payload.errors.length > 0)) {\n\n    return msg\n\n}\n\nreturn null",
         "outputs": 1,
         "noerr": 0,
         "initialize": "",
