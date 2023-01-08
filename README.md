@@ -22,9 +22,9 @@ of the home and the day of the year.
 The following node packages must be installed before loading these
 flows into your environment:
 
-- [@flexdash/node-red-fd-corewidgets](https://flows.nodered.org/node/@flexdash/node-red-fd-corewidgets)
-- [@parasaurolophus/node-red-eventsource](https://flows.nodered.org/node/@parasaurolophus/node-red-eventsource)
+- [node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard)
 - [node-red-node-discovery](https://flows.nodered.org/node/node-red-node-discovery)
+- [@parasaurolophus/node-red-eventsource](https://flows.nodered.org/node/@parasaurolophus/node-red-eventsource)
 
 In addition, some `function` nodes in these flows load the
 [suncalc](https://www.npmjs.com/package/suncalc) package dynamically,
@@ -154,14 +154,14 @@ more interested in extending their surveillance and control over their
 ## User interface
 
 A few of the dashboard controls are "hard coded" using specific
-`fd-toggle`, `fd-push-button` and similar nodes from
-[@flexdash/node-red-fd-corewidgets](https://flows.nodered.org/node/@flexdash/node-red-fd-corewidgets).
+`ui_switch`, `ui_dropdown` and similar nodes from
+[node-red-dashboard](https://flows.nodered.org/node/node-red-dashboard).
 These represent settings not associated with particular devices.
 
-Most of the controls are implemented using `FD custom` nodes that
+Most of the controls are implemented using `ui_template` nodes that
 render data retrieved by querying various device API's or received
-as asynchronous events. The HTML in these `FD custom` nodes
-includes Vuetify `v-switch` and `v-btn` elements that correspond
+as asynchronous events. The HTML in these `ui_template` nodes
+includes AngularJS `md-switch` and `md-button` elements that correspond
 to lighting devices, window coverings and scenes that are discovered
 while these flows are running using the API's provided by the
 device vendors.
