@@ -404,9 +404,7 @@
             }
         ],
         "x": 14,
-        "y": 79,
-        "w": 1192,
-        "h": 322
+        "y": 79
     },
     {
         "id": "8002cb7f995536e6",
@@ -456,9 +454,7 @@
             }
         ],
         "x": 14,
-        "y": 419,
-        "w": 1132,
-        "h": 322
+        "y": 419
     },
     {
         "id": "c2e3e9d2c97df2d0",
@@ -782,9 +778,7 @@
             "18c77db84320513b"
         ],
         "x": 74,
-        "y": 19,
-        "w": 1072,
-        "h": 162
+        "y": 19
     },
     {
         "id": "96971e50c13ead01",
@@ -819,9 +813,7 @@
             "3c4dc36276340285"
         ],
         "x": 74,
-        "y": 199,
-        "w": 1252,
-        "h": 242
+        "y": 199
     },
     {
         "id": "63b8c849bdb4c8f3",
@@ -839,14 +831,11 @@
             "f7841898977deb1b",
             "ababe72bf0305c42",
             "70b7d1b7be7b60f8",
-            "0294a93ea6941dc2",
             "623cb2d99cbc3630",
             "c6606e7c7c64fae7"
         ],
         "x": 74,
-        "y": 459,
-        "w": 672,
-        "h": 107
+        "y": 459
     },
     {
         "id": "4d34d7515d2d5eb7",
@@ -870,7 +859,9 @@
             "f841fe9a2e666d3c"
         ],
         "x": 34,
-        "y": 19
+        "y": 19,
+        "w": 992,
+        "h": 122
     },
     {
         "id": "23bf1f9635c44cc8",
@@ -895,7 +886,9 @@
             "9b7e95a2da929308"
         ],
         "x": 34,
-        "y": 159
+        "y": 159,
+        "w": 932,
+        "h": 170
     },
     {
         "id": "350f810e3d5e7a40",
@@ -962,9 +955,7 @@
             "8c459e9bca83bec4"
         ],
         "x": 74,
-        "y": 579,
-        "w": 712,
-        "h": 147
+        "y": 579
     },
     {
         "id": "b3c9b60575e16c7e",
@@ -1240,7 +1231,7 @@
         "id": "9f1eb8aa7f8677b1",
         "type": "ui_tab",
         "name": "Administration",
-        "icon": "dashboard",
+        "icon": "developer_dashboard",
         "disabled": false,
         "hidden": false
     },
@@ -1273,7 +1264,7 @@
         "tab": "9f1eb8aa7f8677b1",
         "order": 2,
         "disp": true,
-        "width": "6",
+        "width": "12",
         "collapse": true,
         "className": ""
     },
@@ -1293,19 +1284,11 @@
         "subprotocol": ""
     },
     {
-        "id": "de26b0b10f3c327b",
-        "type": "ui_tab",
-        "name": "Metadata",
-        "icon": "dashboard",
-        "disabled": false,
-        "hidden": false
-    },
-    {
         "id": "022f6cf3824c68f0",
         "type": "ui_group",
         "name": "Ground Floor Hue",
-        "tab": "de26b0b10f3c327b",
-        "order": 1,
+        "tab": "9f1eb8aa7f8677b1",
+        "order": 3,
         "disp": true,
         "width": "12",
         "collapse": true,
@@ -1315,8 +1298,8 @@
         "id": "e316edc60da98f39",
         "type": "ui_group",
         "name": "Basement Hue",
-        "tab": "de26b0b10f3c327b",
-        "order": 2,
+        "tab": "9f1eb8aa7f8677b1",
+        "order": 4,
         "disp": true,
         "width": "12",
         "collapse": true,
@@ -3066,8 +3049,8 @@
         "group": "9e5f6340adfc16dc",
         "name": "Status",
         "order": 4,
-        "width": "6",
-        "height": "6",
+        "width": "12",
+        "height": "20",
         "format": "",
         "storeOutMessages": false,
         "fwdInMessages": false,
@@ -5677,7 +5660,7 @@
         "name": "hue bridges",
         "order": 0,
         "width": "12",
-        "height": "6",
+        "height": "20",
         "format": "<div style=\"font-size: small;\">\n    <table border=\"1\">\n        <tr ng-repeat=\"(topic, bridge) in msg.payload\">\n            <td>{{bridge.id}}</td>\n            <td>{{bridge.name}}</td>\n            <td>{{bridge.host}}</td>\n            <td>{{bridge.address}}</td>\n            <td>{{bridge.port}}</td>\n            <td>\n                <md-button ng-click=\"send({ payload: bridge.address })\">\n                    Create Key\n                </md-button>\n            </td>\n        </tr>\n    </table>\n</div>",
         "storeOutMessages": false,
         "fwdInMessages": false,
