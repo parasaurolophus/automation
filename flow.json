@@ -456,7 +456,7 @@
             }
         ],
         "x": 14,
-        "y": 479,
+        "y": 419,
         "w": 1132,
         "h": 322
     },
@@ -487,11 +487,13 @@
             "8b2870e325e61ea1",
             "541a0eff9f0235b7",
             "4c3ffaa9eed2fd35",
-            "71fc2fa7674de915",
-            "9cf9b99be27df212"
+            "9cf9b99be27df212",
+            "64ccefaeb47ec9da"
         ],
         "x": 14,
-        "y": 299
+        "y": 299,
+        "w": 1292,
+        "h": 362
     },
     {
         "id": "8326ae1a15518f8f",
@@ -517,11 +519,13 @@
             "6184212dd8e32e40",
             "0862949d83e8b2e4",
             "f16f4fda7c0b0f7a",
-            "bae913eb3593854f",
-            "5f6c2c18a580f7e7"
+            "5f6c2c18a580f7e7",
+            "cc7c9bc7cd1ba1ae"
         ],
         "x": 14,
-        "y": 19
+        "y": 19,
+        "w": 1332,
+        "h": 262
     },
     {
         "id": "1afeb43be3175917",
@@ -963,6 +967,29 @@
         "h": 147
     },
     {
+        "id": "b3c9b60575e16c7e",
+        "type": "group",
+        "z": "bfdb5183ea783e85",
+        "name": "",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "ce5b04e18d8c32d7",
+            "aca37a7d8391a390",
+            "6ea211a3c670fee5",
+            "6b2bd9d5e31e1296"
+        ],
+        "x": 14,
+        "y": 679,
+        "w": 712,
+        "h": 82
+    },
+    {
         "id": "18c77db84320513b",
         "type": "junction",
         "z": "85ed27d795e6e866",
@@ -995,7 +1022,7 @@
         "z": "2191f395ad362596",
         "g": "8002cb7f995536e6",
         "x": 480,
-        "y": 600,
+        "y": 540,
         "wires": [
             [
                 "2b3846e4906ae7a4",
@@ -3699,7 +3726,7 @@
         "wires": [
             [
                 "ec26adec2aa94c40",
-                "bae913eb3593854f"
+                "cc7c9bc7cd1ba1ae"
             ]
         ]
     },
@@ -4002,7 +4029,7 @@
         "wires": [
             [
                 "ab22f57d983c0a67",
-                "71fc2fa7674de915"
+                "64ccefaeb47ec9da"
             ]
         ]
     },
@@ -4410,40 +4437,6 @@
         "wires": []
     },
     {
-        "id": "bae913eb3593854f",
-        "type": "json",
-        "z": "bfdb5183ea783e85",
-        "g": "8326ae1a15518f8f",
-        "name": "",
-        "property": "payload",
-        "action": "str",
-        "pretty": true,
-        "x": 570,
-        "y": 60,
-        "wires": [
-            [
-                "5f6c2c18a580f7e7"
-            ]
-        ]
-    },
-    {
-        "id": "71fc2fa7674de915",
-        "type": "json",
-        "z": "bfdb5183ea783e85",
-        "g": "c2e3e9d2c97df2d0",
-        "name": "",
-        "property": "payload",
-        "action": "str",
-        "pretty": true,
-        "x": 610,
-        "y": 340,
-        "wires": [
-            [
-                "9cf9b99be27df212"
-            ]
-        ]
-    },
-    {
         "id": "5f6c2c18a580f7e7",
         "type": "ui_template",
         "z": "bfdb5183ea783e85",
@@ -4452,14 +4445,14 @@
         "name": "shades automation trigger",
         "order": 10,
         "width": "6",
-        "height": "3",
-        "format": "<div>\n    <p style=\"text-align: center;\">Shades Automation Trigger</p>\n    <pre>{{msg.payload}}</pre>\n</div>",
+        "height": "4",
+        "format": "",
         "storeOutMessages": false,
         "fwdInMessages": false,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 750,
+        "x": 810,
         "y": 60,
         "wires": [
             []
@@ -4474,17 +4467,124 @@
         "name": "lighting automation trigger",
         "order": 11,
         "width": "6",
-        "height": "3",
-        "format": "<div>\n    <p style=\"text-align: center;\">Lighting Automation Trigger</p>\n    <pre>{{msg.payload}}</pre>\n</div>",
+        "height": "4",
+        "format": "",
         "storeOutMessages": false,
         "fwdInMessages": false,
         "resendOnRefresh": true,
         "templateScope": "local",
         "className": "",
-        "x": 790,
+        "x": 850,
         "y": 340,
         "wires": [
             []
+        ]
+    },
+    {
+        "id": "ce5b04e18d8c32d7",
+        "type": "link in",
+        "z": "bfdb5183ea783e85",
+        "g": "b3c9b60575e16c7e",
+        "name": "stringify payload",
+        "links": [],
+        "x": 120,
+        "y": 720,
+        "wires": [
+            [
+                "6ea211a3c670fee5"
+            ]
+        ],
+        "l": true
+    },
+    {
+        "id": "aca37a7d8391a390",
+        "type": "link out",
+        "z": "bfdb5183ea783e85",
+        "g": "b3c9b60575e16c7e",
+        "name": "stringify payload",
+        "mode": "return",
+        "links": [],
+        "x": 620,
+        "y": 720,
+        "wires": [],
+        "l": true
+    },
+    {
+        "id": "6ea211a3c670fee5",
+        "type": "function",
+        "z": "bfdb5183ea783e85",
+        "g": "b3c9b60575e16c7e",
+        "name": "stringify payload",
+        "func": "msg.time = new Date().toLocaleString()\nmsg.payload = JSON.stringify(msg.payload, undefined, 1)\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 720,
+        "wires": [
+            [
+                "6b2bd9d5e31e1296"
+            ]
+        ]
+    },
+    {
+        "id": "cc7c9bc7cd1ba1ae",
+        "type": "link call",
+        "z": "bfdb5183ea783e85",
+        "g": "8326ae1a15518f8f",
+        "name": "",
+        "links": [
+            "ce5b04e18d8c32d7"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 600,
+        "y": 60,
+        "wires": [
+            [
+                "5f6c2c18a580f7e7"
+            ]
+        ]
+    },
+    {
+        "id": "6b2bd9d5e31e1296",
+        "type": "template",
+        "z": "bfdb5183ea783e85",
+        "g": "b3c9b60575e16c7e",
+        "name": "",
+        "field": "template",
+        "fieldType": "msg",
+        "format": "html",
+        "syntax": "plain",
+        "template": "<div style=\"padding: 1em;\">\n    <p style=\"text-align: center; font-style: italic;\">{{msg.time}}</p>\n    <p style=\"text-align: center; font-weigth: bold;\">{{msg.topic}}</p>\n    <pre>{{msg.payload}}</pre>\n</div>",
+        "output": "str",
+        "x": 460,
+        "y": 720,
+        "wires": [
+            [
+                "aca37a7d8391a390"
+            ]
+        ]
+    },
+    {
+        "id": "64ccefaeb47ec9da",
+        "type": "link call",
+        "z": "bfdb5183ea783e85",
+        "g": "c2e3e9d2c97df2d0",
+        "name": "",
+        "links": [
+            "ce5b04e18d8c32d7"
+        ],
+        "linkType": "static",
+        "timeout": "30",
+        "x": 640,
+        "y": 340,
+        "wires": [
+            [
+                "9cf9b99be27df212"
+            ]
         ]
     },
     {
@@ -4960,7 +5060,7 @@
             }
         ],
         "x": 330,
-        "y": 680,
+        "y": 620,
         "wires": [
             [
                 "11b6479584ba0c35"
@@ -4981,7 +5081,7 @@
         "name": "send to basement hue",
         "links": [],
         "x": 140,
-        "y": 680,
+        "y": 620,
         "wires": [
             [
                 "d3686879543e1951"
@@ -5081,7 +5181,7 @@
         "name": "assumes ${BASEMENT_HUE_ADDRESS} and ${BASEMENT_HUE_KEY} are defined",
         "info": "",
         "x": 340,
-        "y": 520,
+        "y": 460,
         "wires": []
     },
     {
@@ -5110,7 +5210,7 @@
             "8346de5b8a4aac74"
         ],
         "x": 570,
-        "y": 760,
+        "y": 700,
         "wires": [],
         "l": true
     },
@@ -5172,7 +5272,7 @@
         "templateScope": "local",
         "className": "",
         "x": 800,
-        "y": 580,
+        "y": 520,
         "wires": [
             [
                 "ccd3fdee6424982c"
@@ -5191,7 +5291,7 @@
         "linkType": "static",
         "timeout": "30",
         "x": 1020,
-        "y": 580,
+        "y": 520,
         "wires": [
             []
         ]
@@ -5217,7 +5317,7 @@
         "to": "",
         "reg": false,
         "x": 590,
-        "y": 580,
+        "y": 520,
         "wires": [
             [
                 "69a73c283e9728cd"
@@ -5301,7 +5401,7 @@
         "to": "",
         "reg": false,
         "x": 590,
-        "y": 620,
+        "y": 560,
         "wires": [
             [
                 "412e1ebd07192d0e"
@@ -5347,7 +5447,7 @@
         "templateScope": "local",
         "className": "",
         "x": 800,
-        "y": 620,
+        "y": 560,
         "wires": [
             []
         ]
@@ -5391,7 +5491,7 @@
         "templateScope": "local",
         "className": "",
         "x": 560,
-        "y": 680,
+        "y": 620,
         "wires": [
             []
         ]
