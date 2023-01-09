@@ -48,6 +48,14 @@
         "env": []
     },
     {
+        "id": "c55c15c94421eb13",
+        "type": "tab",
+        "label": "Test Services",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
         "id": "85ed27d795e6e866",
         "type": "subflow",
         "name": "Hue API V2",
@@ -487,9 +495,7 @@
             "64ccefaeb47ec9da"
         ],
         "x": 14,
-        "y": 299,
-        "w": 1292,
-        "h": 362
+        "y": 299
     },
     {
         "id": "8326ae1a15518f8f",
@@ -519,9 +525,7 @@
             "cc7c9bc7cd1ba1ae"
         ],
         "x": 14,
-        "y": 19,
-        "w": 1332,
-        "h": 262
+        "y": 19
     },
     {
         "id": "1afeb43be3175917",
@@ -859,9 +863,7 @@
             "f841fe9a2e666d3c"
         ],
         "x": 34,
-        "y": 19,
-        "w": 992,
-        "h": 122
+        "y": 19
     },
     {
         "id": "23bf1f9635c44cc8",
@@ -886,54 +888,7 @@
             "9b7e95a2da929308"
         ],
         "x": 34,
-        "y": 159,
-        "w": 932,
-        "h": 170
-    },
-    {
-        "id": "350f810e3d5e7a40",
-        "type": "group",
-        "z": "d37f5cd9edab358d",
-        "name": "publish / subscribe message broker",
-        "style": {
-            "stroke": "none",
-            "fill": "#ff0000",
-            "fill-opacity": "0.09",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "76781c82c150c92a",
-            "0ecc5602b08b8c5f",
-            "3a39efcd7fc07dad"
-        ],
-        "x": 14,
-        "y": 379,
-        "w": 572,
-        "h": 82
-    },
-    {
-        "id": "4b7445d7b8b321e5",
-        "type": "group",
-        "z": "d37f5cd9edab358d",
-        "name": "publish / subscribe message client",
-        "style": {
-            "stroke": "none",
-            "fill": "#ff0000",
-            "fill-opacity": "0.1",
-            "label": true,
-            "color": "#ffffff"
-        },
-        "nodes": [
-            "caf72cb42e0009d9",
-            "c48a2d04949161ff",
-            "93835128d0c6d2e5",
-            "cbb99030871c8165"
-        ],
-        "x": 14,
-        "y": 479,
-        "w": 512,
-        "h": 142
+        "y": 159
     },
     {
         "id": "4893dd6a2321040d",
@@ -976,8 +931,227 @@
             "6b2bd9d5e31e1296"
         ],
         "x": 14,
-        "y": 679,
-        "w": 712,
+        "y": 679
+    },
+    {
+        "id": "049e1c291c756fd4",
+        "type": "group",
+        "z": "c55c15c94421eb13",
+        "name": "websocket",
+        "style": {
+            "stroke": "#ffffff",
+            "stroke-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "9ae465779c5d0bcc",
+            "753f320d5318e13e",
+            "e76ec56b6689b0c1"
+        ],
+        "x": 38,
+        "y": 13,
+        "w": 604,
+        "h": 374
+    },
+    {
+        "id": "69f851de0493afb5",
+        "type": "group",
+        "z": "c55c15c94421eb13",
+        "name": "http",
+        "style": {
+            "stroke": "#ffffff",
+            "stroke-opacity": "0.1",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "507f1c169b76e77a",
+            "918de7aae7dcdf3f"
+        ],
+        "x": 668,
+        "y": 13,
+        "w": 564,
+        "h": 274
+    },
+    {
+        "id": "c8a76ac776d585f7",
+        "type": "group",
+        "z": "c55c15c94421eb13",
+        "name": "mqtt",
+        "style": {
+            "stroke": "#ffffff",
+            "stroke-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "e391dff56ee59066",
+            "b9c46b0a73a05973"
+        ],
+        "x": 668,
+        "y": 313,
+        "w": 364,
+        "h": 234
+    },
+    {
+        "id": "9ae465779c5d0bcc",
+        "type": "group",
+        "z": "c55c15c94421eb13",
+        "g": "049e1c291c756fd4",
+        "name": "publish / subscribe broker",
+        "style": {
+            "label": true,
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "88477ff5b74b6a54",
+            "3a5472128996cb0a",
+            "541f756692acafb4",
+            "643967913428d9d9"
+        ],
+        "x": 64,
+        "y": 39,
+        "w": 552,
+        "h": 122
+    },
+    {
+        "id": "507f1c169b76e77a",
+        "type": "group",
+        "z": "c55c15c94421eb13",
+        "g": "69f851de0493afb5",
+        "name": "server",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "c5abeb505dacef38",
+            "d222a9b4e2fd2510",
+            "369cdb48f70bf8a0",
+            "5d9efaedbb2a8654"
+        ],
+        "x": 694,
+        "y": 39,
+        "w": 492,
+        "h": 122
+    },
+    {
+        "id": "753f320d5318e13e",
+        "type": "group",
+        "z": "c55c15c94421eb13",
+        "g": "049e1c291c756fd4",
+        "name": "subscribe",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "f4dcd42e288d6b9f",
+            "258d4d35195c83e0"
+        ],
+        "x": 94,
+        "y": 279,
+        "w": 452,
+        "h": 82
+    },
+    {
+        "id": "e391dff56ee59066",
+        "type": "group",
+        "z": "c55c15c94421eb13",
+        "g": "c8a76ac776d585f7",
+        "name": "publish",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "b3f5fa13bb730cf7",
+            "da0987fa2e7b316d"
+        ],
+        "x": 694,
+        "y": 339,
+        "w": 312,
+        "h": 82
+    },
+    {
+        "id": "918de7aae7dcdf3f",
+        "type": "group",
+        "z": "c55c15c94421eb13",
+        "g": "69f851de0493afb5",
+        "name": "request / response",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "64ec62d203266441",
+            "631fd6a533ba422d",
+            "23653abd88f48adb"
+        ],
+        "x": 694,
+        "y": 179,
+        "w": 512,
+        "h": 82
+    },
+    {
+        "id": "e76ec56b6689b0c1",
+        "type": "group",
+        "z": "c55c15c94421eb13",
+        "g": "049e1c291c756fd4",
+        "name": "publish",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "4815c50f5566a20e",
+            "83498f129c618d7e"
+        ],
+        "x": 74,
+        "y": 179,
+        "w": 492,
+        "h": 82
+    },
+    {
+        "id": "b9c46b0a73a05973",
+        "type": "group",
+        "z": "c55c15c94421eb13",
+        "g": "c8a76ac776d585f7",
+        "name": "subscribe",
+        "style": {
+            "stroke": "none",
+            "fill": "#ffffff",
+            "fill-opacity": "0.1",
+            "label": true,
+            "color": "#ffffff"
+        },
+        "nodes": [
+            "67acd730cd05f4cf",
+            "0f9601886b881991"
+        ],
+        "x": 694,
+        "y": 439,
+        "w": 312,
         "h": 82
     },
     {
@@ -1269,21 +1443,6 @@
         "className": ""
     },
     {
-        "id": "9e89e17d24ba152b",
-        "type": "websocket-listener",
-        "path": "/broker",
-        "wholemsg": "true"
-    },
-    {
-        "id": "943656a844c85a87",
-        "type": "websocket-client",
-        "path": "ws://localhost:1880/broker",
-        "tls": "",
-        "wholemsg": "true",
-        "hb": "5",
-        "subprotocol": ""
-    },
-    {
         "id": "022f6cf3824c68f0",
         "type": "ui_group",
         "name": "Ground Floor Hue",
@@ -1304,6 +1463,51 @@
         "width": "12",
         "collapse": true,
         "className": ""
+    },
+    {
+        "id": "66bee0abba669255",
+        "type": "websocket-listener",
+        "z": "c55c15c94421eb13",
+        "path": "/test",
+        "wholemsg": "true"
+    },
+    {
+        "id": "9581848698e19155",
+        "type": "websocket-client",
+        "z": "c55c15c94421eb13",
+        "path": "ws://localhost:1880/test",
+        "tls": "",
+        "wholemsg": "true",
+        "hb": "5",
+        "subprotocol": ""
+    },
+    {
+        "id": "b60735ba19b63b15",
+        "type": "mqtt-broker",
+        "z": "c55c15c94421eb13",
+        "name": "",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
     },
     {
         "id": "07d61ea24d59a251",
@@ -3151,135 +3355,6 @@
         "className": "",
         "x": 1260,
         "y": 300,
-        "wires": []
-    },
-    {
-        "id": "76781c82c150c92a",
-        "type": "websocket in",
-        "z": "d37f5cd9edab358d",
-        "g": "350f810e3d5e7a40",
-        "name": "",
-        "server": "9e89e17d24ba152b",
-        "client": "",
-        "x": 110,
-        "y": 420,
-        "wires": [
-            [
-                "3a39efcd7fc07dad"
-            ]
-        ]
-    },
-    {
-        "id": "0ecc5602b08b8c5f",
-        "type": "websocket out",
-        "z": "d37f5cd9edab358d",
-        "g": "350f810e3d5e7a40",
-        "name": "",
-        "server": "9e89e17d24ba152b",
-        "client": "",
-        "x": 490,
-        "y": 420,
-        "wires": []
-    },
-    {
-        "id": "caf72cb42e0009d9",
-        "type": "websocket in",
-        "z": "d37f5cd9edab358d",
-        "g": "4b7445d7b8b321e5",
-        "name": "",
-        "server": "",
-        "client": "943656a844c85a87",
-        "x": 170,
-        "y": 580,
-        "wires": [
-            [
-                "c48a2d04949161ff"
-            ]
-        ]
-    },
-    {
-        "id": "3a39efcd7fc07dad",
-        "type": "change",
-        "z": "d37f5cd9edab358d",
-        "g": "350f810e3d5e7a40",
-        "name": "",
-        "rules": [
-            {
-                "t": "delete",
-                "p": "_session",
-                "pt": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 300,
-        "y": 420,
-        "wires": [
-            [
-                "0ecc5602b08b8c5f"
-            ]
-        ]
-    },
-    {
-        "id": "c48a2d04949161ff",
-        "type": "debug",
-        "z": "d37f5cd9edab358d",
-        "g": "4b7445d7b8b321e5",
-        "name": "debug 3",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "statusVal": "",
-        "statusType": "auto",
-        "x": 380,
-        "y": 580,
-        "wires": []
-    },
-    {
-        "id": "93835128d0c6d2e5",
-        "type": "inject",
-        "z": "d37f5cd9edab358d",
-        "g": "4b7445d7b8b321e5",
-        "name": "",
-        "props": [
-            {
-                "p": "payload"
-            },
-            {
-                "p": "topic",
-                "vt": "str"
-            }
-        ],
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "topic": "test",
-        "payload": "",
-        "payloadType": "date",
-        "x": 140,
-        "y": 520,
-        "wires": [
-            [
-                "cbb99030871c8165"
-            ]
-        ]
-    },
-    {
-        "id": "cbb99030871c8165",
-        "type": "websocket out",
-        "z": "d37f5cd9edab358d",
-        "g": "4b7445d7b8b321e5",
-        "name": "",
-        "server": "",
-        "client": "943656a844c85a87",
-        "x": 370,
-        "y": 520,
         "wires": []
     },
     {
@@ -5751,5 +5826,393 @@
             ]
         ],
         "l": true
+    },
+    {
+        "id": "88477ff5b74b6a54",
+        "type": "websocket in",
+        "z": "c55c15c94421eb13",
+        "g": "9ae465779c5d0bcc",
+        "name": "",
+        "server": "66bee0abba669255",
+        "client": "",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "541f756692acafb4",
+                "643967913428d9d9"
+            ]
+        ]
+    },
+    {
+        "id": "3a5472128996cb0a",
+        "type": "websocket out",
+        "z": "c55c15c94421eb13",
+        "g": "9ae465779c5d0bcc",
+        "name": "",
+        "server": "66bee0abba669255",
+        "client": "",
+        "x": 530,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "541f756692acafb4",
+        "type": "change",
+        "z": "c55c15c94421eb13",
+        "g": "9ae465779c5d0bcc",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "_session",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 80,
+        "wires": [
+            [
+                "3a5472128996cb0a"
+            ]
+        ]
+    },
+    {
+        "id": "f4dcd42e288d6b9f",
+        "type": "websocket in",
+        "z": "c55c15c94421eb13",
+        "g": "753f320d5318e13e",
+        "name": "",
+        "server": "",
+        "client": "9581848698e19155",
+        "x": 240,
+        "y": 320,
+        "wires": [
+            [
+                "258d4d35195c83e0"
+            ]
+        ]
+    },
+    {
+        "id": "258d4d35195c83e0",
+        "type": "debug",
+        "z": "c55c15c94421eb13",
+        "g": "753f320d5318e13e",
+        "name": "subscribe",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "counter",
+        "x": 440,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "c5abeb505dacef38",
+        "type": "http in",
+        "z": "c55c15c94421eb13",
+        "g": "507f1c169b76e77a",
+        "name": "",
+        "url": "/server",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 790,
+        "y": 100,
+        "wires": [
+            [
+                "369cdb48f70bf8a0",
+                "5d9efaedbb2a8654"
+            ]
+        ]
+    },
+    {
+        "id": "d222a9b4e2fd2510",
+        "type": "http response",
+        "z": "c55c15c94421eb13",
+        "g": "507f1c169b76e77a",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1110,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "369cdb48f70bf8a0",
+        "type": "change",
+        "z": "c55c15c94421eb13",
+        "g": "507f1c169b76e77a",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 960,
+        "y": 80,
+        "wires": [
+            [
+                "d222a9b4e2fd2510"
+            ]
+        ]
+    },
+    {
+        "id": "5d9efaedbb2a8654",
+        "type": "debug",
+        "z": "c55c15c94421eb13",
+        "g": "507f1c169b76e77a",
+        "name": "request",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "counter",
+        "x": 940,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "64ec62d203266441",
+        "type": "http request",
+        "z": "c55c15c94421eb13",
+        "g": "918de7aae7dcdf3f",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:1880/server",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 950,
+        "y": 220,
+        "wires": [
+            [
+                "23653abd88f48adb"
+            ]
+        ]
+    },
+    {
+        "id": "631fd6a533ba422d",
+        "type": "inject",
+        "z": "c55c15c94421eb13",
+        "g": "918de7aae7dcdf3f",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 800,
+        "y": 220,
+        "wires": [
+            [
+                "64ec62d203266441"
+            ]
+        ]
+    },
+    {
+        "id": "23653abd88f48adb",
+        "type": "debug",
+        "z": "c55c15c94421eb13",
+        "g": "918de7aae7dcdf3f",
+        "name": "response",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "counter",
+        "x": 1100,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "b3f5fa13bb730cf7",
+        "type": "mqtt out",
+        "z": "c55c15c94421eb13",
+        "g": "e391dff56ee59066",
+        "name": "",
+        "topic": "fubar",
+        "qos": "2",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b60735ba19b63b15",
+        "x": 930,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "da0987fa2e7b316d",
+        "type": "inject",
+        "z": "c55c15c94421eb13",
+        "g": "e391dff56ee59066",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 800,
+        "y": 380,
+        "wires": [
+            [
+                "b3f5fa13bb730cf7"
+            ]
+        ]
+    },
+    {
+        "id": "83498f129c618d7e",
+        "type": "inject",
+        "z": "c55c15c94421eb13",
+        "g": "e76ec56b6689b0c1",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "fubar",
+        "payload": "",
+        "payloadType": "date",
+        "x": 200,
+        "y": 220,
+        "wires": [
+            [
+                "4815c50f5566a20e"
+            ]
+        ]
+    },
+    {
+        "id": "4815c50f5566a20e",
+        "type": "websocket out",
+        "z": "c55c15c94421eb13",
+        "g": "e76ec56b6689b0c1",
+        "name": "",
+        "server": "",
+        "client": "9581848698e19155",
+        "x": 420,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "67acd730cd05f4cf",
+        "type": "mqtt in",
+        "z": "c55c15c94421eb13",
+        "g": "b9c46b0a73a05973",
+        "name": "",
+        "topic": "fubar",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "b60735ba19b63b15",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 770,
+        "y": 480,
+        "wires": [
+            [
+                "0f9601886b881991"
+            ]
+        ]
+    },
+    {
+        "id": "0f9601886b881991",
+        "type": "debug",
+        "z": "c55c15c94421eb13",
+        "g": "b9c46b0a73a05973",
+        "name": "receive",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "counter",
+        "x": 900,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "643967913428d9d9",
+        "type": "debug",
+        "z": "c55c15c94421eb13",
+        "g": "9ae465779c5d0bcc",
+        "name": "message",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "counter",
+        "x": 300,
+        "y": 120,
+        "wires": []
     }
 ]
