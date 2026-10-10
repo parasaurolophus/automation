@@ -1,18 +1,11 @@
 <!-- Copyright (c) Kirk Rader 2026 -->
 
 <template>
-    <div ref="svg" :class="`container ${size}`">
+    <div ref="svg" :class="size">
     </div>
 </template>
 
 <style scoped>
-.container {
-    display: inline-block;
-    color: black;
-    background-color: white;
-    border-radius: 0;
-}
-
 .small {
     width: 32px;
 }
