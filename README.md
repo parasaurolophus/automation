@@ -3,7 +3,7 @@ Copyright (c) 2026 Kirk Rader
 # Home Automation Server
 
 Monitor and control a [Hue] and [PowerView] based home automation system using
-[express] and [vuetify]
+[express] and [Vue]
 
 - [automation-backend]
   - An [express] project containing the back end of a home automation server
