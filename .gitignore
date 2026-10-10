@@ -1,0 +1,16 @@
+.vscode/
+dist/
+docs/
+experiment/
+frames/
+node_modules/
+out/
+config.js
+settings.json
+*.local
+*~
+*.old
+*.backup
+*.log
+/test.html
+.hintrc

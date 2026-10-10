@@ -1,0 +1,23 @@
+{
+    "name": "@parasaurolophus/automation-backend",
+    "version": "1.0.0",
+    "description": "Home automation server back end",
+    "license": "MIT",
+    "author": "parasaurolophus",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "clean": "del *.log",
+        "test": "node ./test.js"
+    },
+    "dependencies": {
+        "eventsource-client": "^1.2.0",
+        "express": "~5.2.1",
+        "suncalc": "^2.0.2",
+        "undici": "^8.9.0",
+        "ws": "^8.21.1"
+    },
+    "devDependencies": {
+        "uuid": "^14.0.1"
+    }
+}

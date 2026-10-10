@@ -1,0 +1,289 @@
+/* Copyright (c) Kirk Rader 2026 */
+
+/*
+ * global look and feel
+ */
+
+@font-face {
+    font-family: 'Noto Sans Mono';
+    src: url('/fonts/NotoSansMono-Regular.woff2') format('woff2'),
+        url('/fonts/NotoSansMono-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Latin Modern Math';
+    src: url('/fonts/LatinModernMath-Regular.woff2') format('woff2'),
+        url('/fonts/LatinModernMath-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'STIX Two Math';
+    src: url('/fonts/STIXTwoMath-Regular.woff2') format('woff2'),
+        url('/fonts/STIXTwoMath-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'STIX Two Text';
+    src: url('/fonts/STIXTwoText-Bold.woff2') format('woff2'),
+        url('/fonts/STIXTwoText-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'STIX Two Text';
+    src: url('/fonts/STIXTwoText-BoldItalic.woff2') format('woff2'),
+        url('/fonts/STIXTwoText-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'STIX Two Text';
+    src: url('/fonts/STIXTwoText-Italic.woff2') format('woff2'),
+        url('/fonts/STIXTwoText-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'STIX Two Text';
+    src: url('/fonts/STIXTwoText-Medium.woff2') format('woff2'),
+        url('/fonts/STIXTwoText-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'STIX Two Text';
+    src: url('/fonts/STIXTwoText-MediumItalic.woff2') format('woff2'),
+        url('/fonts/STIXTwoText-MediumItalic.woff') format('woff');
+    font-weight: 500;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'STIX Two Text';
+    src: url('/fonts/STIXTwoText-Regular.woff2') format('woff2'),
+        url('/fonts/STIXTwoText-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'STIX Two Text';
+    src: url('/fonts/STIXTwoText-SemiBold.woff2') format('woff2'),
+        url('/fonts/STIXTwoText-SemiBold.woff') format('woff');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'STIX Two Text';
+    src: url('/fonts/STIXTwoText-SemiBoldItalic.woff2') format('woff2'),
+        url('/fonts/STIXTwoText-SemiBoldItalic.woff') format('woff');
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+:root {
+    /* base colors */
+    --foreground: rgb(224 224 224);
+    --background: rgb(32 32 32);
+    --highlight: rgb(from var(--background) 64 64 64);
+
+    /* semantic colors */
+    --success: lightgreen;
+    --warning: yellow;
+    --failure: red;
+
+    /* accent colors */
+    --primary: cyan;
+    --secondary: magenta;
+
+    /* panel dimensions & offsets */
+    --top: 1vh;
+    --left: 1vw;
+    --right: 1vw;
+    --bottom: 1vh;
+    --headerheight: 6lh;
+    --footerheight: 2lh;
+    --sidebarwidth: 25em;
+    --maintop: calc(var(--top) + var(--headerheight) + 1vh);
+    --mainright: calc(var(--left) + var(--sidebarwidth) + 1vw);
+    --mainbottom: calc(var(--bottom) + var(--footerheight) + 1vh);
+}
+
+* {
+    border-radius: 1em;
+    border-width: 1px;
+    box-shadow: none;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: 'Noto Sans Mono', monospace;
+}
+
+#sidePanel {
+    position: fixed;
+    overflow: auto;
+    top: var(--maintop);
+    right: var(--right);
+    width: var(--sidebarwidth);
+    bottom: var(--mainbottom);
+    border-style: solid;
+    overflow: auto;
+}
+
+header {
+    position: fixed;
+    top: var(--top);
+    left: var(--left);
+    right: var(--right);
+    height: var(--headerheight);
+    border-style: solid;
+}
+
+main {
+    position: fixed;
+    overflow: auto;
+    top: var(--maintop);
+    left: var(--left);
+    right: var(--mainright);
+    bottom: var(--mainbottom);
+    border-style: solid;
+}
+
+footer {
+    position: fixed;
+    left: var(--left);
+    right: var(--right);
+    height: var(--footerheight);
+    bottom: var(--bottom);
+    border-style: solid;
+    border-color: var(--highlight);
+    background-color: var(--highlight);
+}
+
+a,
+a:visited {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+a:active,
+a:hover {
+    text-decoration: underline;
+}
+
+details {
+    border: 1px solid var(--background);
+}
+
+details:open {
+    border-color: var(--foreground);
+}
+
+details:not(:open) {
+    border-color: var(--background);
+}
+
+details>*:not(summary) {
+    margin: 0.25em;
+    padding: 0.25em;
+}
+
+summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: start;
+    padding: 0.5em 1em;
+}
+
+summary:hover {
+    background-color: var(--highlight);
+}
+
+summary>* {
+    display: inline-block;
+}
+
+input {
+    accent-color: var(--primary);
+}
+
+code,
+.code {
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: white;
+}
+
+math {
+    font-family: 'Latin Modern Math';
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+/*
+ * styles for "cards"
+ */
+
+.title {
+    font-weight: bolder;
+}
+
+.subtitle {
+    font-style: italic;
+    font-weight: bold;
+}
+
+/*
+ * WebSocket / EventSource readyState styles
+ */
+
+.readystate {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    font-weight: bold;
+}
+
+.readystate>* {
+    white-space: nowrap;
+}
+
+.open {
+    color: var(--success);
+}
+
+.connecting {
+    color: var(--warning);
+}
+
+.closing,
+.closed {
+    color: var(--failure);
+}

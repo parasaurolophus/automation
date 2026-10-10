@@ -1,0 +1,64 @@
+<!-- Copyright (c) Kirk Rader 2026 -->
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Logo</title>
+    <style>
+        .container {
+            display: flex;
+            flex-flow: row wrap;
+        }
+
+        .container > * {
+            margin: 0.5em;
+            padding: 0.5em;
+        }
+
+        .dark {
+            background-color: black;
+            color: white;
+        }
+
+        .dark a {
+            color: cyan;
+        }
+
+        .dark a:visited {
+            color: magenta;
+        }
+
+        .light {
+            background-color: white;
+            color: black;
+        }
+
+        .light a {
+            color: blue;
+        }
+
+        .light a:visited {
+            color: purple;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="dark">
+            <video autoplay muted loop controls>
+                <source src="./logo256.webm" />
+            </video>
+        </div>
+        <div class="light">
+            <video autoplay muted loop controls>
+                <source src="./logo256.webm" />
+            </video>
+        </div>
+    </div>
+</body>
+
+</html>
