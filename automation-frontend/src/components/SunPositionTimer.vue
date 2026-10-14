@@ -19,7 +19,7 @@
 </style>
 
 <script setup>
-import SunPositionEvent from '@/components/SunPositionEvent.vue'
+import SunPositionEvent from './SunPositionEvent.vue'
 import { inject } from 'vue'
 
 const sunPositionTimer = inject('sunPositionTimer')

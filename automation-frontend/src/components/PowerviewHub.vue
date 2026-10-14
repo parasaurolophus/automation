@@ -22,8 +22,8 @@
 </template>
 
 <script setup>
-import DetailsComponent from '@/components/DetailsComponent.vue'
-import PowerviewRoom from '@/components/PowerviewRoom.vue'
+import DetailsComponent from './DetailsComponent.vue'
+import PowerviewRoom from './PowerviewRoom.vue'
 import { inject } from 'vue'
 
 const copyMessage = inject('copyMessage')

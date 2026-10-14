@@ -10,8 +10,8 @@
 </template>
 
 <script setup>
-import DetailsComponent from '@/components/DetailsComponent.vue'
-import PowerviewHub from '@/components/PowerviewHub.vue'
+import DetailsComponent from './DetailsComponent.vue'
+import PowerviewHub from './PowerviewHub.vue'
 import { inject } from 'vue'
 
 const powerviewHubModels = inject('powerviewHubModels')

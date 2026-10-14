@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import DetailsComponent from '@/components/DetailsComponent.vue'
+import DetailsComponent from './DetailsComponent.vue'
 import { inject } from 'vue'
 
 const automations = inject('automations')

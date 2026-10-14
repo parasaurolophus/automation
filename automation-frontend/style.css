@@ -137,6 +137,7 @@ summary {
     align-items: center;
     justify-content: start;
     padding: 0.5em 1em;
+    cursor: pointer;
 }
 
 summary:hover {

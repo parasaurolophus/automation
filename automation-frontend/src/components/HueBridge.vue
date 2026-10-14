@@ -16,8 +16,8 @@
 </template>
 
 <script setup>
-import DetailsComponent from '@/components/DetailsComponent.vue'
-import HueGroup from '@/components/HueGroup.vue'
+import DetailsComponent from './DetailsComponent.vue'
+import HueGroup from './HueGroup.vue'
 import { inject } from 'vue'
 
 const bridge = defineModel()

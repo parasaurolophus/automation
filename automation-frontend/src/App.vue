@@ -6,7 +6,7 @@
             <div id="titlebar">
                 <ServerStatus />
                 <h1>automation</h1>
-                <QrComponent v-model="qrUrl" class="right"/>
+                <QrCode v-model="qrUrl" class="right" />
             </div>
             <StatusBar />
         </div>
@@ -50,23 +50,23 @@
 </style>
 
 <script setup>
-import AutomationControls from '@/components/AutomationControls.vue'
-import AutomationsView from '@/components/AutomationsView.vue'
-import DevControls from '@/components/DevControls.vue'
-import FooterBar from '@/components/FooterBar.vue'
-import HomeDiagram from '@/components/HomeDiagram.vue'
-import HueBridges from '@/components/HueBridges.vue'
-import PowerviewHubs from '@/components/PowerviewHubs.vue'
-import QrComponent from '@/components/QrComponent.vue'
-import ServerStatus from '@/components/ServerStatus.vue'
-import StatusBar from '@/components/StatusBar.vue'
-import SunPositionTimer from '@/components/SunPositionTimer.vue'
-import { buildHomeDiagram } from '@/buildDiagram.js'
+import AutomationControls from './components/AutomationControls.vue'
+import AutomationsView from './components/AutomationsView.vue'
+import DevControls from './components/DevControls.vue'
+import FooterBar from './components/FooterBar.vue'
+import HomeDiagram from './components/HomeDiagram.vue'
+import HueBridges from './components/HueBridges.vue'
+import PowerviewHubs from './components/PowerviewHubs.vue'
+import QrCode from './components/QrCode.vue'
+import ServerStatus from './components/ServerStatus.vue'
+import StatusBar from './components/StatusBar.vue'
+import SunPositionTimer from './components/SunPositionTimer.vue'
+import { buildHomeDiagram } from './buildDiagram.js'
 import mermaid from 'mermaid'
 import { computed, provide, ref } from 'vue'
-import { HueBridgeModel } from '@/HueBridgeModel.js'
-import { PowerviewHubModel } from '@/PowerviewHubModel.js'
-import { merge, sortByName } from '@/utilities.js'
+import { HueBridgeModel } from './HueBridgeModel.js'
+import { PowerviewHubModel } from './PowerviewHubModel.js'
+import { merge, sortByName } from './utilities.js'
 
 const automations = ref({})
 const clientReadyState = ref({})

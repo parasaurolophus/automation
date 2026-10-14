@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import MermaidDiagram from '@/components/MermaidDiagram.vue'
+import MermaidDiagram from './MermaidDiagram.vue'
 import { inject, onMounted, watch } from 'vue'
 
 const clientReadyState = inject('clientReadyState')

@@ -35,9 +35,9 @@ fieldset>* {
 </style>
 
 <script setup>
-import DetailsComponent from '@/components/DetailsComponent.vue'
-import HueLight from '@/components/HueLight.vue'
-import HueScene from '@/components/HueScene.vue'
+import DetailsComponent from './DetailsComponent.vue'
+import HueLight from './HueLight.vue'
+import HueScene from './HueScene.vue'
 
 const bridge = defineModel('bridge')
 const group = defineModel('group')

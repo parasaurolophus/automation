@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-import DetailsComponent from '@/components/DetailsComponent.vue'
+import DetailsComponent from './DetailsComponent.vue'
 import { inject, onMounted, useTemplateRef, watch } from 'vue'
 import mermaid from 'mermaid'
 

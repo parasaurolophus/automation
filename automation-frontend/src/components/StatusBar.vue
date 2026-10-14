@@ -30,10 +30,10 @@
 </style>
 
 <script setup>
-import EventSourceReadyState from '@/components/EventSourceReadyState.vue'
-import LegacyHub from '@/components/LegacyHub.vue'
-import VerticalDivider from '@/components/VerticalDivider.vue'
-import WebSocketReadyState from '@/components/WebSocketReadyState.vue'
+import EventSourceReadyState from './EventSourceReadyState.vue'
+import LegacyHub from './LegacyHub.vue'
+import VerticalDivider from './VerticalDivider.vue'
+import WebSocketReadyState from './WebSocketReadyState.vue'
 import { inject } from 'vue'
 
 const clientReadyState = inject('clientReadyState')

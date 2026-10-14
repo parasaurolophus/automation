@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-import ToggleSwitch from '@/components/ToggleSwitch.vue'
+import ToggleSwitch from './ToggleSwitch.vue'
 import { inject } from 'vue'
 
 const bridge = defineModel('bridge', { required: true })

@@ -55,7 +55,7 @@
 </style>
 
 <script setup>
-import MdiIcon from '@/components/MdiIcon.vue'
+import MdiIcon from './MdiIcon.vue'
 import { mdiBatteryAlertVariantOutline, mdiBattery20, mdiBattery50, mdiBattery90, mdiRollerShade } from '@mdi/js'
 import { inject, ref, watch } from 'vue'
 

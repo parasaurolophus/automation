@@ -34,9 +34,9 @@ fieldset>* {
 </style>
 
 <script setup>
-import DetailsComponent from '@/components/DetailsComponent.vue'
-import PowerviewScene from '@/components/PowerviewScene.vue'
-import PowerviewShade from '@/components/PowerviewShade.vue'
+import DetailsComponent from './DetailsComponent.vue'
+import PowerviewScene from './PowerviewScene.vue'
+import PowerviewShade from './PowerviewShade.vue'
 import { inject } from 'vue'
 
 const copyMessage = inject('copyMessage')

@@ -16,7 +16,7 @@
 </style>
 
 <script setup>
-import MdiIcon from '@/components/MdiIcon.vue'
+import MdiIcon from './MdiIcon.vue'
 import { mdiCircle, mdiCircleOutline } from '@mdi/js'
 import { computed, inject, ref, watch } from 'vue'
 

@@ -10,8 +10,8 @@
 </template>
 
 <script setup>
-import DetailsComponent from '@/components/DetailsComponent.vue'
-import HueBridge from '@/components/HueBridge.vue'
+import DetailsComponent from './DetailsComponent.vue'
+import HueBridge from './HueBridge.vue'
 import { inject } from 'vue'
 
 const hueBridgeModels = inject('hueBridgeModels')
