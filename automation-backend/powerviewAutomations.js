@@ -2,10 +2,16 @@
 
 const powerviewSunrise = [
 
-    // Morning Shades
+    // Close Dining Shades
     {
         topic: 'get/powerview/bff46430-9989-11f1-8be1-e31a95383439/scenes',
-        query: '?sceneId=47761'
+        query: '?sceneId=56870'
+    },
+
+    // Open Living Room Shades
+    {
+        topic: 'get/powerview/bff46430-9989-11f1-8be1-e31a95383439/scenes',
+        query: '?sceneId=34624'
     },
 
     // Close Kitchen Shades
@@ -30,10 +36,16 @@ const powerviewMidday = [
 
 const powerviewAfternoon = [
 
-    // Afternoon Shades
+    // Close Living Room Shades
     {
         topic: 'get/powerview/bff46430-9989-11f1-8be1-e31a95383439/scenes',
-        query: '?sceneId=2208'
+        query: '?sceneId=1032'
+    },
+
+    // Open Dining Shades
+    {
+        topic: 'get/powerview/bff46430-9989-11f1-8be1-e31a95383439/scenes',
+        query: '?sceneId=29225'
     },
 
     // Open Kitchen Shades
