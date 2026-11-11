@@ -5,13 +5,13 @@
         <summary>motion areas</summary>
         <fieldset>
             <dl>
-                <template v-for="bridge of findBridge('c42996fffec424ab')" :key="bridge.id">
+                <template v-for="bridge of findBridge(basementBathBridgeId)" :key="bridge.id">
                     <dt>
                         <div>{{ bridge.name }}</div>
                         <div>{{ bridge.id }}</div>
                     </dt>
                     <dd>
-                        <template v-for="group of findGroup(bridge, 'b24e9ff4-7919-4049-9802-b50f9dbabf95')"
+                        <template v-for="group of findGroup(bridge, basementBathGroupId)"
                             :key="group.id">
                             <template v-if="group.motionArea">
                                 <table>
@@ -83,6 +83,11 @@ th:not(:first-child) {
 <script setup>
 import { inject } from 'vue'
 
+const basementBathBridgeId = inject('basementBathBridgeId')
+const basementBathBrightId = inject('basementBathBrightId')
+const basementBathGroupId = inject('basementBathGroupId')
+const basementBathGroupedLightId = inject('basementBathGroupedLightId')
+const basementBathNightlightId = inject('basementBathNightlightId')
 const hueBridgeModels = inject('hueBridgeModels')
 const sendWS = inject('sendWS')
 

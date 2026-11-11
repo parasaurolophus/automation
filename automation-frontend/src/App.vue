@@ -71,7 +71,10 @@ import { PowerviewHubModel } from './PowerviewHubModel.js'
 import { merge, sortByName } from './utilities.js'
 
 const automations = ref({})
+const basementBathBridgeId = ref('c42996fffec424ab')
 const basementBathBrightId = ref('929cd971-1f7c-4237-bab7-706314f0d087')
+const basementBathGroupId = ref('b24e9ff4-7919-4049-9802-b50f9dbabf95')
+const basementBathGroupedLightId = ref('b7f174a0-f1b8-43f9-b2b2-701777a2eb0b')
 const basementBathNightlightId = ref('40bd756d-f9be-45a5-ba47-4211854bbe69')
 const clientReadyState = ref({})
 
@@ -482,7 +485,10 @@ function sendWS(message) {
 }
 
 provide('automations', automations)
+provide('basementBathBridgeId', basementBathBridgeId)
 provide('basementBathBrightId', basementBathBrightId)
+provide('basementBathGroupId', basementBathGroupId)
+provide('basementBathGroupedLightId', basementBathGroupedLightId)
 provide('basementBathNightlightId', basementBathNightlightId)
 provide('clientReadyState', clientReadyState)
 provide('closeAllDetails', closeAllDetails)
