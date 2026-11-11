@@ -1,10 +1,10 @@
 <!-- Copyright (c) Kirk Rader 2026 -->
 
 <template>
-    <DetailsComponent>
-        <template #summary>
+    <details name="hue-group">
+        <summary>
             <HueLight :name="group.name" v-model:bridge="bridge" v-model:resource="group.groupedLight" />
-        </template>
+        </summary>
         <template v-if="group.scenes.length > 0">
             <fieldset>
                 <legend>scenes</legend>
@@ -19,7 +19,7 @@
                     v-model:resource="light.resource" />
             </fieldset>
         </template>
-    </DetailsComponent>
+    </details>
 </template>
 
 <style scoped>
@@ -35,7 +35,6 @@ fieldset>* {
 </style>
 
 <script setup>
-import DetailsComponent from './DetailsComponent.vue'
 import HueLight from './HueLight.vue'
 import HueScene from './HueScene.vue'
 

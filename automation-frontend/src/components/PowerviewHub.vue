@@ -1,11 +1,9 @@
 <!-- Copyright (c) Kirk Rader 2026 -->
 
 <template>
-    <DetailsComponent :id="hub.id">
-        <template #summary>
-            {{ hub.name }}
-        </template>
-        <template #subtitle>
+    <details :id="hub.id" name="powerview-hub">
+        <summary>{{ hub.name }}</summary>
+        <div class="subtitle">
             <div @click.prevent.stop="copy" class="clickable">
                 {{ hub.id }}
             </div>
@@ -14,15 +12,14 @@
                     {{ swaggerUrl }}
                 </a>
             </div>
-        </template>
+        </div>
         <template v-for="(room, index) of hub.rooms" :key="room.id">
             <PowerviewRoom v-if="!isEmpty(room)" v-model:hub="hub" v-model:room="hub.rooms[index]" />
         </template>
-    </DetailsComponent>
+    </details>
 </template>
 
 <script setup>
-import DetailsComponent from './DetailsComponent.vue'
 import PowerviewRoom from './PowerviewRoom.vue'
 import { inject } from 'vue'
 

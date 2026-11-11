@@ -13,10 +13,11 @@
     </header>
     <main>
         <div class="padded">
-            <HomeDiagram id="homediagram" />
+            <HomeDiagram />
             <HueBridges id="huebridges" />
             <PowerviewHubs id="powerviewhubs" />
-            <AutomationsView id="automationsview" />
+            <AutomationsView />
+            <HueMotionAreaConfiguration />
         </div>
     </main>
     <div id="sidePanel">
@@ -56,6 +57,7 @@ import DevControls from './components/DevControls.vue'
 import FooterBar from './components/FooterBar.vue'
 import HomeDiagram from './components/HomeDiagram.vue'
 import HueBridges from './components/HueBridges.vue'
+import HueMotionAreaConfiguration from './components/HueMotionAreaConfiguration.vue'
 import PowerviewHubs from './components/PowerviewHubs.vue'
 import QrCode from './components/QrCode.vue'
 import ServerStatus from './components/ServerStatus.vue'
@@ -69,6 +71,8 @@ import { PowerviewHubModel } from './PowerviewHubModel.js'
 import { merge, sortByName } from './utilities.js'
 
 const automations = ref({})
+const basementBathBrightId = ref('929cd971-1f7c-4237-bab7-706314f0d087')
+const basementBathNightlightId = ref('40bd756d-f9be-45a5-ba47-4211854bbe69')
 const clientReadyState = ref({})
 
 const defaultDiagram = `flowchart LR
@@ -478,6 +482,8 @@ function sendWS(message) {
 }
 
 provide('automations', automations)
+provide('basementBathBrightId', basementBathBrightId)
+provide('basementBathNightlightId', basementBathNightlightId)
 provide('clientReadyState', clientReadyState)
 provide('closeAllDetails', closeAllDetails)
 provide('copyMessage', copyMessage)

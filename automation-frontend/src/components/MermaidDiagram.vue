@@ -1,16 +1,13 @@
 <!-- Copyright (c) 2026 Kirk Rader -->
 
 <template>
-    <DetailsComponent>
-        <template #summary>
-            home diagram
-        </template>
+    <details name="home">
+        <summary>home diagram</summary>
         <pre ref="diagramElement" class="mermaid"></pre>
-    </DetailsComponent>
+    </details>
 </template>
 
 <script setup>
-import DetailsComponent from './DetailsComponent.vue'
 import { inject, onMounted, useTemplateRef, watch } from 'vue'
 import mermaid from 'mermaid'
 

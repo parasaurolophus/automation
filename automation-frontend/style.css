@@ -138,6 +138,7 @@ summary {
     justify-content: start;
     padding: 0.5em 1em;
     cursor: pointer;
+    font-weight: bolder;
 }
 
 summary:hover {

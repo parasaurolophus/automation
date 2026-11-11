@@ -1,6 +1,108 @@
 // Copyright (c) 2026 Kirk Rader
 
-import { compareNames, merge, sortByName } from "./utilities"
+import { merge, sortByName } from "./utilities"
+
+function HueMotionAreaModel(motionAreaResource, resources) {
+
+    let convenience = null
+    let convenienceBehavior = null
+    let security = null
+    let securityBehavior = null
+
+    for (let service of motionAreaResource.services) {
+
+        if (service.rtype === 'convenience_area_motion') {
+
+            for (let resource of resources) {
+
+                if (resource.id === service.rid) {
+
+                    convenience = resource
+                    convenienceBehavior = this.findBehaviorInstance(resource.id, resources)
+                    break
+                }
+            }
+        }
+
+        if (service.rtype === 'security_area_motion') {
+
+            for (let resource of resources) {
+
+                if (resource.id === service.rid) {
+
+                    security = resource
+                    securityBehavior = this.findBehaviorInstance(resource.id, resources)
+                    break
+                }
+            }
+        }
+    }
+
+    Object.defineProperties(this, {
+        convenience: {
+            value: convenience,
+            configurable: true,
+            enumerable: true,
+            writable: false,
+        },
+        convenienceBehavior: {
+            value: convenienceBehavior,
+            configurable: true,
+            enumerable: true,
+            writable: false,
+        },
+        id: {
+            get() {
+                return this.resource.id
+            },
+            enumerable: true,
+        },
+        name: {
+            get() {
+                return this.resource.name
+            },
+            enumerable: true,
+        },
+        resource: {
+            value: motionAreaResource,
+            configurable: true,
+            enumerable: false,
+            writable: false,
+        },
+        security: {
+            value: security,
+            configurable: true,
+            enumerable: true,
+            writable: false,
+        },
+        securityBehavior: {
+            value: securityBehavior,
+            configurable: true,
+            enumerable: true,
+            writable: false,
+        },
+        type: {
+            get() {
+                return this.resource.type
+            },
+            enumerable: true,
+        },
+    })
+}
+
+HueMotionAreaModel.prototype.findBehaviorInstance = function findBehaviorInstance(id, resources) {
+
+    for (let resource of resources) {
+
+        if (resource.type === 'behavior_instance' &&
+            resource.configuration?.motion?.motion_service?.rid === id) {
+
+            return resource
+        }
+    }
+
+    return null
+}
 
 function HueLightModel(lightResource) {
 
@@ -81,6 +183,16 @@ function HueGroupModel(groupResource, resources) {
     let groupedLightId = null
     let lights = []
     let scenes = []
+    let motionArea = null
+
+    for (let resource of resources) {
+
+        if (resource.type === 'motion_area_configuration' && resource.group.rid === groupResource.id) {
+
+            motionArea = new HueMotionAreaModel(resource, resources)
+            break
+        }
+    }
 
     if (groupResource.type === 'room') {
 
@@ -185,6 +297,12 @@ function HueGroupModel(groupResource, resources) {
         },
         lights: {
             value: lights,
+            configurable: true,
+            enumerable: true,
+            writable: false,
+        },
+        motionArea: {
+            value: motionArea,
             configurable: true,
             enumerable: true,
             writable: false,
@@ -315,4 +433,4 @@ HueBridgeModel.prototype.updateResources = function updateResources(resources) {
     sortByName(this.groups)
 }
 
-export { HueBridgeModel, HueGroupModel, HueLightModel, HueSceneModel }
+export { HueBridgeModel, HueGroupModel, HueLightModel, HueMotionAreaModel, HueSceneModel }
