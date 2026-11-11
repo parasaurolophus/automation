@@ -5,18 +5,28 @@
         <summary>motion areas</summary>
         <fieldset>
             <dl>
-                <template v-for="bridge of hueBridgeModels" :key="bridge.id">
-                    <dt>{{ bridge.name }}</dt>
+                <template v-for="bridge of findBridge('c42996fffec424ab')" :key="bridge.id">
+                    <dt>
+                        <div>{{ bridge.name }}</div>
+                        <div>{{ bridge.id }}</div>
+                    </dt>
                     <dd>
-                        <template v-for="group of bridge.groups" :key="group.id">
+                        <template v-for="group of findGroup(bridge, 'b24e9ff4-7919-4049-9802-b50f9dbabf95')"
+                            :key="group.id">
                             <template v-if="group.motionArea">
                                 <table>
-                                    <caption>{{ group.name }}</caption>
+                                    <caption>
+                                        <div>{{ group.name }}</div>
+                                        <div>{{ group.id }}</div>
+                                        <div>{{ group.groupedLight.id }}</div>
+                                    </caption>
                                     <thead>
                                         <tr>
                                             <th>type</th>
                                             <th>motion</th>
                                             <th>valid</th>
+                                            <th>scene name</th>
+                                            <th>scene id</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -24,25 +34,13 @@
                                             <th>convenience</th>
                                             <td>{{ group.motionArea.convenience.motion.motion }}</td>
                                             <td>{{ group.motionArea.convenience.motion.motion_valid }}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>security</th>
-                                            <td>{{ group.motionArea.security.motion.motion }}</td>
-                                            <td>{{ group.motionArea.security.motion.motion_valid }}</td>
+                                            <template v-for="id of [convenienceSceneId(group)]">
+                                                <td>{{ sceneName(bridge, id) }}</td>
+                                                <td>{{ id }}</td>
+                                            </template>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <template v-if="group.motionArea.convenienceBehavior">
-                                    <hr>
-                                    <p>convenience behavior</p>
-                                    <pre>{{ JSON.stringify(group.motionArea.convenienceBehavior, undefined, 2) }}</pre>
-                                </template>
-                                <template v-if="group.motionArea.securityBehavior">
-                                    <hr>
-                                    <p>security behavior</p>
-                                    <pre>{{ JSON.stringify(group.motionArea.securityBehavior, undefined, 2) }}
-</pre>
-                                </template>
                             </template>
                         </template>
                     </dd>
@@ -87,6 +85,61 @@ import { inject } from 'vue'
 
 const hueBridgeModels = inject('hueBridgeModels')
 const sendWS = inject('sendWS')
+
+function convenienceSceneId(group) {
+
+    if (group.motionArea.convenienceBehavior) {
+
+        for (let index = 0; index < group.motionArea.convenienceBehavior.configuration.motion.when.timeslots.length; ++index) {
+
+            if (group.motionArea.convenienceBehavior.configuration.motion.when.timeslots[index].start_time.time.hour !== 21) {
+
+                return group.motionArea.convenienceBehavior.configuration.motion.when.timeslots[index].on_motion.recall_single[0].action.recall.rid
+            }
+        }
+    }
+
+    return 'none'
+}
+
+function findBridge(id) {
+
+    for (let bridge of hueBridgeModels.value) {
+
+        if (bridge.id === id) {
+
+            return [bridge]
+        }
+    }
+
+    return []
+}
+
+function findGroup(bridge, id) {
+
+    for (let group of bridge.groups) {
+
+        if (group.id === id) {
+
+            return [group]
+        }
+    }
+
+    return []
+}
+
+function sceneName(bridge, id) {
+
+    for (let resource of bridge.resources) {
+
+        if (resource.id === id) {
+
+            return resource.metadata.name
+        }
+    }
+
+    return id
+}
 </script>
 
 <!--
