@@ -7,7 +7,8 @@
     "type": "module",
     "main": "index.js",
     "scripts": {
-        "clean": "del *.log",
+        "cleanl": "rm *.log",
+        "cleanw": "del *.log",
         "test": "node ./test.js"
     },
     "dependencies": {

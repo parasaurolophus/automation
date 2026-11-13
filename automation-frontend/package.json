@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "clean": "rd /s /q dist"
+    "cleanl": "rm -rf dist",
+    "cleanw": "rd /s /q dist"
   },
   "dependencies": {
     "@mdi/js": "^7.4.47",
