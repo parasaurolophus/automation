@@ -17,7 +17,7 @@
             <HueBridges id="huebridges" />
             <PowerviewHubs id="powerviewhubs" />
             <AutomationsView />
-            <HueMotionAreaConfiguration />
+            <HueMotionAreaConfiguration v-if="displayMotionAreas" />
         </div>
     </main>
     <div id="sidePanel">
@@ -91,6 +91,22 @@ let qrUrl = window.location.origin
 const refreshDiagrams = ref(Date.now())
 const shadesEnabled = ref(false)
 const sunPositionTimer = ref([])
+
+const displayMotionAreas = computed(() => {
+
+    for (let bridge of hueBridgeModels.value) {
+
+        for (let group of bridge.groups) {
+
+            if (group.motionArea) {
+
+                return true
+            }
+        }
+    }
+
+    return false
+})
 
 const wsUrl = computed(() => {
 
