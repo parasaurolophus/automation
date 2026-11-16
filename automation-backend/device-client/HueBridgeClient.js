@@ -36,9 +36,9 @@ IYSgwwxHXm73/JgcU9lAM6c8Bmu3UE3kBIUwBs1qXFw=
     #_apiKey
     #_bridgeId
 
-    constructor(onError, bridgeId, apiKey) {
+    constructor(logger, bridgeId, apiKey) {
 
-        super(onError)
+        super(logger)
         this.#_bridgeId = bridgeId
         this.#_apiKey = apiKey
     }
@@ -98,7 +98,7 @@ IYSgwwxHXm73/JgcU9lAM6c8Bmu3UE3kBIUwBs1qXFw=
 
         } catch (error) {
 
-            this.onError(this, error, message)
+            this.logger.error(this, error, message)
         }
     }
 
@@ -128,21 +128,24 @@ IYSgwwxHXm73/JgcU9lAM6c8Bmu3UE3kBIUwBs1qXFw=
             }
 
             const response = await fetch(`https://${this.#_bridgeId}/clip/v2/${request.uri}`, options)
+            const body = await response.json()
+
+            if (body.errors) {
+
+                body.errors.forEach(error => this.logger.error(this, `response from hue bridge ${this.id} included an error`, response))
+            }
 
             if (response.status < 200 || response.status >= 300) {
 
-                this.onError(this, new Error(response.statusText), response)
+                this.logger.error(this, response)
                 return
             }
 
-            const body = await response.json()
-
-            body.errors.forEach(error => this.onError(this, new Error(`response from hue bridge ${this.id} included an error`), response))
             onResponse(this, body.data)
 
         } catch (error) {
 
-            this.onError(this, error, request)
+            this.logger.error(this, error, request)
         }
     }
 
