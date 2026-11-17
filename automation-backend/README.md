@@ -219,12 +219,84 @@ file:
 
 ## Launch
 
+### Manual Testing
+
 Browse to the URL displayed in the console window after invoking:
 
 ```bash
-cd automation-backend
+cd automation-frontend
+npm run build
+cd ../automation-backend
 node index.js
 ```
+
+### Run Automatically as a Service
+
+First build the frontend single-page application:
+
+```bash
+cd automation-frontend
+npm run build
+cd ..
+```
+
+#### Linux `systemd`
+
+1. Create the daemon configuration file:
+
+   ```bash
+   sudo nano /etc/systemd/system/automation-backend.service
+   ```
+
+   then paste the following, changing the paths to the `automation-backend`
+   directory and `node` executable as appropriate for your setup:
+
+   ```
+   [Unit]
+   Description=Automation Backend
+   After=network.target
+
+   [Service]
+   Type=simple
+   User=kirk
+   WorkingDirectory=/home/user/projects/automation/automation-backend
+   ExecStart=/home/user/.nvm/versions/node/v26.13.1/bin/node ./index.js
+   Restart=on-failure
+   RestartSec=5
+   StandardOutput=journal
+   StandardError=journal
+
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+   finally save and exit `nano`
+
+2. Configure `automation-backend.service` to start automatically:
+
+   ```bash
+   sudo systemctl daemon-reload
+   sudo systemctl enable automation-backend.service
+   sudo systemctl start automation-backend.service
+   ```
+
+3. Verify `automation-backend.service` is running and view logs:
+
+   ```bash
+   sudo systemctl status automation-backend.service
+   sudo journalctl -u automation-backend.service
+   ```
+
+   See the man pages for `systemctl` and `journalctl` for more options.
+
+#### Windows
+
+1. Click on the Windows menu icon.
+2. Type `Task Scheduler` in the search bar.
+3. Click on `Task Scheduler` in the search results.
+4. Use the GUI to create a task to invoke `node index` in the
+   `automation-backend` directory automatically each time the server machine
+   boots.
 
 ## [automation-backend]
 
