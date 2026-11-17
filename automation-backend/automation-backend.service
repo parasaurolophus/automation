@@ -1,0 +1,16 @@
+[Unit]
+Description=Automation Backend
+After=network.target
+
+[Service]
+Type=simple
+User=kirk
+WorkingDirectory=/home/kirk/projects/automation/automation-backend
+ExecStart=/home/kirk/.nvm/versions/node/v26.13.1/bin/node ./index.js
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
