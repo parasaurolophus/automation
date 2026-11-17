@@ -126,6 +126,8 @@ npm i
 
 ## Configuration
 
+### Server Application Configuration File
+
 Create `./automation-backend/config.js` with appropriate values for your
 location and hardware:
 
@@ -178,9 +180,42 @@ export default config
 ```
 
 See <https://developers.meethue.com/develop/hue-api-v2/getting-started/> for an
-explanation of the `hue.bridgeId` and `hue.apiKey` values (the latter being the
-value to use as the value for the `hue-application-key` parameter when sending
+explanation of the `hue.bridgeId` and `hue.apiKey` values (the former must match
+the identifer added to the [system `hosts` file](#system-hosts-file) while the
+latter is the value to use for the `hue-application-key` header when sending
 HTTPS requests to the bridge API.)
+
+### System `hosts` File
+
+Configure your router to assign a static IP address to each Hue Bridge device.
+(Most consumer routers' configuration control panels refer to this using
+terminology like "address reservations" in their "advanced" configuration
+sections.)
+
+Add entries to the `hosts` file on the machine running this server application
+mapping each Hue Bridge device's unique id to the static IP address specified in
+your router configuration.
+
+| Operating System     | Hosts File Location                     |
+|----------------------|-----------------------------------------|
+| Linux / Unix / macOS | `etc/hosts`                             |
+| Windows              | `C:\Windows\System32\Drivers\etc\hosts` |
+
+The IP address and unique id to use can be viewed by tapping on the name of a
+bridge in the Hue mobile app, in the _Bridges_ section of the _Settings_ tab.
+
+For example, add something like the following to your server machine's `hosts`
+file:
+
+```
+192.168.1.50 edb5faffde231c9f
+192.168.1.51 c52996ffdec614ab
+```
+
+- One entry per Hue Bridge
+- IP address must be permanently reserved for that bridge by your router
+- Identifier must match the value shown as the _ID_ for that bridge in the Hue
+  mobile app
 
 ## Launch
 
