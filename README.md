@@ -108,102 +108,26 @@ sequenceDiagram
     end
 ```
 
-## Installation
+## Install, Configure, Build
 
-```bash
-cd automation-backend
-npm i
-cd ../automation-frontend
-npm i
-```
-
-## Configuration
-
-### Back End
-
-Create `./automation-backend/config.js` with appropriate values for your
-location and hardware:
-
-```javascript
-const config = {
-
-    frontendPort: 8080,
-    wssPort: 8081,
-
-    location: {
-        latitude: 34.052238,
-        longitude: -118.243340,
-        elevation: 0,
-    },
-
-    hue: [
-        {
-            bridgeId: 'd53896fffec424ab',
-            apiKey: '28a4QSK429JDHOyHidv5Ef1Tx-i-b4hYruFHVKIO',
-        },
-        {
-            bridgeId: 'fab5faccbe212f0d',
-            apiKey: '2P6zDhsdGdzmEXNMLmV21ypt404AVdxZY2ofksrH',
-        },
-    ],
-
-    powerview: [
-        {
-            id: 'bff46430-9989-11f1-8be1-e31a95383439',
-            address: '192.168.1.51',
-            name: 'Living / Dining Room',
-            type: 'legacy',
-        },
-        {
-            id: '348cd80-9989-11f1-a63b-1f68433e5c42',
-            address: '192.168.1.32',
-            name: 'Kitchen',
-            type: 'gen3',
-        },
-    ],
-}
-
-export default config
-```
-
-See <https://developers.meethue.com/develop/hue-api-v2/getting-started/> for an
-explanation of the `hue.bridgeId` and `hue.apiKey` values (the latter being the
-value to use for the `hue-application-key` parameter when sending HTTPS requests
-to the bridge API.)
-
-### Font End
-
-Create `./automation-frontend/.env.local`:
-
-```
-VITE_SERVER_WS=ws://myserver.local:8081
-VITE_LATITUDE=34.052238
-VITE_LONGITUDE=-118.243340
-VITE_ELEVATION=0
-```
-
-The values in `./automation-frontend/.env.local` must be consistent with the
-corresponding entries in `./automation-backend/config.js`.
-
-- The hostname for `VITE_SERVER_WS` must be the DNS name or IP address of the
-  machine running the back end.
-- The port number for `VITE_SERVER_WS` must be the same as the value for
-  `config.wssPort` in the back end configuration file.
-- The geolocation attributes are duplicated in the front end configuration file
-solely to support certain testing scenarios.
-
-## Build
-
-```bash
-cd automation-frontend
-npm run build
-```
-
-There is no build step for the back end.
+See the individual `README.md` files for [automation-backend] and
+[automation-frontend].
 
 ## Launch
 
 ### Production
+
+If you have configured [automation-backend] to run as a `systemd` [daemon], you
+can use the [redeploy.sh] script to stop the service, pull the latest sources,
+rebuild the frontend, and restart the service simply by running:
+
+```sh
+./redeploy.sh
+```
+
+in the directory containing this `README.md` file.
+
+### Manual
 
 Browse to the URL displayed in the console window after invoking:
 
@@ -212,15 +136,20 @@ cd automation-backend
 node index.js
 ```
 
-The back end [express] app serves whatever HTML is at
-`../automation-frontend/dist` relative to its launch directory. I.e.
+By default, the back end [express] app serves whatever HTML is at
+`../automation-frontend/dist/` relative to its launch directory. I.e.
 `node index.js` in the back end directory serves the output of `npm run build`
 in the front end directory in addition to handling on-going interactions with
-"smart" home devices.
+"smart" home devices. [Note that the location from which to serve the frontend
+SPA can be overridden by adding the absolute path to the static root directory
+as the value of the `root` property in `automation-backend/config.js`, though
+given the current architecture of [automation-backend], this is of questionable
+utility.]
 
-You can then open a browser to the URL implied by the values for
-`config.frontendPort` in `./automation-backend/config.js` and `VITE_SERVER_WS`
-in `./automation-frontend/.env.local`, e.g. `http://myserver.local:8080`.
+Once `index.js` is running, you can then open a browser to the URL implied by
+the values for `config.frontendPort` in `./automation-backend/config.js` and
+`VITE_SERVER_WS` in `./automation-frontend/.env.local`, e.g.
+`http://myserver.local:8080`.
 
 _**Note that adding support for TLS encryption and some form of authentication
 would be required to make it safe to expose this server to the internet for
@@ -250,7 +179,9 @@ will then launch the [Vue] SPA, connecting to the local back end instance.
 
 [automation-backend]: ./automation-backend/README.md
 [automation-frontend]: ./automation-frontend/README.md
+[daemon]: ./automation-backend/README.md#linux-systemd
 [express]: https://expressjs.com/
 [Hue]: https://developers.meethue.com/develop/hue-api-v2/getting-started/
 [PowerView]: https://www.hunterdouglas.com/operating-systems/motorized/powerview
+[redeploy.sh]: ./redeploy.sh
 [Vue]: https://vuejs.org/
