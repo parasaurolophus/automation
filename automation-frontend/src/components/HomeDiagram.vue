@@ -1,7 +1,7 @@
 <!-- Copyright (c) 2026 Kirk Rader -->
 
 <template>
-    <mermaid-diagram svg-id="diagram" v-model="diagramSource" />
+    <MermaidDiagram svg-id="diagram" v-model="diagramSource" name="home" />
 </template>
 
 <script setup>

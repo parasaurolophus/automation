@@ -13,10 +13,10 @@
     </header>
     <main>
         <div class="padded">
-            <HomeDiagram id="homediagram" />
-            <HueBridges id="huebridges" />
-            <PowerviewHubs id="powerviewhubs" />
-            <AutomationsView id="automationsview" />
+            <HomeDiagram id="homediagram" name="home" />
+            <HueBridges id="huebridges" name="home" />
+            <PowerviewHubs id="powerviewhubs" name="home" />
+            <AutomationsView id="automationsview" name="home" />
         </div>
     </main>
     <div id="sidePanel">

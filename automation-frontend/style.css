@@ -178,6 +178,8 @@ math {
 .subtitle {
     font-style: italic;
     font-weight: bold;
+    font-size: 80%;
+    padding-left: 1rem;
 }
 
 svg {

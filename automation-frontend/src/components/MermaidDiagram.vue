@@ -1,23 +1,25 @@
 <!-- Copyright (c) 2026 Kirk Rader -->
 
 <template>
-    <DetailsComponent>
-        <template #summary>
-            home diagram
-        </template>
+    <details :name="name">
+        <summary>home diagram</summary>
         <pre ref="diagramElement" class="mermaid"></pre>
-    </DetailsComponent>
+    </details>
 </template>
 
 <script setup>
-import DetailsComponent from './DetailsComponent.vue'
 import { inject, onMounted, useTemplateRef, watch } from 'vue'
 import mermaid from 'mermaid'
 
 const diagramElement = useTemplateRef('diagramElement')
 const diagramSource = defineModel()
 
-const props = defineProps({
+const { name, svgId } = defineProps({
+
+    name: {
+        type: String,
+        required: true,
+    },
 
     svgId: {
         type: String,
@@ -47,7 +49,7 @@ async function renderDiagram(source) {
 
         // await mermaid.render() with the critical section locked
         renderLocked = true
-        const { svg, bindFunctions } = await mermaid.render(props.svgId, source)
+        const { svg, bindFunctions } = await mermaid.render(svgId, source)
         diagramElement.value.innerHTML = svg
         bindFunctions?.(diagramElement.value)
 

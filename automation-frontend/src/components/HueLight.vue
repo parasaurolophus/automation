@@ -1,8 +1,8 @@
 <!-- Copyright (c) Kirk Rader 2026 -->
 
 <template>
-    <ToggleSwitch v-model="resource.on.on" :label="props.name || resource.metadata?.name" :toggle="toggle">
-        {{ props.name || resource.metadata?.name }}
+    <ToggleSwitch v-model="resource.on.on" :toggle="toggle">
+        <span>{{ name || resource.metadata?.name || resource.id }}</span>
         <template #subtitle>
             <span @click.prevent.stop="copyMessage(message)" class="clickable">
                 {{ resource.type }} {{ resource.id }}
@@ -15,9 +15,15 @@
 import ToggleSwitch from './ToggleSwitch.vue'
 import { inject } from 'vue'
 
+const { name } = defineProps({
+
+    name: {
+        type: String,
+    },
+})
+
 const bridge = defineModel('bridge', { required: true })
 const copyMessage = inject('copyMessage')
-const props = defineProps({ name: { type: String } })
 const resource = defineModel('resource', { required: true })
 const sendWS = inject('sendWS')
 

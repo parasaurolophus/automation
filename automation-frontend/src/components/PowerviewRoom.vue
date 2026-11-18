@@ -1,13 +1,11 @@
 <!-- Copyright (c) Kirk Rader 2026 -->
 
 <template>
-    <DetailsComponent @toggle="onToggle">
-        <template #summary>{{ room.name }}</template>
-        <template #subtitle>
-            <span @click.prevent.stop="copy" class="clickable">
-                {{ room.id }}
-            </span>
-        </template>
+    <details @toggle="onToggle" name="powerview-rooms">
+        <summary>{{ room.name }}</summary>
+        <div @click.prevent.stop="copy" class="clickable subtitle">
+            {{ room.id }}
+        </div>
         <fieldset v-if="room.scenes.length > 0">
             <legend>scenes</legend>
             <PowerviewScene v-for="(scene, index) of room.scenes" :key="scene.id" v-model:hub="hub"
@@ -17,7 +15,7 @@
             <legend>shades</legend>
             <PowerviewShade v-for="(shade, index) of room.shades" :key="shade.id" v-model="room.shades[index]" />
         </fieldset>
-    </DetailsComponent>
+    </details>
 </template>
 
 <style scoped>
@@ -34,7 +32,6 @@ fieldset>* {
 </style>
 
 <script setup>
-import DetailsComponent from './DetailsComponent.vue'
 import PowerviewScene from './PowerviewScene.vue'
 import PowerviewShade from './PowerviewShade.vue'
 import { inject } from 'vue'

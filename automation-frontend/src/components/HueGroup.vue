@@ -1,10 +1,11 @@
 <!-- Copyright (c) Kirk Rader 2026 -->
 
 <template>
-    <DetailsComponent>
-        <template #summary>
+    <details name="hue-groups">
+        <summary :class="group.groupedLight.on.on ? 'on' : 'off'">{{ group.name }}</summary>
+        <div class="switch">
             <HueLight :name="group.name" v-model:bridge="bridge" v-model:resource="group.groupedLight" />
-        </template>
+        </div>
         <template v-if="group.scenes.length > 0">
             <fieldset>
                 <legend>scenes</legend>
@@ -19,7 +20,7 @@
                     v-model:resource="light.resource" />
             </fieldset>
         </template>
-    </DetailsComponent>
+    </details>
 </template>
 
 <style scoped>
@@ -32,10 +33,18 @@ fieldset {
 fieldset>* {
     padding: 0.5rem;
 }
+
+.on {
+    color: var(--primary);
+}
+
+.switch {
+    border-style: solid;
+    padding: 0.5rem;
+}
 </style>
 
 <script setup>
-import DetailsComponent from './DetailsComponent.vue'
 import HueLight from './HueLight.vue'
 import HueScene from './HueScene.vue'
 

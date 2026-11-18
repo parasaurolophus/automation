@@ -1,37 +1,36 @@
 <!-- Copyright (c) Kirk Rader 2026 -->
 
 <template>
-    <DetailsComponent>
-        <template #summary>
-            automations
-        </template>
-        <DetailsComponent v-for="(forThemes, deviceType) in automations">
-            <template #summary>
-                {{ deviceType }}
-            </template>
-            <DetailsComponent v-for="(forEvents, theme) in forThemes">
-                <template #summary>
-                    {{ theme }}
-                </template>
-                <DetailsComponent v-for="(messages, event) in forEvents">
-                    <template #summary>
-                        {{ event }}
-                    </template>
-                    <DetailsComponent v-for="(message, index) of messages" :key="index">
-                        <template #summary>
+    <details :name="name">
+        <summary>automations</summary>
+        <details v-for="(forThemes, deviceType) in automations" name="device-types">
+            <summary>{{ deviceType }}</summary>
+            <details v-for="(forEvents, theme) in forThemes" name="themes">
+                <summary>{{ theme }}</summary>
+                <details v-for="(messages, event) in forEvents" name="events">
+                    <summary>{{ event }}</summary>
+                    <details v-for="(message, index) of messages" :key="index" name="messages">
+                        <summary>
                             {{ formatMessage(deviceType, theme, event, message) }}
-                        </template>
+                        </summary>
                         <pre>{{ JSON.stringify(message, undefined, 2) }}</pre>
-                    </DetailsComponent>
-                </DetailsComponent>
-            </DetailsComponent>
-        </DetailsComponent>
-    </DetailsComponent>
+                    </details>
+                </details>
+            </details>
+        </details>
+    </details>
 </template>
 
 <script setup>
-import DetailsComponent from './DetailsComponent.vue'
 import { inject } from 'vue'
+
+const { name } = defineProps({
+
+    name: {
+        type: String,
+        required: true,
+    },
+})
 
 const automations = inject('automations')
 const hueBridgeModels = inject('hueBridgeModels')

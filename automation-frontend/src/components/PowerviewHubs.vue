@@ -1,18 +1,23 @@
 <!-- Copyright (c) Kirk Rader 2026 -->
 
 <template>
-    <DetailsComponent>
-        <template #summary>
-            powerview hubs
-        </template>
+    <details :name="name">
+        <summary>powerview hubs</summary>
         <PowerviewHub v-for="(hub, index) of powerviewHubModels" :key="hub.id" v-model="powerviewHubModels[index]" />
-    </DetailsComponent>
+    </details>
 </template>
 
 <script setup>
-import DetailsComponent from './DetailsComponent.vue'
 import PowerviewHub from './PowerviewHub.vue'
 import { inject } from 'vue'
+
+const { name } = defineProps({
+
+    name: {
+        type: String,
+        required: true,
+    },
+})
 
 const powerviewHubModels = inject('powerviewHubModels')
 </script>
