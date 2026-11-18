@@ -13,7 +13,6 @@
     </header>
     <main>
         <div class="padded">
-            <HomeDiagram id="homediagram" name="home" />
             <HueBridges id="huebridges" name="home" />
             <PowerviewHubs id="powerviewhubs" name="home" />
             <AutomationsView id="automationsview" name="home" />
@@ -54,15 +53,12 @@ import AutomationControls from './components/AutomationControls.vue'
 import AutomationsView from './components/AutomationsView.vue'
 import DevControls from './components/DevControls.vue'
 import FooterBar from './components/FooterBar.vue'
-import HomeDiagram from './components/HomeDiagram.vue'
 import HueBridges from './components/HueBridges.vue'
 import PowerviewHubs from './components/PowerviewHubs.vue'
 import QrCode from './components/QrCode.vue'
 import ServerStatus from './components/ServerStatus.vue'
 import StatusBar from './components/StatusBar.vue'
 import SunPositionTimer from './components/SunPositionTimer.vue'
-import { buildHomeDiagram } from './buildDiagram.js'
-import mermaid from 'mermaid'
 import { computed, provide, ref } from 'vue'
 import { HueBridgeModel } from './HueBridgeModel.js'
 import { PowerviewHubModel } from './PowerviewHubModel.js'
@@ -71,16 +67,10 @@ import { merge, sortByName } from './utilities.js'
 const automations = ref({})
 const clientReadyState = ref({})
 
-const defaultDiagram = `flowchart LR
-uninitialize@{ shape: braces, label: "uninitialized" }`
-
-const diagramBuilder = ref(buildHomeDiagram)
-const diagramSource = ref(defaultDiagram)
 const hueBridgeModels = ref([])
 const lightingEnabled = ref(false)
 const powerviewHubModels = ref([])
 let qrUrl = window.location.origin
-const refreshDiagrams = ref(Date.now())
 const shadesEnabled = ref(false)
 const sunPositionTimer = ref([])
 
@@ -396,23 +386,6 @@ async function copyMessage(message) {
     }
 }
 
-function initializeMermaid() {
-
-    mermaid.initialize({
-        startOnLoad: false,
-        theme: 'dark',
-        securityLevel: 'loose',
-        htmlLabels: false,
-    })
-
-    refreshDiagrams.value = Date.now()
-}
-
-function mermaidClick(arg) {
-
-    openPanel(arg)
-}
-
 // open the <details> element selected by the given id, after opening all its
 // ancestor <details> elements
 function openPanel(id) {
@@ -475,20 +448,15 @@ provide('automations', automations)
 provide('clientReadyState', clientReadyState)
 provide('closeAllDetails', closeAllDetails)
 provide('copyMessage', copyMessage)
-provide('diagramBuilder', diagramBuilder)
-provide('diagramSource', diagramSource)
 provide('hueBridgeModels', hueBridgeModels)
 provide('isWsOpen', isWsOpen)
 provide('lightingEnabled', lightingEnabled)
 provide('openPanel', openPanel)
 provide('powerviewHubModels', powerviewHubModels)
-provide('refreshDiagrams', refreshDiagrams)
 provide('shadesEnabled', shadesEnabled)
 provide('sunPositionTimer', sunPositionTimer)
 provide('sendWS', sendWS)
 provide('wsReadyState', wsReadyState)
 provide('wsUrl', wsUrl)
 
-mermaidHandler = mermaidClick
-initializeMermaid()
 </script>

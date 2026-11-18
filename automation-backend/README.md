@@ -638,7 +638,6 @@ stateDiagram-v2
 
 [eventsource-client]: https://www.npmjs.com/package/eventsource-client
 [express]: https://www.npmjs.com/package/express
-[mermaid]: https://mermaid.ai/open-source/intro/
 [suncalc]: https://www.npmjs.com/package/suncalc
 [undici]: https://www.npmjs.com/package/undici
 [ws]: https://www.npmjs.com/package/ws

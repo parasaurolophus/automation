@@ -8,7 +8,6 @@ Copyright 2026 Kirk Rader
 
 - [@mdi/js]
 - [Noto Sans]
-- [Mermaid]
 - [Vue]
 
 ## Installation
@@ -41,5 +40,4 @@ npm run clean; npm run dev
 
 [@mdi/js]: https://www.npmjs.com/package/@mdi/js
 [Noto Sans]: https://fonts.google.com/noto/specimen/Noto+Sans
-[Mermaid]: https://www.npmjs.com/package/mermaid
 [Vue]: https://www.npmjs.com/package/vue
