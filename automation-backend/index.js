@@ -2,23 +2,25 @@
 
 import config from './config.js'
 import express from 'express'
+import path from 'node:path'
 import { HueBridgeClient, PowerviewHubClient } from './device-client/index.js'
-import { logger } from './logger.js'
 import { messageBroker, messageEvents } from './messageBroker.js'
 import { hueBridgeClients, onMessage, powerviewHubClients } from './onMessage.js'
 import { startReadyStatePoller } from './readyStatePoller.js'
 
 const frontendPort = config.frontendPort ?? 3000
-const root = config.root ?? `${process.cwd()}/../automation-frontend/dist`
+const root = config.root ?? path.resolve(process.cwd(), '../automation-frontend/dist')
+const home = path.resolve(root, 'index.html')
 const app = express()
 
+console.error(home)
 app.use(express.static(root))
 
-app.get('/{*uri}', (request, response) => {
+app.get('/', (request, response) => {
 
     try {
 
-        response.sendFile(`${root}/index.html`)
+        response.sendFile(home)
 
     } catch (error) {
 
@@ -26,23 +28,22 @@ app.get('/{*uri}', (request, response) => {
     }
 })
 
-app.listen(frontendPort, () => {
+app.listen(frontendPort, function listen() {
 
     try {
 
-        messageEvents.on('clientError', (event, client) => logger.error(event, client))
-        messageEvents.on('close', (event, broker) => logger.info(event, broker))
-        messageEvents.on('connection', () => logger.info(messageBroker.toString()))
-        messageEvents.on('disconnection', () => logger.info(messageBroker.toString()))
-        messageEvents.on('error', (event, broker) => logger.error(event, broker))
+        messageEvents.on('clientError', (event, client) => console.error(event, client))
+        messageEvents.on('close', (event, broker) => console.log(event, broker))
+        messageEvents.on('connection', () => console.log(messageBroker.toString()))
+        messageEvents.on('disconnection', () => console.log(messageBroker.toString()))
+        messageEvents.on('error', (event, broker) => console.error(event, broker))
         messageEvents.on('message', onMessage)
-        messageEvents.on('open', (event, broker) => logger.info(event, broker))
+        messageEvents.on('open', (event, broker) => console.log(event, broker))
         messageBroker.open(config.wssPort ?? 3001)
 
         for (let { bridgeId, apiKey } of config.hue) {
 
             const client = new HueBridgeClient(
-                (sender, error, ...context) => logger.error(`error ${sender.toString()}`, error),
                 bridgeId,
                 apiKey,
             )
@@ -53,21 +54,15 @@ app.listen(frontendPort, () => {
                     topic: `hue/${sender.bridgeId}/resource/${resource.type}/${resource.id}`,
                     payload: resource
                 }),
-                (sender) => logger.info(`connect ${sender.toString()}`),
-                (sender) => logger.info(`disconnect ${sender.toString()}`),
-                (sender, event) => logger.info(`scheduledReconnect ${sender.toString()} ${event.delay}`),
+                (sender) => console.log(`connect ${sender.toString()}`),
+                (sender) => console.log(`disconnect ${sender.toString()}`),
+                (sender, event) => console.log(`scheduleReconnect ${sender.toString()} ${event.delay}`),
             )
         }
 
         for (let { id, address, name, type } of config.powerview) {
 
-            const client = new PowerviewHubClient(
-                (sender, error, ...context) => logger.error(`error ${sender.toString()} ${error}`),
-                id,
-                name,
-                type,
-                address,
-            )
+            const client = new PowerviewHubClient(id, name, type, address)
 
             powerviewHubClients.push(client)
 
@@ -78,9 +73,9 @@ app.listen(frontendPort, () => {
                         topic: `powerview/${sender.id}/event`,
                         payload: resource
                     }),
-                    sender => logger.info(`connect ${sender.toString()}`),
-                    sender => logger.info(`disconnect ${sender.toString()}`),
-                    (sender, event) => logger.info(`scheduledReconnect ${sender.toString()} ${event.delay}`),
+                    sender => console.log(`connect ${sender.toString()}`),
+                    sender => console.log(`disconnect ${sender.toString()}`),
+                    (sender, event) => console.log(`scheduleReconnect ${sender.toString()} ${event.delay}`),
                 )
             }
         }

@@ -59,13 +59,12 @@ function onScheduleReconnect(sender, event) {
 
 const hueBridgeClients = config.hue.map(hue => {
 
-    return new HueBridgeClient(onError, hue.bridgeId, hue.apiKey)
+    return new HueBridgeClient(hue.bridgeId, hue.apiKey)
 })
 
 const powerviewHubClients = config.powerview.map(powerview => {
 
     return new PowerviewHubClient(
-        onError,
         powerview.id,
         powerview.name,
         powerview.type,

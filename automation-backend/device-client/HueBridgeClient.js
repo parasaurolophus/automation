@@ -36,9 +36,9 @@ IYSgwwxHXm73/JgcU9lAM6c8Bmu3UE3kBIUwBs1qXFw=
     #_apiKey
     #_bridgeId
 
-    constructor(logger, bridgeId, apiKey) {
+    constructor(bridgeId, apiKey) {
 
-        super(logger)
+        super()
         this.#_bridgeId = bridgeId
         this.#_apiKey = apiKey
     }
@@ -98,7 +98,7 @@ IYSgwwxHXm73/JgcU9lAM6c8Bmu3UE3kBIUwBs1qXFw=
 
         } catch (error) {
 
-            this.logger.error(this, error, message)
+            console.error(this, error, message)
         }
     }
 
@@ -132,12 +132,12 @@ IYSgwwxHXm73/JgcU9lAM6c8Bmu3UE3kBIUwBs1qXFw=
 
             if (body.errors) {
 
-                body.errors.forEach(error => this.logger.error(this, `response from hue bridge ${this.id} included an error`, response))
+                body.errors.forEach(error => console.error(this, `response from hue bridge ${this.id} included an error`, response))
             }
 
             if (response.status < 200 || response.status >= 300) {
 
-                this.logger.error(this, response)
+                console.error(this, response)
                 return
             }
 
@@ -145,7 +145,7 @@ IYSgwwxHXm73/JgcU9lAM6c8Bmu3UE3kBIUwBs1qXFw=
 
         } catch (error) {
 
-            this.logger.error(this, error, request)
+            console.error(this, error, request)
         }
     }
 

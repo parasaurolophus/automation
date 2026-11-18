@@ -13,9 +13,9 @@ class PowerviewHubClient extends DeviceClient {
     #_name
     #_type
 
-    constructor(logger, id, name, type, address) {
+    constructor(id, name, type, address) {
 
-        super(logger)
+        super()
         this.#_address = address
         this.#_id = id
         this.#_name = name
@@ -49,7 +49,7 @@ class PowerviewHubClient extends DeviceClient {
 
         } catch (error) {
 
-            this.logger.error(this, error)
+            console.error(this, error)
         }
     }
 
@@ -73,7 +73,7 @@ class PowerviewHubClient extends DeviceClient {
 
             if (!response.ok) {
 
-                this.logger.error(this, response)
+                console.error(this, response)
                 return
             }
 
@@ -102,7 +102,7 @@ class PowerviewHubClient extends DeviceClient {
 
         } catch (error) {
 
-            this.logger.error(this, error, request)
+            console.error(this, error, request)
         }
     }
 

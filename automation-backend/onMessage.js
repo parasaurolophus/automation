@@ -2,7 +2,6 @@
 
 import { settings } from './settings/index.js'
 import config from './config.js'
-import { logger } from './logger.js'
 import { messageEvents } from "./messageBroker.js"
 import { sunPositionTimer, triggerAutomation } from "./sunPositionTimer.js"
 import { updateLightingEnabled, updateShadesEnabled } from './updateSettings.js'
@@ -17,7 +16,7 @@ function onMessage(message, websocketClient) {
 
     if (message?.topic === undefined) {
 
-        logger.error(`invalid message`, message)
+        console.error(`invalid message`, message)
         return
     }
 
@@ -176,7 +175,7 @@ function onMessage(message, websocketClient) {
 
                 hueBridgeClient.send(request, (sender, response) => {
 
-                    response.errors.forEach(logger.error)
+                    response.errors.forEach(console.error)
 
                     messageEvents.emit(
 
@@ -194,7 +193,7 @@ function onMessage(message, websocketClient) {
             }
         }
 
-        logger.warn(`no hue bridge client found with id ${bridgeId}`, message)
+        console.warn(`no hue bridge client found with id ${bridgeId}`, message)
         return
     }
 
@@ -280,7 +279,7 @@ function onMessage(message, websocketClient) {
             }
         }
 
-        logger.warn(`no powerview hub found with id ${hubId}`)
+        console.warn(`no powerview hub found with id ${hubId}`)
         return
     }
 

@@ -7,9 +7,7 @@
     "type": "module",
     "main": "index.js",
     "scripts": {
-        "cleanl": "rm *.log",
-        "cleanw": "del *.log",
-        "test": "node ./test.js"
+        "test": "echo \"no tests defined\""
     },
     "dependencies": {
         "eventsource-client": "^1.2.0",

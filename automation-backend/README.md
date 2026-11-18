@@ -134,12 +134,6 @@ location and hardware:
 ```javascript
 const config = {
 
-    logger: {
-        name: 'automation',
-        maxBackups: 3,
-        maxSize: 1047552,
-    },
-
     frontendPort: 8080,
     wssPort: 8081,
 

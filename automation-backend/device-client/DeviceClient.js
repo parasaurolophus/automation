@@ -6,17 +6,14 @@ class DeviceClient {
     static CONNECTING = 'connecting'
     static OPEN = 'open'
 
-    logger
-
     #client
     #lastSentTimestamp
     #sendQueue
 
-    constructor(logger) {
+    constructor() {
 
         this.#client = null
         this.#lastSentTimestamp = 0
-        this.logger = logger
         this.#sendQueue = []
     }
 
@@ -42,7 +39,7 @@ class DeviceClient {
 
         } catch (error) {
 
-            this.logger.error(this, error)
+            console.error(this, error)
         }
     }
 
