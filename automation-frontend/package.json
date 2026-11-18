@@ -13,8 +13,7 @@
   "dependencies": {
     "@mdi/js": "^7.4.47",
     "qr": "^0.7.2",
-    "vue": "^3.5.45",
-    "vue-router": "^5.5.1"
+    "vue": "^3.5.45"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.11",
