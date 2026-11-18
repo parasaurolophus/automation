@@ -1,18 +1,20 @@
 <!-- Copyright (c) Kirk Rader 2026 -->
 
 <template>
-    <ToggleSwitch v-model="resource.on.on" :toggle="toggle">
-        <span>{{ name || resource.metadata?.name || resource.id }}</span>
-        <template #subtitle>
+    <div>
+        <div>
+            <input :id="resource.id" type="checkbox" switch v-model="resource.on.on" @click.stop.prevent="toggle">
+            <label :for="resource.id">{{ name || resource.metadata?.name || resource.id }}</label>
+        </div>
+        <div class="subtitle">
             <span @click.prevent.stop="copyMessage(message)" class="clickable">
                 {{ resource.type }} {{ resource.id }}
             </span>
-        </template>
-    </ToggleSwitch>
+        </div>
+    </div>
 </template>
 
 <script setup>
-import ToggleSwitch from './ToggleSwitch.vue'
 import { inject } from 'vue'
 
 const { name } = defineProps({

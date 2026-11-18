@@ -77,7 +77,6 @@ uninitialize@{ shape: braces, label: "uninitialized" }`
 const diagramBuilder = ref(buildHomeDiagram)
 const diagramSource = ref(defaultDiagram)
 const hueBridgeModels = ref([])
-let idCounter = 0
 const lightingEnabled = ref(false)
 const powerviewHubModels = ref([])
 let qrUrl = window.location.origin
@@ -414,11 +413,6 @@ function mermaidClick(arg) {
     openPanel(arg)
 }
 
-function nextId() {
-
-    return `id${idCounter++}`
-}
-
 // open the <details> element selected by the given id, after opening all its
 // ancestor <details> elements
 function openPanel(id) {
@@ -486,7 +480,6 @@ provide('diagramSource', diagramSource)
 provide('hueBridgeModels', hueBridgeModels)
 provide('isWsOpen', isWsOpen)
 provide('lightingEnabled', lightingEnabled)
-provide('nextId', nextId)
 provide('openPanel', openPanel)
 provide('powerviewHubModels', powerviewHubModels)
 provide('refreshDiagrams', refreshDiagrams)
