@@ -41,9 +41,9 @@ class PowerviewHubClient extends DeviceClient {
                 return createEventSource({
                     url: `http://${this.#_address}/home/events?sse=true`,
                     onMessage: message => onMessage(this, message),
-                    onConnect: () => onConnect(this),
-                    onDisconnect: () => onDisconnect(this),
-                    onScheduleReconnect: (event) => onScheduleReconnect(this, event)
+                    onConnect: onConnect ? () => onConnect(this) : undefined,
+                    onDisconnect: onDisconnect ? () => onDisconnect(this) : undefined,
+                    onScheduleReconnect: onScheduleReconnect ? (event) => onScheduleReconnect(this, event) : undefined,
                 })
             }
 

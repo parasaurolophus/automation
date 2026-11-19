@@ -13,7 +13,6 @@ const root = config.root ?? path.resolve(process.cwd(), '../automation-frontend/
 const home = path.resolve(root, 'index.html')
 const app = express()
 
-console.error(home)
 app.use(express.static(root))
 
 app.get('/', (request, response) => {
@@ -33,12 +32,12 @@ app.listen(frontendPort, function listen() {
     try {
 
         messageEvents.on('clientError', (event, client) => console.error(event, client))
-        messageEvents.on('close', (event, broker) => console.log(event, broker))
-        messageEvents.on('connection', () => console.log(messageBroker.toString()))
-        messageEvents.on('disconnection', () => console.log(messageBroker.toString()))
+        // messageEvents.on('close', (event, broker) => console.log(event, broker))
+        // messageEvents.on('connection', () => console.log(messageBroker.toString()))
+        // messageEvents.on('disconnection', () => console.log(messageBroker.toString()))
         messageEvents.on('error', (event, broker) => console.error(event, broker))
         messageEvents.on('message', onMessage)
-        messageEvents.on('open', (event, broker) => console.log(event, broker))
+        // messageEvents.on('open', (event, broker) => console.log(event, broker))
         messageBroker.open(config.wssPort ?? 3001)
 
         for (let { bridgeId, apiKey } of config.hue) {
@@ -54,9 +53,9 @@ app.listen(frontendPort, function listen() {
                     topic: `hue/${sender.bridgeId}/resource/${resource.type}/${resource.id}`,
                     payload: resource
                 }),
-                (sender) => console.log(`connect ${sender.toString()}`),
-                (sender) => console.log(`disconnect ${sender.toString()}`),
-                (sender, event) => console.log(`scheduleReconnect ${sender.toString()} ${event.delay}`),
+                // (sender) => console.log(`connect ${sender.toString()}`),
+                // (sender) => console.log(`disconnect ${sender.toString()}`),
+                // (sender, event) => console.log(`scheduleReconnect ${sender.toString()} ${event.delay}`),
             )
         }
 
@@ -73,9 +72,9 @@ app.listen(frontendPort, function listen() {
                         topic: `powerview/${sender.id}/event`,
                         payload: resource
                     }),
-                    sender => console.log(`connect ${sender.toString()}`),
-                    sender => console.log(`disconnect ${sender.toString()}`),
-                    (sender, event) => console.log(`scheduleReconnect ${sender.toString()} ${event.delay}`),
+                    // sender => console.log(`connect ${sender.toString()}`),
+                    // sender => console.log(`disconnect ${sender.toString()}`),
+                    // (sender, event) => console.log(`scheduleReconnect ${sender.toString()} ${event.delay}`),
                 )
             }
         }

@@ -67,9 +67,9 @@ IYSgwwxHXm73/JgcU9lAM6c8Bmu3UE3kBIUwBs1qXFw=
 
             },
             onMessage: message => this.onMessage(message, onMessage),
-            onConnect: () => onConnect(this),
-            onDisconnect: () => onDisconnect(this),
-            onScheduleReconnect: event => onScheduleReconnect(this, event)
+            onConnect: onConnect ? () => onConnect(this) : undefined,
+            onDisconnect: onDisconnect ? () => onDisconnect(this) : undefined,
+            onScheduleReconnect: onScheduleReconnect ? event => onScheduleReconnect(this, event) : undefined,
         }
 
         return createEventSource(options)
