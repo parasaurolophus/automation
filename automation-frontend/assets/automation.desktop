@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.5
+Name=automation
+Name[en_US]=automation
+Comment=Home automation frontend
+Icon=/usr/local/share/automation.ico
+Exec=open http://192.168.68.73:8080
+Type=Application
+Terminal=false
+Categories=None;
