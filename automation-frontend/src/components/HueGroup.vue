@@ -3,9 +3,7 @@
 <template>
     <details name="hue-groups">
         <summary :class="group.groupedLight.on.on ? 'on' : 'off'">{{ group.name }}</summary>
-        <div class="switch">
-            <HueLight :name="group.name" v-model:bridge="bridge" v-model:resource="group.groupedLight" />
-        </div>
+        <HueLight :name="group.name" v-model:bridge="bridge" v-model:resource="group.groupedLight" />
         <template v-if="group.scenes.length > 0">
             <fieldset>
                 <legend>scenes</legend>
@@ -36,11 +34,6 @@ fieldset>* {
 
 .on {
     color: var(--primary);
-}
-
-.switch {
-    border-style: solid;
-    padding: 0.5rem;
 }
 </style>
 

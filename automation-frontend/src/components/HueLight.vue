@@ -1,17 +1,17 @@
 <!-- Copyright (c) Kirk Rader 2026 -->
 
 <template>
-    <div>
-        <div>
+    <fieldset>
+        <legend>
             <input :id="resource.id" type="checkbox" switch v-model="resource.on.on" @click.stop.prevent="toggle">
             <label :for="resource.id">{{ name || resource.metadata?.name || resource.id }}</label>
-        </div>
+        </legend>
         <div class="subtitle">
             <span @click.prevent.stop="copyMessage(message)" class="clickable">
                 {{ resource.type }} {{ resource.id }}
             </span>
         </div>
-    </div>
+    </fieldset>
 </template>
 
 <script setup>

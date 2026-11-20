@@ -1,14 +1,14 @@
 <!-- Copyright (c) Kirk Rader 2026 -->
 
 <template>
-    <div>
-        <div class="title">
+    <fieldset>
+        <legend>
             <input type="button" :value="scene.name" @click="activate" :class="scene.resource.status.active">
-        </div>
+        </legend>
         <div class="subtitle clickable" @click.prevent.stop="copyMessage(message)">
             {{ scene.id }}
         </div>
-    </div>
+    </fieldset>
 </template>
 
 <style scoped>
